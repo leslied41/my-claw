@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-Everything runs through **skills (slash commands)** and a small set of **state files**. Skills contain all workflow logic and instructions — job context only loads when a skill is invoked, keeping non-job conversations lean. No external integrations needed beyond what's already configured (Brave Search, WebFetch, WhatsApp/Telegram).
+Everything runs through **skills (slash commands)** and a small set of **state files**. Skills contain all workflow logic and instructions — job context only loads when a skill is invoked, keeping non-job conversations lean. Integrations: Brave Search, WebFetch, WhatsApp/Telegram (already configured), plus **Chrome DevTools MCP** for browser automation on the Hetzner server.
 
 ```
 workspace/
@@ -29,18 +29,34 @@ workspace/
 ## The 7-Phase Workflow
 
 ### Phase 1 — Job Discovery (Automated, 2x daily)
-- **Brave Search** with `site:seek.com.au "software engineer" Melbourne` style queries — returns actual job URLs without scraping friction
-- **Direct Seek URL fetch** for search results pages + individual job pages (Seek is publicly fetchable without auth)
-- **LinkedIn**: used for discovery via Brave Search snippets only (requires auth for full pages, so just use the snippet data)
+- **Brave Search** with `site:seek.com.au "software engineer" Melbourne` style queries — primary discovery method, fast and zero detection risk
+- **Chrome DevTools MCP** (fallback) — if Seek blocks WebFetch, use headless Chrome to fetch the full job page
+- **LinkedIn**: Brave Search snippets only — Chrome MCP not used for LinkedIn (bot detection too aggressive)
 - **Dedup** against `JOB_PIPELINE.md` before any processing
 - Search queries sourced from `SEARCH_QUERIES.md`; agent refines them over time
 
-### Phase 2 — Job Analysis
-Each fetched job gets structured extraction into an application file:
-- Title, company, salary, location, hybrid/remote policy
-- Must-have vs nice-to-have requirements mapped against your skills
-- **Match Score**: STRONG / MODERATE / WEAK
-- Weak matches: logged but not processed further
+### Phase 2 — Job Filtering & Scoring
+
+**Step 1 — Hard filters (instant discard, no further processing):**
+- Salary stated and base (excl. super) < $115k → discard, log reason
+- Salary not stated → proceed (don't discard on unknown)
+- Role is contract/casual only → discard
+- Location is not Melbourne or remote-friendly → discard
+
+**Step 2 — Relevance scoring against `RESUME.md`:**
+
+Score each dimension 0–10, then compute a weighted total:
+
+| Dimension | Weight | What to look for |
+|---|---|---|
+| Technical skills match | 40% | How many must-have tech skills does Leslie have? |
+| Experience level match | 25% | Does seniority/years align? |
+| Domain/industry fit | 20% | Has Leslie worked in this domain before? |
+| Nice-to-have coverage | 15% | Bonus skills that add signal |
+
+**Threshold: weighted score ≥ 6.0 → proceed to Phase 3. Below 6.0 → log as `weak_match` and stop.**
+
+Each application file records the score breakdown so you can audit and calibrate the threshold over time.
 
 ### Phase 3 — Resume Tailoring (per application)
 Not a full rewrite — **tailoring notes** that live in the application file:
@@ -68,7 +84,14 @@ Tone calibrated: startup < 50 people (direct/informal) vs enterprise (formal, em
 discovered → analysed → materials_ready → pending_review → applied → interview → offer
 ```
 
-Claw moves jobs autonomously through `pending_review`. **You control the gate** — nothing gets submitted without your explicit "apply 001".
+Claw moves jobs autonomously through `pending_review`. **You control the gate** — nothing gets submitted without your final action.
+
+Pipeline states:
+```
+discovered → filtered → scored → materials_ready → pending_review → applied
+                ↓           ↓
+           discarded    weak_match  (logged, no further work)
+```
 
 ### Phase 6 — Submission Handoff
 When materials are ready, Claw messages you on WhatsApp:
@@ -76,12 +99,19 @@ When materials are ready, Claw messages you on WhatsApp:
 Job ready: Software Engineer @ Acme Corp (Melbourne)
 Match: STRONG | Salary: $130-150k | Seek Easy Apply
 
-Reply "apply 001" to submit, "skip 001" to pass, or "review" to see full draft.
+Reply "apply 001" to review + submit, "skip 001" to pass.
 ```
 
-- **Direct email roles**: Claw composes and sends the email for you
-- **Seek/LinkedIn Easy Apply**: Claw gives you the URL + exact steps + pre-written cover letter to paste
-- **Future**: If browser automation ever gets added to OpenClaw, Seek Easy Apply becomes fully automatable
+When you reply "apply 001", Claw uses **Chrome DevTools MCP** to:
+1. Navigate to the job page
+2. Pre-fill the application form (name, contact, cover letter)
+3. Take a screenshot and send it to you on WhatsApp for final review
+
+**You do the final click to submit** — Claw never submits on your behalf. This keeps you in control and avoids automated submission detection.
+
+- **Direct email roles**: Claw drafts the email, you review and send
+- **Seek Easy Apply**: Claw pre-fills, you submit
+- **LinkedIn**: manual only — Claw gives you the URL and cover letter to paste yourself
 
 ### Phase 7 — Skills
 
@@ -110,6 +140,12 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | Skills contain all instructions | Workflow logic lives in skills, not separate protocol files — fewer files, single source of truth per skill |
 | jobs/ holds state only | `JOB_PIPELINE.md`, `SEARCH_QUERIES.md`, and `applications/` are the only files the agent writes to |
 | Skills as entry points | Job context only loads when a skill is invoked — non-job chats stay lean and general-purpose |
+| Hard salary filter first | Salary < $115k base (excl. super) → discard immediately, no analysis wasted |
+| Weighted relevance score, threshold 6.0 | Objective, auditable gate — score breakdown saved per job so threshold can be tuned |
+| Salary unknown → proceed | Don't discard on missing data; many roles omit salary and are still worth pursuing |
+| Brave Search for discovery, Chrome MCP as fallback | Brave Search is fast and detection-safe; Chrome MCP steps in only when Seek blocks WebFetch |
+| Chrome MCP pre-fills, you submit | Avoids automated submission detection; keeps you in the loop for the final action |
+| No Chrome MCP for LinkedIn | LinkedIn bot detection is too aggressive — snippets only |
 | Markdown files, not a database | Claw already reads workspace files as context; keeps everything in one mental model |
 | Tailoring notes, not full resume rewrites | Auditable, fast, `RESUME.md` stays as single source of truth |
 | Max 5 fully-processed jobs per cron run | Prevents slow/expensive runs when many listings appear at once |
@@ -136,15 +172,16 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 
 ## Implementation Sequence
 
-1. Update `PREFERENCES.md` — grant autonomous search for job crons
-2. Create `skills/job-hunt.md` — discovery workflow + search protocol + job analysis logic
-3. Create `skills/job-apply.md` — resume tailoring protocol + cover letter template + submission handoff
-4. Create `skills/job-review.md` — review flow
-5. Create `skills/job-status.md` — pipeline summary format
-6. Initialise `jobs/JOB_PIPELINE.md` — empty table with schema
-7. Create `jobs/SEARCH_QUERIES.md` — initial Seek/LinkedIn query bank
-8. Update `HEARTBEAT.md` — add pipeline check
-9. Create 2 cron jobs via `openclaw cron` (invoke `/job-hunt`)
+1. Install Chrome DevTools MCP on Hetzner server (Chromium + Node.js v20.19+ + MCP config)
+2. Update `PREFERENCES.md` — grant autonomous search for job crons
+3. Create `skills/job-hunt.md` — discovery workflow + search protocol + job analysis logic
+4. Create `skills/job-apply.md` — resume tailoring protocol + cover letter template + form pre-fill instructions
+5. Create `skills/job-review.md` — review flow
+6. Create `skills/job-status.md` — pipeline summary format
+7. Initialise `jobs/JOB_PIPELINE.md` — empty table with schema
+8. Create `jobs/SEARCH_QUERIES.md` — initial Seek/LinkedIn query bank
+9. Update `HEARTBEAT.md` — add pipeline check
+10. Create 2 cron jobs via `openclaw cron` (invoke `/job-hunt`)
 
 **Before activating crons**: do one manual `/job-hunt` in chat and review the first application file output. Adjust skill content before going autonomous.
 
@@ -154,7 +191,9 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 
 | Failure | Mitigation |
 |---|---|
-| Seek blocks the fetcher | Fall back to Brave Search snippet for basic info; flag as "partial data" in pipeline |
+| Salary range listed as a span (e.g. $110–130k) | Use the midpoint to evaluate; if midpoint ≥ $115k, proceed |
+| Seek blocks WebFetch | Fall back to Chrome DevTools MCP headless fetch |
+| Chrome MCP unavailable (Chromium not running) | Fall back to Brave Search snippet; flag as "partial data" in pipeline |
 | LinkedIn truncation without auth | Use LinkedIn only for discovery snippets; find full JD on company careers page |
 | Too many jobs in one run | Cap at 5 fully-processed jobs per run; rest stay as `discovered` for next run |
 | Pipeline fills with stale pending_review | Heartbeat re-pings after 48h (once only); auto-skip after 7 days |
@@ -163,4 +202,4 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 ---
 
 *Created: 2026-03-19*
-*Updated: 2026-03-20 — skills-first architecture; static protocol files absorbed into skills*
+*Updated: 2026-03-20 — skills-first architecture; static protocol files absorbed into skills; Chrome DevTools MCP added for browser automation; final submission remains manual*

@@ -81,17 +81,14 @@ Tone calibrated: startup < 50 people (direct/informal) vs enterprise (formal, em
 `JOB_PIPELINE.md` is a markdown table tracking every job:
 
 ```
-discovered → analysed → materials_ready → pending_review → applied → interview → offer
+discovered → filtered → scored → materials_ready → pending_review → applied
+                ↓            ↓
+           discarded    weak_match  (logged, no further work)
 ```
 
 Claw moves jobs autonomously through `pending_review`. **You control the gate** — nothing gets submitted without your final action.
 
-Pipeline states:
-```
-discovered → filtered → scored → materials_ready → pending_review → applied
-                ↓           ↓
-           discarded    weak_match  (logged, no further work)
-```
+`materials_ready` is set by `/job-apply` after tailoring notes and cover letter are written, before form pre-fill. This lets you distinguish "materials done" from "form submitted for review".
 
 ### Phase 6 — Submission Handoff
 When materials are ready, Claw messages you on WhatsApp:
@@ -126,10 +123,11 @@ Four slash commands cover all job-hunting interactions:
 
 Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed — nothing is preloaded.
 
-### Phase 8 — Cron Schedule (weekdays only)
-- `8:23 AM AEST` — morning discovery sweep → runs `/job-hunt`
-- `1:47 PM AEST` — afternoon sweep → runs `/job-hunt`
-- No weekends — AU job listings are Mon-Fri
+### Phase 8 — Cron Schedule
+- `8:23 AM AEST, Mon–Fri` — morning discovery sweep → runs `/job-hunt`
+- `1:47 PM AEST, Mon–Fri` — afternoon sweep → runs `/job-hunt`
+- `9:00 AM AEST, daily` — heartbeat check → reads `HEARTBEAT.md`, sends stale reminders, auto-skips after 7 days
+- No `/job-hunt` on weekends — AU job listings are Mon–Fri; heartbeat runs every day
 
 ---
 
@@ -143,14 +141,16 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | Hard salary filter first | Salary < $115k base (excl. super) → discard immediately, no analysis wasted |
 | Weighted relevance score, threshold 6.0 | Objective, auditable gate — score breakdown saved per job so threshold can be tuned |
 | Salary unknown → proceed | Don't discard on missing data; many roles omit salary and are still worth pursuing |
-| Brave Search for discovery, Chrome MCP as fallback | Brave Search is fast and detection-safe; Chrome MCP steps in only when Seek blocks WebFetch |
-| Chrome MCP pre-fills, you submit | Avoids automated submission detection; keeps you in the loop for the final action |
-| No Chrome MCP for LinkedIn | LinkedIn bot detection is too aggressive — snippets only |
+| Melbourne, Brisbane, or Sydney | All three cities in scope; queries and hard filter updated to match |
+| Brave Search for discovery, Chrome DevTools as fallback | Brave Search is fast and detection-safe; Chrome DevTools steps in only when Seek blocks WebFetch |
+| Chrome DevTools pre-fills, you submit | Avoids automated submission detection; keeps you in the loop for the final action |
+| No Chrome for LinkedIn | LinkedIn bot detection is too aggressive — snippets only |
 | Markdown files, not a database | Claw already reads workspace files as context; keeps everything in one mental model |
 | Tailoring notes, not full resume rewrites | Auditable, fast, `RESUME.md` stays as single source of truth |
 | Max 5 fully-processed jobs per cron run | Prevents slow/expensive runs when many listings appear at once |
-| PREFERENCES.md exception for job crons | Currently blocks all autonomous web searches — needs explicit exception |
+| PREFERENCES.md exception for job crons | Autonomous web search pre-approved for job skills — no per-session approval needed |
 | 48h reminder then silence for pending_review | Avoids spamming you; auto-skip after 7 days of no response |
+| Heartbeat state in heartbeat-state.json | Prevents duplicate reminders across sessions; tracked in `jobs/memory/heartbeat-state.json` |
 
 ---
 
@@ -161,29 +161,34 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | `jobs/JOB_PIPELINE.md` | Setup | Agent (via skills) | Agent (after every action) |
 | `jobs/SEARCH_QUERIES.md` | Setup | Agent (via job-hunt skill) | Agent (learning over time) |
 | `jobs/applications/*.md` | Agent | Agent + Leslie | Agent (status changes) |
+| `jobs/memory/heartbeat-state.json` | Setup | Agent (heartbeat cron) | Agent (tracks reminded jobs) |
 | `skills/job-hunt.md` | Setup | Agent (on invocation) | Leslie only |
 | `skills/job-review.md` | Setup | Agent (on invocation) | Leslie only |
 | `skills/job-status.md` | Setup | Agent (on invocation) | Leslie only |
 | `skills/job-apply.md` | Setup | Agent (on invocation) | Leslie only |
-| `HEARTBEAT.md` | Setup (update) | Agent (heartbeat) | Agent (state tracking) |
-| `PREFERENCES.md` | Setup (update) | Agent (session start) | Leslie only |
+| `HEARTBEAT.md` | Setup | Agent (heartbeat cron daily) | Leslie only |
+| `PREFERENCES.md` | Setup | Agent (session start) | Leslie only |
+| `doc/JOB_HUNTING.md` | Setup | Reference | Leslie only |
 
 ---
 
 ## Implementation Sequence
 
-1. Install Chrome DevTools MCP on Hetzner server (Chromium + Node.js v20.19+ + MCP config)
-2. Update `PREFERENCES.md` — grant autonomous search for job crons
-3. Create `skills/job-hunt.md` — discovery workflow + search protocol + job analysis logic
-4. Create `skills/job-apply.md` — resume tailoring protocol + cover letter template + form pre-fill instructions
-5. Create `skills/job-review.md` — review flow
-6. Create `skills/job-status.md` — pipeline summary format
-7. Initialise `jobs/JOB_PIPELINE.md` — empty table with schema
-8. Create `jobs/SEARCH_QUERIES.md` — initial Seek/LinkedIn query bank
-9. Update `HEARTBEAT.md` — add pipeline check
-10. Create 2 cron jobs via `openclaw cron` (invoke `/job-hunt`)
+1. ✅ Rebuild Docker image with `--build-arg OPENCLAW_INSTALL_BROWSER=1` — Playwright Chromium in image
+2. ✅ Set `browser.executablePath` in `openclaw.json` → `/home/node/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome`
+3. ✅ Update `PREFERENCES.md` — grant autonomous search for job crons
+4. ✅ Create `skills/job-hunt.md` — discovery workflow + search protocol + job analysis logic
+5. ✅ Create `skills/job-apply.md` — resume tailoring protocol + cover letter template + form pre-fill instructions
+6. ✅ Create `skills/job-review.md` — review flow
+7. ✅ Create `skills/job-status.md` — pipeline summary format
+8. ✅ Initialise `jobs/JOB_PIPELINE.md` — empty table with schema
+9. ✅ Create `jobs/SEARCH_QUERIES.md` — Seek queries for Melbourne, Brisbane, Sydney + LinkedIn snippets
+10. ✅ Update `HEARTBEAT.md` — pending_review check with 48h reminder + 7-day auto-skip
+11. ✅ Create `jobs/memory/heartbeat-state.json` — reminder state tracker
+12. ✅ Create 3 cron jobs — morning sweep, afternoon sweep, daily heartbeat
+13. ✅ Create `doc/JOB_HUNTING.md` — full design and usage reference
 
-**Before activating crons**: do one manual `/job-hunt` in chat and review the first application file output. Adjust skill content before going autonomous.
+**Next step**: do one manual `/job-hunt` in chat and review the first application file output. Adjust skill content before trusting the crons fully.
 
 ---
 
@@ -202,4 +207,4 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 ---
 
 *Created: 2026-03-19*
-*Updated: 2026-03-20 — skills-first architecture; static protocol files absorbed into skills; Chrome DevTools MCP added for browser automation; final submission remains manual*
+*Updated: 2026-03-20 — fully implemented: browser live (Playwright Chromium), 3 crons active, heartbeat state tracker added, Brisbane/Sydney added to scope, materials_ready state wired in, WhatsApp message wording fixed, interview/offer tracking descoped*

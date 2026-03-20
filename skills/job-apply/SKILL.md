@@ -52,7 +52,27 @@ Produce tailoring notes (do NOT modify `RESUME.md`). Write these into the applic
 
 ---
 
-## Step 4 — Cover letter
+## Step 4 — Tailored resume
+
+Using `RESUME.md` as the base and the tailoring notes from Step 3, produce a fully tailored resume document. Save it as:
+
+`workspace/jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md`
+
+(Same date and slug as the application file, with `_RESUME` appended.)
+
+Apply the tailoring notes in this order:
+
+1. **Summary** — replace the summary section with the rewritten 2–3 sentence summary from the tailoring notes
+2. **Experience bullets** — within each job entry, reorder bullets so the most relevant ones appear first (per the reorder list in tailoring notes)
+3. **Skills table** — reorder the skill category rows so the most relevant categories appear first
+4. **Keywords** — where a JD term was mapped to a resume equivalent, ensure the resume uses the JD's exact wording (e.g. if JD says "CI/CD pipelines" and resume says "build pipelines", update to match) — only for genuine equivalents, never fabricate
+5. **Gap note** — do NOT add missing skills to the resume; leave the gap note in the application file only
+
+Everything else (structure, formatting, contact info, all other content) must be identical to `RESUME.md`. This is a targeted reorder + rephrase, not a rewrite.
+
+---
+
+## Step 5 — Cover letter
 
 Write a 250–350 word cover letter in plain text. Four paragraphs:
 
@@ -76,13 +96,13 @@ Write the cover letter into the application file under **Cover Letter**.
 
 ---
 
-## Step 5 — Mark materials ready
+## Step 6 — Mark materials ready
 
-Update the job's status to `materials_ready` in `JOB_PIPELINE.md` now that tailoring notes and cover letter are complete.
+Update the job's status to `materials_ready` in `JOB_PIPELINE.md` now that tailoring notes, tailored resume, and cover letter are complete.
 
 ---
 
-## Step 6 — Pre-fill application form
+## Step 7 — Pre-fill application form
 
 **If application method is Seek Easy Apply:**
 
@@ -94,6 +114,7 @@ Update the job's status to `materials_ready` in `JOB_PIPELINE.md` now that tailo
    - Phone: 0468 911 943
    - Cover letter field: paste the generated cover letter
    - Any other fields: fill from RESUME.md as appropriate
+   - If there is a resume upload field: note in the WhatsApp message that the tailored resume is at `jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md`
 4. **Do NOT click submit.** Stop at the final review screen.
 5. Take a screenshot of the filled form.
 6. Send screenshot to Leslie on WhatsApp with:
@@ -116,7 +137,7 @@ Update the job's status to `materials_ready` in `JOB_PIPELINE.md` now that tailo
 
 ---
 
-## Step 7 — Update pipeline
+## Step 8 — Update pipeline
 
 Set job status to `pending_review` in `JOB_PIPELINE.md` once the WhatsApp notification is sent.
 

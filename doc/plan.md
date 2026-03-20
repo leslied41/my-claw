@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-Everything runs through **skills (slash commands)** and a small set of **state files**. Skills contain all workflow logic and instructions — job context only loads when a skill is invoked, keeping non-job conversations lean. Integrations: Brave Search, WebFetch, WhatsApp/Telegram (already configured), plus **Chrome DevTools MCP** for browser automation on the Hetzner server.
+Everything runs through **skills (slash commands)** and a small set of **state files**. Skills contain all workflow logic and instructions — job context only loads when a skill is invoked, keeping non-job conversations lean. Integrations: Playwright (Seek scraping), Brave Search (LinkedIn snippets), WhatsApp (already configured), plus **Chrome DevTools MCP** for browser automation on the Hetzner server.
 
 ```
 workspace/
@@ -11,11 +11,19 @@ workspace/
     SEARCH_QUERIES.md     ← live state: curated Seek/LinkedIn query bank
     applications/
       YYYY-MM-DD_Company_Role.md  ← one file per job (generated)
+    memory/
+      heartbeat-state.json  ← tracks which jobs have been reminded
   skills/
-    job-hunt.md           ← discovery + analysis workflow + search protocol
-    job-review.md         ← review pending_review items, apply/skip decisions
-    job-status.md         ← print pipeline summary
-    job-apply.md          ← submission handoff + resume tailoring + cover letter template
+    job-hunt/
+      SKILL.md            ← discovery + analysis workflow + search protocol
+      scripts/
+        seek-fetch.js     ← Playwright scraper for Seek search + job pages
+    job-review/
+      SKILL.md            ← review pending_review items, apply/skip decisions
+    job-status/
+      SKILL.md            ← print pipeline summary
+    job-apply/
+      SKILL.md            ← resume tailoring + cover letter + form pre-fill
   HEARTBEAT.md            ← updated with pipeline check
   PREFERENCES.md          ← updated to permit autonomous job searches
 ```
@@ -29,11 +37,10 @@ workspace/
 ## The 7-Phase Workflow
 
 ### Phase 1 — Job Discovery (Automated, 2x daily)
-- **Brave Search** with `site:seek.com.au "software engineer" Melbourne` style queries — primary discovery method, fast and zero detection risk
-- **Chrome DevTools MCP** (fallback) — if Seek blocks WebFetch, use headless Chrome to fetch the full job page
-- **LinkedIn**: Brave Search snippets only — Chrome MCP not used for LinkedIn (bot detection too aggressive)
+- **`seek-fetch.js` (Playwright)** — primary Seek discovery, runs 3–4 queries per sweep from `SEARCH_QUERIES.md`. Launches headless Chromium, scrapes search results directly. Returns title, company, salary, location, workType, URL. Fast and Seek-native.
+- **Brave Search** — supplementary, LinkedIn snippets only (2 queries max). LinkedIn blocks automated fetching, so snippets are the best available signal.
 - **Dedup** against `JOB_PIPELINE.md` before any processing
-- Search queries sourced from `SEARCH_QUERIES.md`; agent refines them over time
+- Search queries sourced from `SEARCH_QUERIES.md`; agent refines them over time (adds quality notes, retires dead queries)
 
 ### Phase 2 — Job Filtering & Scoring
 
@@ -66,10 +73,10 @@ Not a full rewrite — **tailoring notes** that live in the application file:
 4. Skills table reordering
 5. Gap acknowledgment (honest note if something's missing)
 
-`RESUME.md` stays untouched as the source of truth. Full tailoring protocol is embedded in `skills/job-apply.md`.
+`RESUME.md` stays untouched as the source of truth. Full tailoring protocol is embedded in `skills/job-apply/SKILL.md`.
 
 ### Phase 4 — Cover Letter Generation
-**4-paragraph template** embedded in `skills/job-apply.md`:
+**4-paragraph template** embedded in `skills/job-apply/SKILL.md`:
 1. **Hook**: Name the role + one specific company/product reference (requires fetching their about page)
 2. **Evidence**: 1-2 quantified achievements matching JD core requirements
 3. **Company Fit**: Why *this* company specifically (no generic "great culture" language)
@@ -136,13 +143,14 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | Decision | Rationale |
 |---|---|
 | Skills contain all instructions | Workflow logic lives in skills, not separate protocol files — fewer files, single source of truth per skill |
+| agentskills.io skill format | Each skill is a `skill-name/SKILL.md` folder with YAML frontmatter — compatible with the open agent skill spec |
 | jobs/ holds state only | `JOB_PIPELINE.md`, `SEARCH_QUERIES.md`, and `applications/` are the only files the agent writes to |
 | Skills as entry points | Job context only loads when a skill is invoked — non-job chats stay lean and general-purpose |
 | Hard salary filter first | Salary < $115k base (excl. super) → discard immediately, no analysis wasted |
 | Weighted relevance score, threshold 6.0 | Objective, auditable gate — score breakdown saved per job so threshold can be tuned |
 | Salary unknown → proceed | Don't discard on missing data; many roles omit salary and are still worth pursuing |
 | Melbourne, Brisbane, or Sydney | All three cities in scope; queries and hard filter updated to match |
-| Brave Search for discovery, Chrome DevTools as fallback | Brave Search is fast and detection-safe; Chrome DevTools steps in only when Seek blocks WebFetch |
+| Playwright script for Seek, Brave Search for LinkedIn | seek-fetch.js scrapes Seek directly (reliable, fast); Brave Search used only for LinkedIn snippets |
 | Chrome DevTools pre-fills, you submit | Avoids automated submission detection; keeps you in the loop for the final action |
 | No Chrome for LinkedIn | LinkedIn bot detection is too aggressive — snippets only |
 | Markdown files, not a database | Claw already reads workspace files as context; keeps everything in one mental model |
@@ -162,10 +170,11 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | `jobs/SEARCH_QUERIES.md` | Setup | Agent (via job-hunt skill) | Agent (learning over time) |
 | `jobs/applications/*.md` | Agent | Agent + Leslie | Agent (status changes) |
 | `jobs/memory/heartbeat-state.json` | Setup | Agent (heartbeat cron) | Agent (tracks reminded jobs) |
-| `skills/job-hunt.md` | Setup | Agent (on invocation) | Leslie only |
-| `skills/job-review.md` | Setup | Agent (on invocation) | Leslie only |
-| `skills/job-status.md` | Setup | Agent (on invocation) | Leslie only |
-| `skills/job-apply.md` | Setup | Agent (on invocation) | Leslie only |
+| `skills/job-hunt/SKILL.md` | Setup | Agent (on invocation) | Leslie only |
+| `skills/job-hunt/scripts/seek-fetch.js` | Setup | Agent (via Bash) | Leslie only |
+| `skills/job-review/SKILL.md` | Setup | Agent (on invocation) | Leslie only |
+| `skills/job-status/SKILL.md` | Setup | Agent (on invocation) | Leslie only |
+| `skills/job-apply/SKILL.md` | Setup | Agent (on invocation) | Leslie only |
 | `HEARTBEAT.md` | Setup | Agent (heartbeat cron daily) | Leslie only |
 | `PREFERENCES.md` | Setup | Agent (session start) | Leslie only |
 | `doc/JOB_HUNTING.md` | Setup | Reference | Leslie only |
@@ -177,10 +186,11 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 1. ✅ Rebuild Docker image with `--build-arg OPENCLAW_INSTALL_BROWSER=1` — Playwright Chromium in image
 2. ✅ Set `browser.executablePath` in `openclaw.json` → `/home/node/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome`
 3. ✅ Update `PREFERENCES.md` — grant autonomous search for job crons
-4. ✅ Create `skills/job-hunt.md` — discovery workflow + search protocol + job analysis logic
-5. ✅ Create `skills/job-apply.md` — resume tailoring protocol + cover letter template + form pre-fill instructions
-6. ✅ Create `skills/job-review.md` — review flow
-7. ✅ Create `skills/job-status.md` — pipeline summary format
+4. ✅ Create `skills/job-hunt/SKILL.md` — discovery workflow + search protocol + job analysis logic
+4a. ✅ Create `skills/job-hunt/scripts/seek-fetch.js` — Playwright Seek scraper (replaces Brave Search for Seek)
+5. ✅ Create `skills/job-apply/SKILL.md` — resume tailoring protocol + cover letter template + form pre-fill instructions
+6. ✅ Create `skills/job-review/SKILL.md` — review flow
+7. ✅ Create `skills/job-status/SKILL.md` — pipeline summary format
 8. ✅ Initialise `jobs/JOB_PIPELINE.md` — empty table with schema
 9. ✅ Create `jobs/SEARCH_QUERIES.md` — Seek queries for Melbourne, Brisbane, Sydney + LinkedIn snippets
 10. ✅ Update `HEARTBEAT.md` — pending_review check with 48h reminder + 7-day auto-skip
@@ -197,8 +207,8 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | Failure | Mitigation |
 |---|---|
 | Salary range listed as a span (e.g. $110–130k) | Use the midpoint to evaluate; if midpoint ≥ $115k, proceed |
-| Seek blocks WebFetch | Fall back to Chrome DevTools MCP headless fetch |
-| Chrome MCP unavailable (Chromium not running) | Fall back to Brave Search snippet; flag as "partial data" in pipeline |
+| seek-fetch.js slow | Script launches real browser (~15–20s per run) — normal, don't retry |
+| Seek changes selectors | Update `data-automation` selectors in `seek-fetch.js`; test with `--url` mode |
 | LinkedIn truncation without auth | Use LinkedIn only for discovery snippets; find full JD on company careers page |
 | Too many jobs in one run | Cap at 5 fully-processed jobs per run; rest stay as `discovered` for next run |
 | Pipeline fills with stale pending_review | Heartbeat re-pings after 48h (once only); auto-skip after 7 days |

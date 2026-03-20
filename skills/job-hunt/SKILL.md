@@ -8,7 +8,7 @@ description: >
   check for new listings, or kick off the job-hunting process. This is also what the
   morning and afternoon cron jobs invoke automatically. Do not use if the user only
   wants to review jobs already in the pipeline — use /job-review for that.
-compatibility: Requires Brave Search and WebFetch tools. Chrome DevTools as fallback for Seek fetch.
+compatibility: Requires Brave Search (LinkedIn only) and Bash to run skills/job-hunt/scripts/seek-fetch.js.
 ---
 
 ## Step 1 — Load state
@@ -22,27 +22,35 @@ Read these files before doing anything:
 
 ## Step 2 — Discover jobs
 
-Run up to 6 Brave Search queries from `SEARCH_QUERIES.md` (rotate — don't repeat the same queries every run). For each result:
+**For Seek** (primary — run 3–4 queries per sweep):
 
-1. Extract the job URL, title, company, and any salary/location info from the snippet
-2. Check against `JOB_PIPELINE.md` — if already listed, skip
-3. Add new jobs to a working list
+Use the scraper script via Bash for each query in the Seek section of `SEARCH_QUERIES.md` (rotate, don't repeat same queries every run):
 
-Target: collect 10–20 candidate URLs per run before fetching full pages.
+```bash
+node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
+  --query "software engineer" --location "Melbourne"
+```
+
+Returns JSON: title, company, salary, location, workType, URL. Dedup each result against `JOB_PIPELINE.md` before adding to the working list.
+
+**For LinkedIn** (supplementary — 2 queries max per sweep):
+
+Run Brave Search queries from the LinkedIn section of `SEARCH_QUERIES.md` (snippets only). Extract title, company, location, URL. Do not attempt to fetch LinkedIn URLs — they block all automated access.
+
+Target: 15–25 candidates total before filtering.
 
 ---
 
-## Step 3 — Fetch full job details
+## Step 3 — Get full job details (when needed)
 
-For each candidate URL (cap at **10 per run** to limit cost):
+Script results include title, company, salary, location, and work type — sufficient for hard filters and often for scoring too. Only fetch the full page when must-have requirements are missing:
 
-1. Try `WebFetch` on the Seek job URL
-2. If blocked/empty → use Chrome DevTools headless fetch as fallback
-3. Extract:
-   - Job title, company name, salary (if stated), location, work arrangement (remote/hybrid/onsite)
-   - Must-have requirements, nice-to-have requirements
-   - Employment type (permanent/contract/casual)
-   - Application method (Seek Easy Apply / direct email / external link)
+```bash
+node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
+  --url "https://www.seek.com.au/job/12345"
+```
+
+Cap at **5 full-page fetches per run**. For LinkedIn jobs needing more detail, WebFetch the company's own careers page instead (search `[Company] [Role] site:[company.com]/careers`).
 
 ---
 
@@ -151,7 +159,8 @@ After each run, add a brief quality note to the queries that were used (e.g. "re
 
 ## Gotchas
 
-- **Seek URL format**: Seek job URLs look like `seek.com.au/job/[id]`. WebFetch on these often works; if it returns empty HTML, try appending `?tracking=jobsearch` or fall back to Chrome DevTools immediately.
+- **Script path**: Always use the full absolute path `/home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js` — relative paths will fail depending on working directory.
+- **Script takes ~15–20s per run**: It launches a real browser. This is normal — don't retry if it's slow.
 - **Salary in package terms**: Some listings say "$130k package" — treat this as base (super is included), which means actual base is ~$118k. Still above threshold — proceed.
 - **"Salary competitive" / "market rate"**: Treat as unknown salary — do not discard.
 - **Contract roles with permanent option**: If a listing says "contract with view to perm", treat as contract-only — discard.

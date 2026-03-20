@@ -14,7 +14,7 @@ All workflow logic lives in skill files (`workspace/skills/*.md`). Nothing is pr
 
 ```
 User invokes /job-hunt
-  → agent reads skills/job-hunt.md
+  → agent reads skills/job-hunt/SKILL.md
   → skill instructions load jobs/JOB_PIPELINE.md, SEARCH_QUERIES.md, RESUME.md
   → work happens
   → state written back to jobs/
@@ -63,10 +63,16 @@ workspace/
 │   └── applications/
 │       └── YYYY-MM-DD_Company_Role.md  ← One file per job
 └── skills/
-    ├── job-hunt.md              ← Discovery + filtering + scoring workflow
-    ├── job-apply.md             ← Resume tailoring + cover letter + form pre-fill
-    ├── job-review.md            ← Review pending jobs, apply/skip decisions
-    └── job-status.md            ← Read-only pipeline snapshot
+    ├── job-hunt/
+    │   ├── SKILL.md             ← Discovery + filtering + scoring workflow
+    │   └── scripts/
+    │       └── seek-fetch.js    ← Playwright scraper for Seek search + job pages
+    ├── job-apply/
+    │   └── SKILL.md             ← Resume tailoring + cover letter + form pre-fill
+    ├── job-review/
+    │   └── SKILL.md             ← Review pending jobs, apply/skip decisions
+    └── job-status/
+        └── SKILL.md             ← Read-only pipeline snapshot
 ```
 
 ---
@@ -97,11 +103,11 @@ discovered → filtered → scored → materials_ready → pending_review → ap
 
 ### Phase 1 — Discovery
 
-Runs via **Brave Search** using queries from `SEARCH_QUERIES.md`. Up to 6 queries per run, rotated across runs. Targets Seek (primary) and LinkedIn (snippets only — no auth, bot detection too aggressive for full page fetches).
+**Seek (primary — 3–4 queries per sweep):** Runs `seek-fetch.js` via Bash for each query in `SEARCH_QUERIES.md`. The script uses headless Playwright/Chromium to scrape Seek search results directly — title, company, salary, location, workType, URL. Each result is deduped against `JOB_PIPELINE.md` before adding to the working list. Individual job pages are fetched with `--url` mode when full details are needed (capped at 5 per run).
 
-- Deduplicates against `JOB_PIPELINE.md` before processing
-- Collects 10–20 candidate URLs before fetching full pages
-- Falls back to Chrome DevTools (headless) if Seek blocks WebFetch
+**LinkedIn (supplementary — 2 queries max):** Brave Search snippets only. LinkedIn blocks all automated fetching, so snippets are the best available source. Do not attempt to WebFetch LinkedIn URLs.
+
+Target: 15–25 candidates total before filtering.
 
 ### Phase 2 — Hard Filters
 
@@ -199,7 +205,7 @@ Three cron jobs run automatically (configured in `.openclaw/cron/jobs.json`):
 ### `/job-hunt`
 Runs a full discovery sweep. What the crons run automatically — also invoke manually to trigger on demand.
 
-**What it does:** loads pipeline + queries + resume → runs Brave Search → fetches job pages → filters → scores → creates application files → notifies you on WhatsApp → updates query quality notes.
+**What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek (Playwright), Brave Search for LinkedIn snippets → filters → scores → creates application files → notifies you on WhatsApp → updates query quality notes.
 
 **Cap:** max 10 URLs fetched, max 5 jobs scored per run. The rest stay as `discovered` for the next run.
 
@@ -310,8 +316,8 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 
 | Failure | What happens |
 |---|---|
-| Seek blocks WebFetch | Falls back to Chrome DevTools headless fetch |
-| Chrome DevTools unavailable | Falls back to Brave Search snippet; flagged as "partial data" |
+| seek-fetch.js is slow | Normal — script launches real browser (~15–20s). Don't retry. |
+| Seek changes selectors | Update `data-automation` selectors in `seek-fetch.js`; test with `--url` mode |
 | LinkedIn truncated (no auth) | Seek/company careers page used for full JD |
 | Too many jobs in one run | Capped at 5 scored per run; rest stay `discovered` |
 | Stale `pending_review` | Heartbeat re-pings after 48h (once); auto-skipped after 7 days |
@@ -327,7 +333,7 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 | `jobs/` holds state only | Clean separation between instructions (skills) and data (jobs) |
 | Hard salary filter first | No point scoring a job that pays under threshold |
 | Salary unknown → proceed | Many roles omit salary; don't miss good jobs on missing data |
-| Brave Search primary, Chrome fallback | Brave is fast and detection-safe; Chrome steps in only when needed |
+| Playwright script for Seek, Brave Search for LinkedIn | seek-fetch.js scrapes Seek directly (reliable, fast, no WebFetch dependency); Brave Search used only for LinkedIn snippets |
 | No Chrome for LinkedIn | Bot detection too aggressive — snippets only |
 | Tailoring notes, not resume rewrites | `RESUME.md` stays as single source of truth; notes are auditable |
 | Agent pre-fills, you submit | Avoids automated submission detection; you stay in the loop |

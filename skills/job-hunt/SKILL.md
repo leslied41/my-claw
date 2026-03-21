@@ -17,7 +17,8 @@ compatibility: Requires Brave Search (LinkedIn only) and Bash to run skills/job-
 Read these files before doing anything:
 - `workspace/jobs/JOB_PIPELINE.md` — to know what jobs already exist (for dedup)
 - `workspace/jobs/SEARCH_QUERIES.md` — to get the current query bank
-- `workspace/RESUME.md` — to have Leslie's skills/experience ready for scoring and tailoring
+- `workspace/RESUME.md` — Leslie's skills and experience (source of truth)
+- `workspace/PROJECTS.md` — detailed project history with tech stack and context (use this alongside RESUME.md for richer scoring and more specific cover letters — pull concrete project examples and skill depth from here)
 
 ---
 

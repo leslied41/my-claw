@@ -51,6 +51,7 @@ All state is stored in markdown files. This means the agent can read and write s
 ```
 workspace/
 ├── RESUME.md                    ← Leslie's skills and experience (source of truth)
+├── PROJECTS.md                  ← Project history analysed from GitHub (maintained by /github-analyse)
 ├── PREFERENCES.md               ← Agent behaviour rules (web search permissions, etc.)
 ├── HEARTBEAT.md                 ← Background check tasks (stale job reminders)
 ├── doc/
@@ -70,6 +71,8 @@ workspace/
     │       └── seek-fetch.js    ← Playwright scraper for Seek search + job pages
     ├── job-status/
     │   └── SKILL.md             ← Read-only pipeline snapshot
+    ├── github-analyse/
+    │   └── SKILL.md             ← Analyse a GitHub repo and write to PROJECTS.md
     └── md-to-pdf/
         ├── SKILL.md             ← Convert tailored resume markdown to PDF
         └── scripts/
@@ -223,6 +226,13 @@ Runs the full pipeline end-to-end. What the cron runs automatically — also inv
 **What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek, Brave Search for LinkedIn snippets → hard filters → fetches full job pages (batch, one browser session) → scores → generates tailored resume + cover letter for each match → notifies you on WhatsApp → updates query quality notes.
 
 **Cap:** max 10 URLs fetched, max 5 jobs scored per run. The rest stay as `discovered` for the next run.
+
+---
+
+### `/github-analyse <repo-url>`
+Analyses a GitHub repository and writes a structured project entry to `PROJECTS.md`. Works with no README — uses GitHub API metadata, file tree, manifest files, entry points, and test files. If the repo already exists in `PROJECTS.md`, the entry is overwritten not duplicated.
+
+Run this manually for each of your projects before running `/job-hunt` for the first time, so the agent has rich project context for scoring and cover letters.
 
 ---
 

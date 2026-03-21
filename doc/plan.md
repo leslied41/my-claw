@@ -28,8 +28,6 @@ workspace/
       SKILL.md            ← full pipeline: discovery → scoring → tailoring → notify
       scripts/
         seek-fetch.js     ← Playwright scraper for Seek search + job pages
-    job-review/
-      SKILL.md            ← review pending_review items, apply/skip decisions
     job-status/
       SKILL.md            ← print pipeline summary
   HEARTBEAT.md            ← updated with pipeline check
@@ -138,7 +136,6 @@ Four slash commands cover all job-hunting interactions:
 | Skill | Contains | When to use |
 |---|---|---|
 | `/job-hunt` | Full pipeline: discovery, scoring, tailoring, cover letter, notify | Manually trigger a sweep; also what the cron runs |
-| `/job-review` | Review logic, skip flow | Review `pending_review` jobs, skip unwanted ones |
 | `/job-status` | Pipeline summary format | Quick look at current pipeline counts |
 
 Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed — nothing is preloaded.
@@ -201,8 +198,7 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 4. ✅ Create `skills/job-hunt/SKILL.md` — discovery workflow + search protocol + job analysis logic
 4a. ✅ Create `skills/job-hunt/scripts/seek-fetch.js` — Playwright Seek scraper (replaces Brave Search for Seek)
 5. ✅ Merge job-apply into `skills/job-hunt/SKILL.md` — material generation is now fully automated in the sweep
-6. ✅ Create `skills/job-review/SKILL.md` — review flow
-7. ✅ Create `skills/job-status/SKILL.md` — pipeline summary format
+6. ✅ Create `skills/job-status/SKILL.md` — pipeline summary format
 8. ✅ Initialise `jobs/JOB_PIPELINE.md` — empty table with schema
 9. ✅ Create `jobs/SEARCH_QUERIES.md` — Seek queries for Melbourne, Brisbane, Sydney + LinkedIn snippets
 10. ✅ Update `HEARTBEAT.md` — pending_review check with 48h reminder + 7-day auto-skip

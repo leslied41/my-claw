@@ -68,8 +68,6 @@ workspace/
     │   ├── SKILL.md             ← Full pipeline: discovery → scoring → tailoring → notify
     │   └── scripts/
     │       └── seek-fetch.js    ← Playwright scraper for Seek search + job pages
-    ├── job-review/
-    │   └── SKILL.md             ← Review pending jobs, skip decisions
     └── job-status/
         └── SKILL.md             ← Read-only pipeline snapshot
 ```
@@ -245,25 +243,6 @@ Archived
 
 Total tracked: 27
 ```
-
----
-
-### `/job-review`
-Shows all `pending_review` jobs with key details. Use this to browse ready applications and make decisions.
-
-**Displays for each job:**
-- Score, salary, location, application method
-- Top skills matched and any gaps
-- Tailored summary
-
-**Commands available during review:**
-```
-/job-apply JOB-001   → prepare form and cover letter
-skip JOB-001         → pass on this job
-review JOB-001       → show full application file
-```
-
-Also flags stale jobs (> 48h) and auto-skips anything > 7 days old.
 
 ---
 

@@ -13,10 +13,10 @@ The job hunting system is a semi-autonomous agent workflow built on top of OpenC
 All workflow logic lives in skill files (`workspace/skills/*.md`). Nothing is preloaded into the agent's context by default — job hunting context only exists when a skill is invoked. This keeps non-job conversations lean and prevents irrelevant context from polluting unrelated tasks.
 
 ```
-User invokes /job-hunt
+User invokes /job-hunt (or cron fires)
   → agent reads skills/job-hunt/SKILL.md
-  → skill instructions load jobs/JOB_PIPELINE.md, SEARCH_QUERIES.md, RESUME.md
-  → work happens
+  → skill loads JOB_PIPELINE.md, SEARCH_QUERIES.md, RESUME.md
+  → discover → filter → score → tailor resume → cover letter → notify
   → state written back to jobs/
   → context discarded
 ```
@@ -36,7 +36,7 @@ Skills are never modified by the agent. The agent only writes to `jobs/`.
 The agent moves jobs autonomously through the pipeline up to `pending_review`. Nothing is submitted without your explicit action. This avoids automated submission detection and keeps you in control of what goes out.
 
 ```
-Agent does:  discover → filter → score → tailor → cover letter → notify you
+Agent does:  discover → filter → score → tailor resume → cover letter → notify you (fully automated)
 You do:      review materials → open job URL → apply yourself
 ```
 
@@ -61,16 +61,15 @@ workspace/
 │   ├── memory/
 │   │   └── heartbeat-state.json ← Tracks which jobs have been reminded (prevents spam)
 │   └── applications/
-│       └── YYYY-MM-DD_Company_Role.md  ← One file per job
+│       ├── YYYY-MM-DD_Company_Role.md         ← Application file (score, tailoring notes, cover letter)
+│       └── YYYY-MM-DD_Company_Role_RESUME.md  ← Tailored resume (ready to submit)
 └── skills/
     ├── job-hunt/
-    │   ├── SKILL.md             ← Discovery + filtering + scoring workflow
+    │   ├── SKILL.md             ← Full pipeline: discovery → scoring → tailoring → notify
     │   └── scripts/
     │       └── seek-fetch.js    ← Playwright scraper for Seek search + job pages
-    ├── job-apply/
-    │   └── SKILL.md             ← Resume tailoring + cover letter + form pre-fill
     ├── job-review/
-    │   └── SKILL.md             ← Review pending jobs, apply/skip decisions
+    │   └── SKILL.md             ← Review pending jobs, skip decisions
     └── job-status/
         └── SKILL.md             ← Read-only pipeline snapshot
 ```
@@ -217,9 +216,9 @@ Three cron jobs run automatically (configured in `.openclaw/cron/jobs.json`):
 ## Slash Commands
 
 ### `/job-hunt`
-Runs a full discovery sweep. What the crons run automatically — also invoke manually to trigger on demand.
+Runs the full pipeline end-to-end. What the cron runs automatically — also invoke manually to trigger on demand.
 
-**What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek (Playwright), Brave Search for LinkedIn snippets → filters → scores → creates application files → notifies you on WhatsApp → updates query quality notes.
+**What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek, Brave Search for LinkedIn snippets → hard filters → fetches full job pages (batch, one browser session) → scores → generates tailored resume + cover letter for each match → notifies you on WhatsApp → updates query quality notes.
 
 **Cap:** max 10 URLs fetched, max 5 jobs scored per run. The rest stay as `discovered` for the next run.
 
@@ -268,21 +267,6 @@ Also flags stale jobs (> 48h) and auto-skips anything > 7 days old.
 
 ---
 
-### `/job-apply <JOB-ID>`
-Prepares full application materials for a specific job and pre-fills the form.
-
-**Steps:**
-1. Loads job file + resume
-2. Fetches company about page
-3. Writes tailoring notes into application file
-4. Sets status → `materials_ready`
-5. Writes cover letter into application file
-6. Pre-fills the application form (Seek Easy Apply) via Chrome DevTools
-7. Screenshots the filled form
-8. Sends screenshot + URL to WhatsApp
-9. Sets status → `pending_review`
-
----
 
 ## Application File Format
 

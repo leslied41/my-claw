@@ -25,15 +25,13 @@ workspace/
       heartbeat-state.json  ← tracks which jobs have been reminded
   skills/
     job-hunt/
-      SKILL.md            ← discovery + analysis workflow + search protocol
+      SKILL.md            ← full pipeline: discovery → scoring → tailoring → notify
       scripts/
         seek-fetch.js     ← Playwright scraper for Seek search + job pages
     job-review/
       SKILL.md            ← review pending_review items, apply/skip decisions
     job-status/
       SKILL.md            ← print pipeline summary
-    job-apply/
-      SKILL.md            ← resume tailoring + cover letter generation
   HEARTBEAT.md            ← updated with pipeline check
   PREFERENCES.md          ← updated to permit autonomous job searches
 ```
@@ -139,10 +137,9 @@ Four slash commands cover all job-hunting interactions:
 
 | Skill | Contains | When to use |
 |---|---|---|
-| `/job-hunt` | Discovery workflow, search protocol, job analysis logic | Manually trigger a sweep; also what crons run |
-| `/job-review` | Review logic, apply/skip flow | Review all `pending_review` jobs |
-| `/job-status` | Pipeline summary format | Quick look at current pipeline |
-| `/job-apply <id>` | Resume tailoring protocol, cover letter template, submission handoff | Apply to a specific job |
+| `/job-hunt` | Full pipeline: discovery, scoring, tailoring, cover letter, notify | Manually trigger a sweep; also what the cron runs |
+| `/job-review` | Review logic, skip flow | Review `pending_review` jobs, skip unwanted ones |
+| `/job-status` | Pipeline summary format | Quick look at current pipeline counts |
 
 Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed — nothing is preloaded.
 
@@ -203,7 +200,7 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 3. ✅ Update `PREFERENCES.md` — grant autonomous search for job crons
 4. ✅ Create `skills/job-hunt/SKILL.md` — discovery workflow + search protocol + job analysis logic
 4a. ✅ Create `skills/job-hunt/scripts/seek-fetch.js` — Playwright Seek scraper (replaces Brave Search for Seek)
-5. ✅ Create `skills/job-apply/SKILL.md` — resume tailoring protocol + cover letter template + form pre-fill instructions
+5. ✅ Merge job-apply into `skills/job-hunt/SKILL.md` — material generation is now fully automated in the sweep
 6. ✅ Create `skills/job-review/SKILL.md` — review flow
 7. ✅ Create `skills/job-status/SKILL.md` — pipeline summary format
 8. ✅ Initialise `jobs/JOB_PIPELINE.md` — empty table with schema

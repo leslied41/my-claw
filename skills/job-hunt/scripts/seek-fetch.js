@@ -3,20 +3,25 @@
  * seek-fetch.js — Search Seek.com.au and extract job listings using headless Chromium.
  *
  * Usage:
- *   Search:    node seek-fetch.js --query "software engineer" --location "Melbourne"
- *   Job page:  node seek-fetch.js --url "https://www.seek.com.au/job/12345"
+ *   Search:     node seek-fetch.js --query "software engineer" --location "Melbourne"
+ *   Job page:   node seek-fetch.js --url "https://www.seek.com.au/job/12345"
+ *   Batch URLs: node seek-fetch.js --urls-file /path/to/urls.json
  *
  * Options:
- *   --query     Search keywords (required for search mode)
- *   --location  Location string, default: "Melbourne"
- *   --full      Also fetch each job's full detail page (slower, richer data)
- *   --url       Fetch a single job page by URL (skips search)
+ *   --query      Search keywords (required for search mode)
+ *   --location   Location string, default: "Melbourne"
+ *   --full       Also fetch each job's full detail page (slower, richer data)
+ *   --url        Fetch a single job page by URL (skips search)
+ *   --urls-file  Path to a JSON file containing an array of Seek job URLs.
+ *                Fetches all pages in a single browser session — use this instead
+ *                of calling --url repeatedly to avoid repeated browser launches.
  *
  * Output: JSON array of job objects to stdout.
  * Errors: to stderr, exit code 1.
  */
 
 const { chromium } = require('/app/node_modules/playwright-core');
+const fs = require('fs');
 
 const CHROMIUM_PATH = '/home/node/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome';
 const SEEK_BASE = 'https://www.seek.com.au';
@@ -108,14 +113,16 @@ async function main() {
   const flag = (name) => { const i = args.indexOf(name); return i !== -1 ? args[i + 1] : null; };
   const has  = (name) => args.includes(name);
 
-  const query    = flag('--query');
-  const location = flag('--location') || 'Melbourne';
-  const url      = flag('--url');
-  const full     = has('--full');
+  const query     = flag('--query');
+  const location  = flag('--location') || 'Melbourne';
+  const url       = flag('--url');
+  const urlsFile  = flag('--urls-file');
+  const full      = has('--full');
 
-  if (!query && !url) {
+  if (!query && !url && !urlsFile) {
     process.stderr.write('Usage: seek-fetch.js --query "software engineer" [--location "Melbourne"] [--full]\n');
     process.stderr.write('       seek-fetch.js --url "https://www.seek.com.au/job/12345"\n');
+    process.stderr.write('       seek-fetch.js --urls-file /path/to/urls.json\n');
     process.exit(1);
   }
 
@@ -128,6 +135,26 @@ async function main() {
   try {
     const page = await browser.newPage({ userAgent: USER_AGENT });
     await page.setExtraHTTPHeaders({ 'Accept-Language': 'en-AU,en;q=0.9' });
+
+    if (urlsFile) {
+      // Batch URL mode — fetch multiple job pages in one browser session
+      const urls = JSON.parse(fs.readFileSync(urlsFile, 'utf-8'));
+      const jobs = [];
+      for (const u of urls) {
+        try {
+          await page.goto(u, { waitUntil: 'networkidle', timeout: 30000 });
+          await dismissCookieBanner(page);
+          const job = await scrapeJobPage(page);
+          job.url = cleanJobUrl(u);
+          job.source = 'seek-job-page';
+          jobs.push(job);
+        } catch (e) {
+          jobs.push({ url: u, fetchError: e.message, source: 'seek-job-page' });
+        }
+      }
+      console.log(JSON.stringify(jobs, null, 2));
+      return;
+    }
 
     if (url) {
       // Single job page mode
@@ -147,7 +174,7 @@ async function main() {
     const jobs = await scrapeSearchResults(page);
 
     if (full) {
-      // Enrich each job with its full detail page
+      // Enrich each job with its full detail page in the same browser session
       for (const job of jobs) {
         try {
           await page.goto(job.url, { waitUntil: 'networkidle', timeout: 30000 });

@@ -42,7 +42,7 @@ Target: 15–25 candidates total before filtering.
 ---
 
 ## Step 3 — Hard filters
-
+<!-- only filer out on salary, location, workType is specified, if not specified, passed them to next step -->
 Search result data (title, company, salary, location, workType) is sufficient for hard filters — no full page fetch needed yet. Discard immediately if ANY of these are true:
 - Salary is explicitly stated AND base (excl. super) < $115k
   - If salary is a range (e.g. $110–130k), use the midpoint ($120k) — proceed if midpoint ≥ $115k
@@ -55,12 +55,20 @@ Log discarded jobs to the **Archived Jobs** table in `JOB_PIPELINE.md` with reas
 
 ## Step 4 — Get full job details
 
-For every job that passed hard filters, fetch the full job page to get the complete description and requirements needed for scoring:
+For every Seek job that passed hard filters, fetch all full job pages in a **single browser session** using `--urls-file`. Do not call `--url` repeatedly — each call launches a new browser and will crash on low-memory servers.
 
-```bash
-node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
-  --url "https://www.seek.com.au/job/12345"
-```
+1. Collect all Seek URLs that passed hard filters into a JSON array and write to a temp file:
+   ```
+   /tmp/seek-urls.json  →  ["https://www.seek.com.au/job/123", "https://www.seek.com.au/job/456", ...]
+   ```
+
+2. Run one batch fetch:
+   ```bash
+   node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
+     --urls-file /tmp/seek-urls.json
+   ```
+
+   Returns a JSON array with full details (title, company, location, salary, workType, description) for each URL. If a URL fails, it returns `{ url, fetchError }` — treat as partial data and proceed.
 
 For LinkedIn jobs, WebFetch the company's own careers page instead (search `[Company] [Role] site:[company.com]/careers`).
 
@@ -158,7 +166,7 @@ After each run, add a brief quality note to the queries that were used (e.g. "re
 ## Gotchas
 
 - **Script path**: Always use the full absolute path `/home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js` — relative paths will fail depending on working directory.
-- **Script takes ~15–20s per run**: It launches a real browser. This is normal — don't retry if it's slow.
+- **Script is slow**: Each browser launch takes ~15–20s. Use `--urls-file` for batch fetching (one launch for all URLs) — never call `--url` in a loop, it will crash on low-memory servers.
 - **Salary in package terms**: Some listings say "$130k package" — treat this as base (super is included), which means actual base is ~$118k. Still above threshold — proceed.
 - **"Salary competitive" / "market rate"**: Treat as unknown salary — do not discard.
 - **Contract roles with permanent option**: If a listing says "contract with view to perm", treat as contract-only — discard.

@@ -68,8 +68,12 @@ workspace/
     │   ├── SKILL.md             ← Full pipeline: discovery → scoring → tailoring → notify
     │   └── scripts/
     │       └── seek-fetch.js    ← Playwright scraper for Seek search + job pages
-    └── job-status/
-        └── SKILL.md             ← Read-only pipeline snapshot
+    ├── job-status/
+    │   └── SKILL.md             ← Read-only pipeline snapshot
+    └── md-to-pdf/
+        ├── SKILL.md             ← Convert tailored resume markdown to PDF
+        └── scripts/
+            └── md-to-pdf.js ← Playwright-based markdown→PDF converter
 ```
 
 ---
@@ -219,6 +223,17 @@ Runs the full pipeline end-to-end. What the cron runs automatically — also inv
 **What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek, Brave Search for LinkedIn snippets → hard filters → fetches full job pages (batch, one browser session) → scores → generates tailored resume + cover letter for each match → notifies you on WhatsApp → updates query quality notes.
 
 **Cap:** max 10 URLs fetched, max 5 jobs scored per run. The rest stay as `discovered` for the next run.
+
+---
+
+### `/md-to-pdf [file | JOB-ID]`
+Converts any markdown file to PDF. Manually triggered only.
+
+- With a file path: converts that file directly
+- With a JOB-ID: finds the tailored resume for that job and converts it
+- Without an argument: asks which file to convert
+
+Output saved alongside the input file with `.pdf` extension.
 
 ---
 

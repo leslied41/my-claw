@@ -11,3 +11,13 @@ This file is maintained by the `/github-analyse` skill. Each entry is generated 
 ---
 
 <!-- Entries are added below by /github-analyse. Each starts with ## repo-name -->
+
+## micro-service-e-commerce
+- **URL:** https://github.com/leslied41/micro-service-e-commerce
+- **Type:** side
+- **Languages:** Java 95%, HTML 5%
+- **Stack:** Spring Boot, Spring Cloud, Eureka (Service Discovery), PostgreSQL, MongoDB, Kafka, Zipkin, Docker
+- **What it does:** E-commerce backend built with microservices architecture. Includes customer, order, payment, product, and notification services with centralized config, service discovery, and API gateway. Uses Kafka for event-driven communication and Zipkin for distributed tracing.
+- **Skills demonstrated:** Microservices architecture, Spring Cloud ecosystem, Event-driven design, Polyglot persistence (PostgreSQL + MongoDB), Docker containerization, Distributed systems patterns
+- **Quality signals:** Docker Compose configured, but no tests, CI/CD, or README visible
+- **Analysed:** 2026-03-21

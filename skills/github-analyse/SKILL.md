@@ -107,22 +107,23 @@ Cap: fetch at most **8 files total**. Prioritise manifest files over source file
 
 With all signals gathered, synthesise the following:
 
-**What the project does** — combine: description field, topics, README (if any), package.json description, entry point imports, test names. Write 2–4 sentences in plain English. If genuinely unclear, say "unclear — likely a learning exercise based on tech stack alone".
+**What the project does** — combine: description field, topics, README (if any), package.json description, entry point imports, test names. Write 3–5 sentences. Go beyond "what it is" to capture *how* it works: architecture pattern, key design decisions, notable technical choices. Example of good depth: "E-commerce backend using microservices architecture across 7 services (customer, order, payment, product, notification, config-server, gateway). Services communicate via Kafka for async events and REST via an API Gateway. Uses polyglot persistence — PostgreSQL for transactional services, MongoDB for flexible document storage. Distributed tracing via Zipkin." If genuinely unclear, say "unclear — likely a learning exercise based on tech stack alone".
 
-**Tech stack** — from manifest dependencies and file tree patterns. List frameworks and tools, not just languages (e.g. "React, TypeScript, Express, PostgreSQL, Docker" not just "JavaScript").
+**Tech stack** — from manifest dependencies and file tree patterns. List frameworks and tools specifically, not just languages (e.g. "Spring Boot, Spring Cloud Config, Eureka, Kafka, PostgreSQL, MongoDB, Docker" not just "Java").
 
-**Skills demonstrated** — infer from what was actually built:
-- Building a REST API → backend, API design, HTTP
-- React components + state management → frontend, component architecture
-- Database migrations present → schema design, ORM usage
-- CI/CD config → DevOps, automation
-- Test files present → testing practices
-- Docker/compose → containerisation
+**Architecture notes** — for non-trivial projects, capture the structural decisions worth highlighting:
+- Number of services/modules and their responsibilities (for microservices)
+- Data layer choices (which DB for what, why)
+- Communication patterns (REST, event-driven, GraphQL)
+- Infrastructure components (message queues, caches, tracing, gateways)
+- Omit this field for simple single-service or learning projects
+
+**Skills demonstrated** — be specific enough that a job description can be matched against this. Not "Microservices architecture" but "Designed 7-service microservices system with service discovery (Eureka), centralised config (Spring Cloud Config), and API gateway". Not "Docker" but "Docker Compose orchestration of 10+ services including databases, message broker, and tracing". Think: would a hiring manager reading this JD requirement be able to match it to this bullet?
 
 **Project type** — classify as one of:
 - `professional` — work project (infer from org ownership, description, or if told by user)
-- `side` — personal project with real purpose/users
-- `learning` — clearly a tutorial, practice, or course exercise (e.g. "learn-X", "todo-app", copied patterns, minimal commits)
+- `side` — personal project with real purpose (built something real, not a tutorial)
+- `learning` — clearly a tutorial, practice, or course exercise (e.g. "learn-X", "todo-app", copied patterns, minimal commits, follows a course structure)
 - `unknown` — can't tell; leave for Leslie to label
 
 **Skill level signal** — note any quality indicators:
@@ -143,9 +144,10 @@ Write the entry in this format:
 - **URL:** https://github.com/{owner}/{repo}
 - **Type:** {professional | side | learning | unknown}
 - **Languages:** {language distribution, e.g. TypeScript 65%, Python 25%, Shell 10%}
-- **Stack:** {comma-separated frameworks and tools}
-- **What it does:** {2–4 sentence description}
-- **Skills demonstrated:** {comma-separated list}
+- **Stack:** {comma-separated frameworks and tools — specific, not just languages}
+- **What it does:** {3–5 sentences covering what it is, how it works, key design decisions}
+- **Architecture notes:** {structural decisions — services, data layer, communication patterns; omit for simple projects}
+- **Skills demonstrated:** {specific, JD-matchable list — not "microservices" but "7-service microservices system with Eureka discovery and API gateway"}
 - **Quality signals:** {e.g. "has tests, CI/CD configured, Dockerised" or "none — learning project"}
 - **Analysed:** {today's date}
 ```

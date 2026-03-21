@@ -103,11 +103,11 @@ discovered → filtered → scored → materials_ready → pending_review → ap
 
 ### Phase 1 — Discovery
 
-**Seek (primary — 3–4 queries per sweep):** Runs `seek-fetch.js` via Bash for each query in `SEARCH_QUERIES.md`. The script uses headless Playwright/Chromium to scrape Seek search results directly — title, company, salary, location, workType, URL. Each result is deduped against `JOB_PIPELINE.md` before adding to the working list. Individual job pages are fetched with `--url` mode when full details are needed (capped at 5 per run).
+**Seek (primary — 3–4 queries per sweep):** Runs `seek-fetch.js` via Bash for each query in `SEARCH_QUERIES.md`. Returns title, company, salary, location, workType, URL per listing. Each result is deduped against `JOB_PIPELINE.md` before adding to the working list.
 
 **LinkedIn (supplementary — 2 queries max):** Brave Search snippets only. LinkedIn blocks all automated fetching, so snippets are the best available source. Do not attempt to WebFetch LinkedIn URLs.
 
-Target: 15–25 candidates total before filtering.
+Target: 15–25 candidates total.
 
 > **Why three different fetch tools?**
 > | Tool | Used for | Why |
@@ -118,12 +118,14 @@ Target: 15–25 candidates total before filtering.
 
 ### Phase 2 — Hard Filters
 
-Instant discard (no further processing) if any of:
+Applied immediately after discovery using search result data — **no full page fetch needed**. Instant discard if any of:
 - Salary stated and base (excl. super) **< $115k** — if a range, use midpoint
 - Employment type is **contract or casual only**
 - Location is not **Melbourne, Brisbane, or Sydney** and not remote-friendly
 
 Salary unknown → proceed (don't discard on missing data).
+
+Full job pages are only fetched for jobs that **survive** hard filters, avoiding wasted fetches on roles that would be discarded anyway.
 
 ### Phase 3 — Relevance Scoring
 
@@ -205,6 +207,10 @@ Three cron jobs run automatically (configured in `.openclaw/cron/jobs.json`):
 - Jobs in `pending_review` for > 7 days → auto-skipped
 - No reminders sent between 23:00–08:00 AEST
 - Reminder state tracked in `jobs/memory/heartbeat-state.json`
+
+**Expiry & cleanup:**
+- Active jobs (`discovered`, `filtered`, `scored`, `materials_ready`) older than 30 days → moved to Archived as `expired` (Seek listings expire after ~30 days)
+- Archived entries older than 60 days → deleted entirely, along with their application files
 
 ---
 
@@ -327,7 +333,7 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 | seek-fetch.js is slow | Normal — script launches real browser (~15–20s). Don't retry. |
 | Seek changes selectors | Update `data-automation` selectors in `seek-fetch.js`; test with `--url` mode |
 | LinkedIn truncated (no auth) | Seek/company careers page used for full JD |
-| Too many jobs in one run | Capped at 5 scored per run; rest stay `discovered` |
+| Active jobs not actioned after 30 days | Heartbeat marks them `expired` and archives silently |
 | Stale `pending_review` | Heartbeat re-pings after 48h (once); auto-skipped after 7 days |
 | Application file bloat | After 30 days, move skipped/rejected to `jobs/applications/archive/` |
 

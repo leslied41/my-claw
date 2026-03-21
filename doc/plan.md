@@ -46,21 +46,26 @@ workspace/
 
 ## The 7-Phase Workflow
 
-### Phase 1 — Job Discovery (Automated, 2x daily)
-- **`seek-fetch.js` (Playwright)** — primary Seek discovery, runs 3–4 queries per sweep. Launches headless Chromium, scrapes search results directly. Returns title, company, salary, location, workType, URL. Individual job pages fetched with `--url` mode when full description is needed (capped at 5 per run).
-- **Brave Search** — LinkedIn snippets only (2 queries max). LinkedIn blocks all automated access; search engine snippets give us enough to discover titles, companies, and URLs.
+### Phase 1 — Job Discovery (Automated, daily)
+- **`seek-fetch.js` (Playwright)** — primary Seek discovery, runs 3–4 queries per sweep. Returns title, company, salary, location, workType, URL per listing.
+- **Brave Search** — LinkedIn snippets only (2 queries max). LinkedIn blocks all automated access; search engine snippets give us titles, companies, and URLs.
 - **Dedup** against `JOB_PIPELINE.md` before any processing
-- Search queries sourced from `SEARCH_QUERIES.md`; agent refines them over time (adds quality notes, retires dead queries)
+- Search queries sourced from `SEARCH_QUERIES.md`; agent refines them over time
 
 ### Phase 2 — Job Filtering & Scoring
 
-**Step 1 — Hard filters (instant discard, no further processing):**
+**Step 1 — Hard filters** (uses search result data — no full page fetch needed yet):
 - Salary stated and base (excl. super) < $115k → discard, log reason
 - Salary not stated → proceed (don't discard on unknown)
 - Role is contract/casual only → discard
-- Location is not Melbourne or remote-friendly → discard
+- Location is not Melbourne, Brisbane, or Sydney and not remote-friendly → discard
 
-**Step 2 — Relevance scoring against `RESUME.md`:**
+**Step 2 — Full page fetch** (only for jobs that passed hard filters):
+- Run `seek-fetch.js --url` to get the complete job description and requirements
+- LinkedIn jobs: WebFetch the company's own careers page instead
+- Avoids wasted fetches on jobs that would be discarded anyway
+
+**Step 3 — Relevance scoring against `RESUME.md`:**
 
 Score each dimension 0–10, then compute a weighted total:
 
@@ -165,7 +170,7 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | No Chrome for LinkedIn | LinkedIn bot detection is too aggressive — snippets only |
 | Markdown files, not a database | Claw already reads workspace files as context; keeps everything in one mental model |
 | Tailoring notes, not full resume rewrites | Auditable, fast, `RESUME.md` stays as single source of truth |
-| Max 5 fully-processed jobs per cron run | Prevents slow/expensive runs when many listings appear at once |
+| Hard filter before full page fetch | Search result data is enough to discard ineligible jobs — saves fetching pages that would be thrown away |
 | PREFERENCES.md exception for job crons | Autonomous web search pre-approved for job skills — no per-session approval needed |
 | 48h reminder then silence for pending_review | Avoids spamming you; auto-skip after 7 days of no response |
 | Heartbeat state in heartbeat-state.json | Prevents duplicate reminders across sessions; tracked in `jobs/memory/heartbeat-state.json` |
@@ -220,7 +225,7 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | seek-fetch.js slow | Script launches real browser (~15–20s per run) — normal, don't retry |
 | Seek changes selectors | Update `data-automation` selectors in `seek-fetch.js`; test with `--url` mode |
 | LinkedIn truncation without auth | Use LinkedIn only for discovery snippets; find full JD on company careers page |
-| Too many jobs in one run | Cap at 5 fully-processed jobs per run; rest stay as `discovered` for next run |
+| Active jobs not actioned after 30 days | Heartbeat marks them `expired` and archives silently — Seek listings don't stay live forever |
 | Pipeline fills with stale pending_review | Heartbeat re-pings after 48h (once only); auto-skip after 7 days |
 | Application file bloat over weeks | After 30 days, move `skipped`/`rejected` to `jobs/applications/archive/` |
 

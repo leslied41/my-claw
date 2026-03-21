@@ -41,28 +41,28 @@ Target: 15–25 candidates total before filtering.
 
 ---
 
-## Step 3 — Get full job details (when needed)
+## Step 3 — Hard filters
 
-Script results include title, company, salary, location, and work type — sufficient for hard filters and often for scoring too. Only fetch the full page when must-have requirements are missing:
-
-```bash
-node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
-  --url "https://www.seek.com.au/job/12345"
-```
-
-Cap at **5 full-page fetches per run**. For LinkedIn jobs needing more detail, WebFetch the company's own careers page instead (search `[Company] [Role] site:[company.com]/careers`).
-
----
-
-## Step 4 — Hard filters
-
-Discard immediately (no further processing) if ANY of these are true:
+Search result data (title, company, salary, location, workType) is sufficient for hard filters — no full page fetch needed yet. Discard immediately if ANY of these are true:
 - Salary is explicitly stated AND base (excl. super) < $115k
   - If salary is a range (e.g. $110–130k), use the midpoint ($120k) — proceed if midpoint ≥ $115k
 - Employment type is contract or casual only
 - Location is not Melbourne, Brisbane, or Sydney AND not remote-friendly (no mention of remote/hybrid/WFH)
 
 Log discarded jobs to the **Archived Jobs** table in `JOB_PIPELINE.md` with reason. Do not create application files for them.
+
+---
+
+## Step 4 — Get full job details
+
+For every job that passed hard filters, fetch the full job page to get the complete description and requirements needed for scoring:
+
+```bash
+node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
+  --url "https://www.seek.com.au/job/12345"
+```
+
+For LinkedIn jobs, WebFetch the company's own careers page instead (search `[Company] [Role] site:[company.com]/careers`).
 
 ---
 
@@ -128,8 +128,6 @@ For each job with score ≥ 6.0, create `workspace/jobs/applications/YYYY-MM-DD_
 ## Step 7 — Update pipeline
 
 Add each new job to the **Active Jobs** table in `JOB_PIPELINE.md` with status `scored`.
-
-Cap: if more than 5 jobs reach `scored` status in this run, stop processing and leave the rest as `discovered` for the next run.
 
 ---
 

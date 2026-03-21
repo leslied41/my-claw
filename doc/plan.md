@@ -2,7 +2,17 @@
 
 ## Architecture Overview
 
-Everything runs through **skills (slash commands)** and a small set of **state files**. Skills contain all workflow logic and instructions — job context only loads when a skill is invoked, keeping non-job conversations lean. Integrations: Playwright (Seek scraping), Brave Search (LinkedIn snippets), WhatsApp (already configured), plus **Chrome DevTools MCP** for browser automation on the Hetzner server.
+Everything runs through **skills (slash commands)** and a small set of **state files**. Skills contain all workflow logic and instructions — job context only loads when a skill is invoked, keeping non-job conversations lean.
+
+**Three fetch tools, each with a specific role:**
+
+| Tool | Used for | Why |
+|---|---|---|
+| `seek-fetch.js` (headless Playwright) | Seek search results + Seek job pages | Seek blocks plain HTTP — needs a real browser to scrape |
+| WebFetch | Company's own about/website | Regular public webpages — fast, no browser overhead needed |
+| Brave Search | LinkedIn job snippets | LinkedIn blocks all automated access; search engine snippets give us title/company/URL |
+
+Other integrations: WhatsApp (notifications to Leslie).
 
 ```
 workspace/
@@ -23,7 +33,7 @@ workspace/
     job-status/
       SKILL.md            ← print pipeline summary
     job-apply/
-      SKILL.md            ← resume tailoring + cover letter + form pre-fill
+      SKILL.md            ← resume tailoring + cover letter generation
   HEARTBEAT.md            ← updated with pipeline check
   PREFERENCES.md          ← updated to permit autonomous job searches
 ```
@@ -37,8 +47,8 @@ workspace/
 ## The 7-Phase Workflow
 
 ### Phase 1 — Job Discovery (Automated, 2x daily)
-- **`seek-fetch.js` (Playwright)** — primary Seek discovery, runs 3–4 queries per sweep from `SEARCH_QUERIES.md`. Launches headless Chromium, scrapes search results directly. Returns title, company, salary, location, workType, URL. Fast and Seek-native.
-- **Brave Search** — supplementary, LinkedIn snippets only (2 queries max). LinkedIn blocks automated fetching, so snippets are the best available signal.
+- **`seek-fetch.js` (Playwright)** — primary Seek discovery, runs 3–4 queries per sweep. Launches headless Chromium, scrapes search results directly. Returns title, company, salary, location, workType, URL. Individual job pages fetched with `--url` mode when full description is needed (capped at 5 per run).
+- **Brave Search** — LinkedIn snippets only (2 queries max). LinkedIn blocks all automated access; search engine snippets give us enough to discover titles, companies, and URLs.
 - **Dedup** against `JOB_PIPELINE.md` before any processing
 - Search queries sourced from `SEARCH_QUERIES.md`; agent refines them over time (adds quality notes, retires dead queries)
 
@@ -65,22 +75,27 @@ Score each dimension 0–10, then compute a weighted total:
 
 Each application file records the score breakdown so you can audit and calibrate the threshold over time.
 
-### Phase 3 — Resume Tailoring (per application)
-Not a full rewrite — **tailoring notes** that live in the application file:
-1. Keyword mapping (JD terms → your resume equivalents)
-2. Summary rewrite (2-3 sentences, role-specific)
+### Phase 3 — Material Generation (per application, via `/job-apply`)
+
+**Data gathering first:**
+1. If the application file has the full Seek job description (fetched during job-hunt) — use it directly
+2. If only summary data exists — re-fetch using `seek-fetch.js --url [SOURCE_URL]` to get the complete description
+3. WebFetch the **company's own website** (e.g. `acme.com/about`) — separate from the Seek listing, gives mission, team size, product context for the cover letter
+
+**Resume tailoring** — not a full rewrite, tailoring notes written into the application file:
+1. Keyword mapping (JD terms → resume equivalents, gaps flagged)
+2. Summary rewrite (2–3 sentences, mirrors JD language)
 3. Experience bullet reordering (most relevant → top)
 4. Skills table reordering
-5. Gap acknowledgment (honest note if something's missing)
+5. Gap acknowledgment
 
-`RESUME.md` stays untouched as the source of truth. Full tailoring protocol is embedded in `skills/job-apply/SKILL.md`.
+A fully tailored resume (`YYYY-MM-DD_Company_Role_RESUME.md`) is then generated from `RESUME.md` with the tailoring applied. `RESUME.md` itself is never modified.
 
-### Phase 4 — Cover Letter Generation
-**4-paragraph template** embedded in `skills/job-apply/SKILL.md`:
-1. **Hook**: Name the role + one specific company/product reference (requires fetching their about page)
-2. **Evidence**: 1-2 quantified achievements matching JD core requirements
-3. **Company Fit**: Why *this* company specifically (no generic "great culture" language)
-4. **Close**: Confident, not grovelling
+**Cover letter** — 4 paragraphs, 250–350 words:
+1. **Hook**: role + specific company/product reference (from the company website)
+2. **Evidence**: 1–2 quantified achievements matching JD core requirements
+3. **Company Fit**: specific to their tech/mission/scale (no generic filler)
+4. **Close**: confident, not grovelling
 
 Tone calibrated: startup < 50 people (direct/informal) vs enterprise (formal, emphasise reliability).
 
@@ -97,25 +112,21 @@ Claw moves jobs autonomously through `pending_review`. **You control the gate** 
 
 `materials_ready` is set by `/job-apply` after tailoring notes and cover letter are written, before form pre-fill. This lets you distinguish "materials done" from "form submitted for review".
 
-### Phase 6 — Submission Handoff
+### Phase 6 — Notification & Handoff
 When materials are ready, Claw messages you on WhatsApp:
 ```
-Job ready: Software Engineer @ Acme Corp (Melbourne)
-Match: STRONG | Salary: $130-150k | Seek Easy Apply
+JOB-XXX ready: [Title] @ [Company]
+Score: X.X | $[salary] | [arrangement]
 
-Reply "apply 001" to review + submit, "skip 001" to pass.
+Apply here: [job URL]
+
+Tailored resume: jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md
+Cover letter + notes: jobs/applications/YYYY-MM-DD_Company_Role.md
+
+Reply "done XXX" when applied, or "skip XXX" to pass.
 ```
 
-When you reply "apply 001", Claw uses **Chrome DevTools MCP** to:
-1. Navigate to the job page
-2. Pre-fill the application form (name, contact, cover letter)
-3. Take a screenshot and send it to you on WhatsApp for final review
-
-**You do the final click to submit** — Claw never submits on your behalf. This keeps you in control and avoids automated submission detection.
-
-- **Direct email roles**: Claw drafts the email, you review and send
-- **Seek Easy Apply**: Claw pre-fills, you submit
-- **LinkedIn**: manual only — Claw gives you the URL and cover letter to paste yourself
+You review the tailored resume and cover letter, open the job URL, and apply yourself. Claw never submits on your behalf — no auth, no form automation, no bot-detection risk.
 
 ### Phase 7 — Skills
 
@@ -131,8 +142,7 @@ Four slash commands cover all job-hunting interactions:
 Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed — nothing is preloaded.
 
 ### Phase 8 — Cron Schedule
-- `8:23 AM AEST, Mon–Fri` — morning discovery sweep → runs `/job-hunt`
-- `1:47 PM AEST, Mon–Fri` — afternoon sweep → runs `/job-hunt`
+- `1:47 PM AEST, Mon–Fri` — daily discovery sweep → runs `/job-hunt`
 - `9:00 AM AEST, daily` — heartbeat check → reads `HEARTBEAT.md`, sends stale reminders, auto-skips after 7 days
 - No `/job-hunt` on weekends — AU job listings are Mon–Fri; heartbeat runs every day
 
@@ -151,7 +161,7 @@ Each skill reads `JOB_PIPELINE.md` and relevant `applications/` files as needed 
 | Salary unknown → proceed | Don't discard on missing data; many roles omit salary and are still worth pursuing |
 | Melbourne, Brisbane, or Sydney | All three cities in scope; queries and hard filter updated to match |
 | Playwright script for Seek, Brave Search for LinkedIn | seek-fetch.js scrapes Seek directly (reliable, fast); Brave Search used only for LinkedIn snippets |
-| Chrome DevTools pre-fills, you submit | Avoids automated submission detection; keeps you in the loop for the final action |
+| Agent generates materials, you apply | Removes auth complexity entirely; no form automation means no bot-detection risk and no Seek login dependency |
 | No Chrome for LinkedIn | LinkedIn bot detection is too aggressive — snippets only |
 | Markdown files, not a database | Claw already reads workspace files as context; keeps everything in one mental model |
 | Tailoring notes, not full resume rewrites | Auditable, fast, `RESUME.md` stays as single source of truth |

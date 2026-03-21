@@ -1,12 +1,13 @@
 ---
 name: job-apply
 description: >
-  Prepare full application materials for a specific job and pre-fill the submission
-  form. Use this skill when given a JOB-ID and asked to apply, prepare an application,
-  write a cover letter, tailor the resume, or get a job ready for submission. Requires
-  a JOB-ID argument (e.g. /job-apply JOB-003). Do not use without a JOB-ID — use
-  /job-review to browse pending jobs first if you don't have an ID.
-compatibility: Requires WebFetch for company about page. Chrome DevTools for Seek Easy Apply form pre-fill.
+  Generate tailored application materials for a specific job: tailored resume,
+  cover letter, and keyword-mapped tailoring notes. Notifies Leslie on WhatsApp
+  with the job URL and materials so she can apply manually. Use this skill when
+  given a JOB-ID and asked to apply, prepare an application, write a cover letter,
+  or tailor the resume. Requires a JOB-ID argument (e.g. /job-apply JOB-003).
+  Do not use without a JOB-ID — use /job-review to browse pending jobs first.
+compatibility: Requires seek-fetch.js (Playwright) for Seek job page re-fetch if description missing. Requires WebFetch for company about page.
 ---
 
 Usage: `/job-apply JOB-003`
@@ -20,11 +21,20 @@ Read:
 
 If no application file exists for the given JOB-ID, stop and say so — do not proceed.
 
+If the application file exists but has no full job description (only the extracted requirements), re-fetch the Seek job page to get the complete description:
+
+```bash
+node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
+  --url "[SOURCE_URL from application file]"
+```
+
+Update the application file with the full description before proceeding.
+
 ---
 
 ## Step 2 — Fetch company about page
 
-WebFetch the company's about/careers page (find URL from the job listing or by searching `[Company name] about`). Extract:
+WebFetch the company's **own website** about/careers page (not the Seek listing — find the URL from the job listing or by searching `[Company name] about`). Extract:
 - Company mission / what they build
 - Team size (startup or enterprise — affects tone)
 - Tech stack mentions
@@ -102,44 +112,23 @@ Update the job's status to `materials_ready` in `JOB_PIPELINE.md` now that tailo
 
 ---
 
-## Step 7 — Pre-fill application form
+## Step 7 — Notify
 
-**If application method is Seek Easy Apply:**
+Send WhatsApp to Leslie (+61468911943):
 
-1. Use Chrome DevTools to navigate to the job URL
-2. Click "Easy Apply"
-3. Fill in fields:
-   - Name: Zhonghui Duan (Leslie)
-   - Email: leslied41@gmail.com
-   - Phone: 0468 911 943
-   - Cover letter field: paste the generated cover letter
-   - Any other fields: fill from RESUME.md as appropriate
-   - If there is a resume upload field: note in the WhatsApp message that the tailored resume is at `jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md`
-4. **Do NOT click submit.** Stop at the final review screen.
-5. Take a screenshot of the filled form.
-6. Send screenshot to Leslie on WhatsApp with:
-   ```
-   JOB-XXX ready: [Title] @ [Company]
-   Form is pre-filled. Open Seek to review and submit:
-   [URL]
+```
+JOB-XXX ready: [Title] @ [Company]
+Score: X.X | $[salary] | [arrangement]
 
-   Reply "done XXX" when submitted, or "skip XXX" to pass.
-   ```
+Apply here: [job URL]
 
-**If application method is direct email:**
-- Draft the email: To: [email], Subject: "Application for [Role] — Zhonghui Duan", Body: cover letter
-- Send draft to Leslie on WhatsApp — do NOT send the email directly
-- Include the recipient address and subject so Leslie can send it herself
+Tailored resume: jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md
+Cover letter + notes: jobs/applications/YYYY-MM-DD_Company_Role.md
 
-**If application method is external link / LinkedIn:**
-- Send Leslie the URL and the cover letter text on WhatsApp
-- Note any specific instructions from the JD
+Reply "done XXX" when applied, or "skip XXX" to pass.
+```
 
----
-
-## Step 8 — Update pipeline
-
-Set job status to `pending_review` in `JOB_PIPELINE.md` once the WhatsApp notification is sent.
+Then set job status to `pending_review` in `JOB_PIPELINE.md`.
 
 When Leslie replies "done XXX": set status to `applied`, record the date.
 
@@ -147,8 +136,5 @@ When Leslie replies "done XXX": set status to `applied`, record the date.
 
 ## Gotchas
 
-- **Seek login wall**: Seek Easy Apply sometimes requires login. If Chrome DevTools hits a login wall, screenshot it and send to WhatsApp asking Leslie to log in first, then retry.
-- **Cover letter character limits**: Some Seek forms cap cover letters at 4,000 characters. If the cover letter exceeds this, trim Paragraph 3 first — it's the most cuttable.
-- **"Apply on company website"**: If Seek redirects to an external ATS (Workday, Greenhouse, Lever), treat as "external link" — send URL + cover letter to WhatsApp.
 - **Company about page 404**: If the about page is down, check LinkedIn company page as fallback. If that's also unavailable, proceed with what's in the job listing and note the gap.
 - **Gap note in cover letter**: Only address a gap in the cover letter if it's a must-have requirement. Nice-to-have gaps are not worth drawing attention to.

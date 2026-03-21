@@ -45,7 +45,7 @@ After listing all pending jobs:
 
 ```
 Commands:
-  /job-apply JOB-001   → prepare form and cover letter
+  /job-apply JOB-001   → generate tailored resume and cover letter
   skip JOB-001         → pass on this job
   review JOB-001       → show full application file
 ```

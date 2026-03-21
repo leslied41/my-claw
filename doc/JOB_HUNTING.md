@@ -36,8 +36,8 @@ Skills are never modified by the agent. The agent only writes to `jobs/`.
 The agent moves jobs autonomously through the pipeline up to `pending_review`. Nothing is submitted without your explicit action. This avoids automated submission detection and keeps you in control of what goes out.
 
 ```
-Agent does:  discover → filter → score → tailor → cover letter → pre-fill form → notify you
-You do:      review the pre-filled form → click Submit
+Agent does:  discover → filter → score → tailor → cover letter → notify you
+You do:      review materials → open job URL → apply yourself
 ```
 
 ### Markdown over database
@@ -109,6 +109,13 @@ discovered → filtered → scored → materials_ready → pending_review → ap
 
 Target: 15–25 candidates total before filtering.
 
+> **Why three different fetch tools?**
+> | Tool | Used for | Why |
+> |---|---|---|
+> | `seek-fetch.js` (headless Playwright) | Seek search results + Seek job pages | Seek actively blocks plain HTTP requests — needs a real browser |
+> | WebFetch | Company's own about/website | Regular public webpages have no bot protection — fast and simple |
+> | Brave Search | LinkedIn job snippets | LinkedIn blocks all automated access; Brave gives us titles/companies/URLs from search engine results |
+
 ### Phase 2 — Hard Filters
 
 Instant discard (no further processing) if any of:
@@ -133,7 +140,12 @@ Scored against `RESUME.md` across four weighted dimensions:
 
 Score breakdown is saved in every application file so the threshold can be tuned over time.
 
-### Phase 4 — Resume Tailoring
+### Phase 4 — Resume Tailoring & Material Generation
+
+Before tailoring, `/job-apply` ensures complete job data is available:
+- If the application file already has the full Seek job description (fetched during `/job-hunt`) — use it directly, no re-fetch needed
+- If only summary data was captured (job-hunt hit the 5-fetch cap) — re-fetch the Seek job page using `seek-fetch.js --url` to get the full description
+- Then WebFetch the **company's own website** (not the Seek listing) to extract mission, team size, product context — this is what makes the cover letter specific rather than generic
 
 `RESUME.md` is never modified. Instead, tailoring notes are written into the application file:
 
@@ -154,26 +166,23 @@ Score breakdown is saved in every application file so the threshold can be tuned
 
 Tone calibrated: startup < ~50 people (direct, informal) vs enterprise (formal, reliability-focused).
 
-### Phase 6 — Form Pre-fill & Notification
+### Phase 6 — Notification
 
-Depending on application method:
+Once tailored resume and cover letter are ready, the agent sends a WhatsApp summary:
 
-| Method | What the agent does |
-|---|---|
-| **Seek Easy Apply** | Uses Chrome DevTools to navigate → click Easy Apply → fill form → screenshot → WhatsApp you |
-| **Direct email** | Drafts the email → sends draft to WhatsApp for you to send |
-| **External / LinkedIn** | Sends you the URL + cover letter text on WhatsApp |
-
-**The agent never submits. You do the final action.**
-
-WhatsApp message format:
 ```
 JOB-XXX ready: [Title] @ [Company]
-Form is pre-filled. Open Seek to review and submit:
-[URL]
+Score: X.X | $[salary] | [arrangement]
 
-Reply "done XXX" when submitted, or "skip XXX" to pass.
+Apply here: [job URL]
+
+Tailored resume: jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md
+Cover letter + notes: jobs/applications/YYYY-MM-DD_Company_Role.md
+
+Reply "done XXX" when applied, or "skip XXX" to pass.
 ```
+
+You review the materials, open the job URL, and apply yourself. The agent never submits on your behalf.
 
 ### Phase 7 — Status Updates
 
@@ -188,8 +197,7 @@ Three cron jobs run automatically (configured in `.openclaw/cron/jobs.json`):
 
 | Job | Schedule | What it does |
 |---|---|---|
-| Morning sweep | 8:23 AM AEST, Mon–Fri | Runs `/job-hunt` |
-| Afternoon sweep | 1:47 PM AEST, Mon–Fri | Runs `/job-hunt` |
+| Daily sweep | 1:47 PM AEST, Mon–Fri | Runs `/job-hunt` |
 | Heartbeat check | 9:00 AM AEST, daily | Checks for stale `pending_review` jobs |
 
 **Heartbeat behaviour:**
@@ -335,6 +343,7 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 | Salary unknown → proceed | Many roles omit salary; don't miss good jobs on missing data |
 | Playwright script for Seek, Brave Search for LinkedIn | seek-fetch.js scrapes Seek directly (reliable, fast, no WebFetch dependency); Brave Search used only for LinkedIn snippets |
 | No Chrome for LinkedIn | Bot detection too aggressive — snippets only |
+| Agent generates materials, you apply | Removes auth complexity entirely; avoids automated submission detection; you stay in control |
 | Tailoring notes, not resume rewrites | `RESUME.md` stays as single source of truth; notes are auditable |
 | Agent pre-fills, you submit | Avoids automated submission detection; you stay in the loop |
 | Markdown files, not a database | Agent reads/writes using the same tools as everything else |

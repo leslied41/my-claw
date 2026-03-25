@@ -1,11 +1,12 @@
 ---
 name: job-status
 description: >
-  Print a read-only summary of the current job pipeline — counts by status, total
-  tracked, and a prompt if any jobs need action. Use this skill when asked for a
-  pipeline overview, job count, status update, hunting progress, or a quick summary
-  of where things stand. Makes no changes to any files. For detailed job review
-  and apply/skip decisions, use /job-review instead.
+  Show a read-only snapshot of the job search pipeline — counts by status,
+  total tracked, and a nudge if anything needs action. Use this whenever the
+  human asks how the job hunt is going, wants a count of applications, asks
+  "what's in the pipeline", or needs a quick check-in on progress. This is
+  the lightweight overview; it makes zero changes. For reviewing individual
+  jobs, use /job-review. For applying, use /job-apply.
 ---
 
 ## Step 1 — Load pipeline
@@ -14,9 +15,10 @@ Read `workspace/jobs/JOB_PIPELINE.md`.
 
 ---
 
-## Step 2 — Print summary
+## Step 2 — Count and display
 
-Count jobs by status and display:
+Tally jobs by status. The goal is a quick, honest snapshot — not a
+wall of text. Use this exact format:
 
 ```
 📋 Job Pipeline — [today's date]
@@ -37,21 +39,12 @@ Archived
 Total tracked: [N]
 ```
 
-If `pending_review` > 0, add:
-```
-Run /job-review to see what's waiting.
-```
+Then add one of these context lines depending on what the numbers show:
 
-If `scored` or `materials_ready` > 0, add:
-```
-[N] job(s) ready for /job-apply.
-```
-
-If everything is 0 or only archived:
-```
-Queue is clear. Run /job-hunt to search for new jobs.
-```
+- If `pending_review` > 0 → `Run /job-review to see what's waiting.`
+- If `scored` or `materials_ready` > 0 → `[N] job(s) ready for /job-apply.`
+- If everything is 0 or all archived → `Queue is clear. Run /job-hunt to search for new jobs.`
 
 ---
 
-No state changes. No file writes. Read only.
+Read only. No writes, no state changes.

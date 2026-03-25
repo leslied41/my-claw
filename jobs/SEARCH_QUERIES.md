@@ -34,6 +34,16 @@ Pass `--query` and `--location` to the script. Rotate across runs.
 - `site:linkedin.com/jobs "software engineer" Sydney "Python" "senior"`
 
 ## Notes
-- Updated: (agent updates after each run with quality notes)
-- Best performing queries: (agent fills this in over time)
-- Retired queries: (agent moves dead queries here)
+- Updated: 2026-03-24
+- Best performing queries: 
+  - "software engineer Python" Brisbane → found Rumata ML/NLP (strong match)
+  - "software engineer LLM AI" Melbourne → found Australian Unity, Seeing Machines (good signals)
+  - "backend engineer Python FastAPI" Melbourne → found Easygo (good match)
+- Retired queries: (none this run)
+- Query quality notes (2026-03-24):
+  - "software engineer Python" Brisbane: good signal - Rumata ML/NLP passed threshold
+  - "frontend engineer React" Melbourne: mixed - Aspirante passed, Domain partial, The Onset contract
+  - "backend engineer Python FastAPI" Melbourne: good - Easygo passed, DevOps filtered out
+  - "software engineer LLM AI" Melbourne: good - Australian Unity passed
+  - LinkedIn "full stack developer" Melbourne: weak - no specific job details, generic results
+  - LinkedIn "software engineer Sydney Python senior": weak - generic results, limited specificity

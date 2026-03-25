@@ -2,12 +2,12 @@
 name: github-analyse
 description: >
   Analyse a GitHub repository and write a structured project summary to
-  PROJECTS.md. Works even when there is no README — uses GitHub API metadata,
-  file tree, manifest files, entry points, and test files to infer what the
-  project does, its tech stack, and what skills it demonstrates. If the repo
-  already exists in PROJECTS.md, the entry is overwritten (not duplicated).
-  Use this skill when asked to analyse a GitHub repo, add a project to the
-  profile, or update an existing project entry.
+  PROJECTS.md. Use this whenever the human provides a GitHub URL or repo name
+  and wants it analysed, added to their profile, or updated — even if they
+  just say "check this repo" or "add this to my projects". Works without a
+  README by using the GitHub API, file tree, and manifest files to infer
+  purpose, tech stack, and skills demonstrated. Overwrites existing entries
+  rather than duplicating them.
 compatibility: Requires WebFetch for GitHub API calls.
 ---
 

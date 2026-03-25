@@ -16,8 +16,8 @@ This file is maintained by the `/github-analyse` skill. Each entry is generated 
 - **URL:** https://github.com/leslied41/micro-service-e-commerce
 - **Type:** side
 - **Languages:** Java 95%, HTML 5%
-- **Stack:** Spring Boot, Spring Cloud, Eureka (Service Discovery), PostgreSQL, MongoDB, Kafka, Zipkin, Docker
-- **What it does:** E-commerce backend built with microservices architecture. Includes customer, order, payment, product, and notification services with centralized config, service discovery, and API gateway. Uses Kafka for event-driven communication and Zipkin for distributed tracing.
-- **Skills demonstrated:** Microservices architecture, Spring Cloud ecosystem, Event-driven design, Polyglot persistence (PostgreSQL + MongoDB), Docker containerization, Distributed systems patterns
-- **Quality signals:** Docker Compose configured, but no tests, CI/CD, or README visible
+- **Stack:** Spring Boot 3.3.8, Spring Cloud 2023.0.5, Spring Cloud Gateway, Netflix Eureka, Spring Data JPA, Flyway, PostgreSQL, MongoDB, Kafka, Zipkin, Docker, Java 21
+- **What it does:** Production-ready e-commerce backend built with microservices architecture. 7 services: config-server, discovery (Eureka), gateway, customer, order, payment, product, notification. Each service is a Spring Boot app with its own PostgreSQL database, registered with Eureka for service discovery. Uses Kafka for async communication between services, Zipkin for distributed tracing, and centralized config via Spring Cloud Config. Includes architecture diagrams.
+- **Skills demonstrated:** Microservices architecture, Spring Cloud ecosystem (Gateway, Eureka, Config), Event-driven design (Kafka), Polyglot persistence (PostgreSQL + MongoDB), Database migrations (Flyway), REST API design, Docker containerization, Distributed tracing
+- **Quality signals:** Docker Compose for local dev, Architecture diagrams in /diagrams, Actuator for monitoring, but no tests, CI/CD, or README
 - **Analysed:** 2026-03-21

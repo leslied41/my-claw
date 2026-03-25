@@ -1,14 +1,13 @@
 ---
 name: job-hunt
 description: >
-  Run a full job discovery sweep — search for new software engineering roles on
-  Seek and LinkedIn, apply salary/location filters, score relevance against
-  Leslie's resume, generate tailored resume and cover letter for each strong
-  match, and notify Leslie on WhatsApp with everything ready to apply.
-  Use this skill when asked to search for jobs, find new positions, run a job
-  sweep, or kick off the job-hunting process. This is also what the daily cron
-  job invokes automatically. Do not use if the user only wants to review jobs
-  already in the pipeline — use /job-review for that.
+  Run a full job discovery sweep — search Seek and LinkedIn for new software
+  engineering roles, filter by salary/location, score against the user's resume,
+  generate tailored resume and cover letter for each strong match, and notify
+  via WhatsApp. Use this whenever asked to search for jobs, find new roles,
+  run a sweep, or "kick off the job hunt". Also invoked by the daily cron job.
+  Do not use if the human only wants to review jobs already in the pipeline —
+  use /job-review for that.
 compatibility: Requires Brave Search (LinkedIn only) and Bash to run skills/job-hunt/scripts/seek-fetch.js. Requires WebFetch for company about pages.
 ---
 
@@ -24,12 +23,14 @@ Read these files before doing anything:
 
 ## Step 2 — Discover jobs
 
+> Run all scripts from the skill directory: `cd workspace/skills/job-hunt`
+
 **For Seek** (primary — run 3–4 queries per sweep):
 
 Use the scraper script via Bash for each query in the Seek section of `SEARCH_QUERIES.md` (rotate, don't repeat same queries every run):
 
 ```bash
-node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
+node scripts/seek-fetch.js \
   --query "software engineer" --location "Melbourne"
 ```
 
@@ -67,7 +68,7 @@ For every Seek job that passed hard filters, fetch all full job pages in a **sin
 
 2. Run one batch fetch:
    ```bash
-   node /home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js \
+   node scripts/seek-fetch.js \
      --urls-file /tmp/seek-urls.json
    ```
 
@@ -238,7 +239,7 @@ After each run, add a brief quality note to the queries that were used (e.g. "re
 
 ## Gotchas
 
-- **Script path**: Always use the full absolute path `/home/node/.openclaw/workspace/skills/job-hunt/scripts/seek-fetch.js` — relative paths will fail depending on working directory.
+- **Script path**: Always `cd workspace/skills/job-hunt` before running scripts — then use `node scripts/seek-fetch.js`. Relative paths work correctly when run from the skill directory.
 - **Script is slow**: Each browser launch takes ~15–20s. Use `--urls-file` for batch fetching (one launch for all URLs) — never call `--url` in a loop, it will crash on low-memory servers.
 - **Salary in package terms**: Some listings say "$130k package" — treat this as base (super is included), actual base ~$118k. Still above threshold — proceed.
 - **"Salary competitive" / "market rate"**: Treat as unknown salary — do not discard.

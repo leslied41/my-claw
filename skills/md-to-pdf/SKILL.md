@@ -1,11 +1,10 @@
 ---
 name: md-to-pdf
 description: >
-  Convert any markdown file to a PDF. Use this skill when asked to export
-  a markdown file to PDF, convert a document, or generate a PDF for any
-  .md file. Accepts a file path or a JOB-ID (to find a tailored resume).
-  If no argument is given, asks the user which file to convert.
-  Never runs automatically — always manually triggered.
+  Convert any markdown file to a polished PDF. Use this whenever the human
+  asks to export, print, or save a .md file as PDF — including tailored
+  resumes by job ID. Accepts a file path, a JOB-ID shorthand, or will ask
+  if nothing is provided. Never runs automatically — always manually triggered.
 compatibility: Requires Bash to run skills/md-to-pdf/scripts/md-to-pdf.js (Playwright).
 ---
 
@@ -31,10 +30,12 @@ Usage:
 
 ## Step 2 — Convert to PDF
 
+> Run scripts from the skill directory: `cd workspace/skills/md-to-pdf`
+
 Run the conversion script:
 
 ```bash
-node /home/node/.openclaw/workspace/skills/md-to-pdf/scripts/md-to-pdf.js \
+node scripts/md-to-pdf.js \
   --input "/absolute/path/to/file.md"
 ```
 
@@ -43,7 +44,7 @@ The script outputs JSON: `{ success, outputPath, message }`.
 Output PDF is saved alongside the input file with the same name and `.pdf` extension, unless `--output` is specified:
 
 ```bash
-node /home/node/.openclaw/workspace/skills/md-to-pdf/scripts/md-to-pdf.js \
+node scripts/md-to-pdf.js \
   --input "/path/to/file.md" \
   --output "/path/to/output.pdf"
 ```

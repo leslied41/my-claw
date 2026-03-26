@@ -34,16 +34,23 @@ Pass `--query` and `--location` to the script. Rotate across runs.
 - `site:linkedin.com/jobs "software engineer" Sydney "Python" "senior"`
 
 ## Notes
-- Updated: 2026-03-24
+- Updated: 2026-03-26
 - Best performing queries: 
   - "software engineer Python" Brisbane → found Rumata ML/NLP (strong match)
   - "software engineer LLM AI" Melbourne → found Australian Unity, Seeing Machines (good signals)
   - "backend engineer Python FastAPI" Melbourne → found Easygo (good match)
 - Retired queries: (none this run)
-- Query quality notes (2026-03-24):
-  - "software engineer Python" Brisbane: good signal - Rumata ML/NLP passed threshold
-  - "frontend engineer React" Melbourne: mixed - Aspirante passed, Domain partial, The Onset contract
-  - "backend engineer Python FastAPI" Melbourne: good - Easygo passed, DevOps filtered out
-  - "software engineer LLM AI" Melbourne: good - Australian Unity passed
-  - LinkedIn "full stack developer" Melbourne: weak - no specific job details, generic results
-  - LinkedIn "software engineer Sydney Python senior": weak - generic results, limited specificity
+- Query quality notes (2026-03-26):
+  - "software engineer Python" Melbourne: mixed - AGL Python good, Easygo Data too data-focused
+  - "full stack software engineer" Sydney: mixed - Canva and Talenza filtered, Lendi strong match
+  - "software engineer TypeScript" Brisbane: mixed - Medbill good, Secure Code Warrior filtered
+  - "ML engineer software" Sydney: weak - mostly data scientist or ML engineer focus
+  - LinkedIn "software engineer" Melbourne: weak - generic results, limited specificity
+  - LinkedIn "software engineer" Sydney Python: weak - generic results
+
+- Query quality notes (2026-03-26 evening):
+  - "full stack software engineer" Melbourne: mixed — Netbay (good match, score 6.7), Saltus Group (good match, score 6.75), but also many duplicates and weak matches (Triniti wrong stack, BGL below salary)
+  - "software engineer TypeScript" Melbourne: mixed — mostly duplicates; Technology One Brisbane (contract → discard), Karbon (DevOps → discard)
+  - "software engineer Python" Brisbane: mixed — Boeing Defence (defense sector), QIC (weak_match, AI specialist), Technology One Brisbane Python (weak_match, AI specialist)
+  - "frontend engineer React" Sydney: weak — mostly frontend-heavy or too senior; Australia Post frontend role (discarded)
+  - LinkedIn queries: weak — generic aggregation results, no specific job details

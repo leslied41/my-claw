@@ -1,4 +1,4 @@
-# Job Hunting System — Design & Usage Guide
+# Job Hunting System — Workflow & Design Guide
 
 ## Overview
 
@@ -13,12 +13,11 @@ The job hunting system is a semi-autonomous agent workflow built on top of OpenC
 All workflow logic lives in skill files (`workspace/skills/*.md`). Nothing is preloaded into the agent's context by default — job hunting context only exists when a skill is invoked. This keeps non-job conversations lean and prevents irrelevant context from polluting unrelated tasks.
 
 ```
-User invokes /job-hunt (or cron fires)
-  → agent reads skills/job-hunt/SKILL.md
-  → skill loads JOB_PIPELINE.md, SEARCH_QUERIES.md, RESUME.md
-  → discover → filter → score → tailor resume → cover letter → notify
-  → state written back to jobs/
-  → context discarded
+/job-hunt (cron or manual)
+  → discover → filter → score → create application file → update pipeline → notify → trigger /job-materials
+
+/job-materials (cron 4x/day or triggered by /job-hunt)
+  → pick top 3 scored → fetch company about page → tailor resume + cover letter → notify batch
 ```
 
 ### Mutable state vs. static instructions
@@ -36,8 +35,9 @@ Skills are never modified by the agent. The agent only writes to `jobs/`.
 The agent moves jobs autonomously through the pipeline up to `materials_ready`. You apply yourself and mark jobs done with `/job-applied`.
 
 ```
-Agent does:  discover → filter → score → tailor resume → cover letter → notify (fully automated)
-You do:      review materials → open job URL → apply → /job-applied JOB-XXX
+/job-hunt:      discover → filter → score → create application file → notify sweep → trigger /job-materials
+/job-materials: pick top 3 scored → tailor resume + cover letter → notify batch ready
+You:            review materials → open job URL → apply → /job-applied JOB-XXX
 ```
 
 ### Markdown over database
@@ -54,18 +54,20 @@ workspace/
 ├── PROJECTS.md                  ← Project history analysed from GitHub (maintained by /github-analyse)
 ├── HEARTBEAT.md                 ← Background cleanup tasks (expiry, archival)
 ├── doc/
-│   └── JOB_HUNTING.md           ← This file
+│   └── WORKFLOW.md              ← This file
 ├── jobs/
 │   ├── JOB_PIPELINE.md          ← Live CRM table: all jobs and their status
 │   ├── SEARCH_QUERIES.md        ← Curated Seek/LinkedIn query bank (agent-maintained)
 │   └── applications/
-│       ├── YYYY-MM-DD_Company_Role.md         ← Application file (score, tailoring notes, cover letter)
+│       ├── YYYY-MM-DD_Company_Role.md         ← Application file (full JD, score, tailoring notes, cover letter)
 │       └── YYYY-MM-DD_Company_Role_RESUME.md  ← Tailored resume (ready to submit)
 └── skills/
     ├── job-hunt/
-    │   ├── SKILL.md             ← Full pipeline: discovery → scoring → tailoring → notify
+    │   ├── SKILL.md             ← Discovery → filter → score → create application file → notify → trigger job-materials
     │   └── scripts/
     │       └── seek-fetch.js    ← Playwright scraper for Seek search + job pages
+    ├── job-materials/
+    │   └── SKILL.md             ← Pick top 3 scored → tailor resume + cover letter → notify batch
     ├── job-applied/
     │   └── SKILL.md             ← Mark a job as applied in the pipeline
     ├── github-analyse/
@@ -90,7 +92,7 @@ discovered → filtered → scored → materials_ready → applied
 |---|---|
 | `discovered` | URL found, not yet fetched |
 | `filtered` | Passed hard filters (salary, location, employment type) |
-| `scored` | Relevance score ≥ 6.0, application file created |
+| `scored` | Relevance score ≥ 6.0, application file created with verbatim job description |
 | `materials_ready` | Tailoring notes, tailored resume, and cover letter written |
 | `applied` | You submitted the application |
 | `discarded` | Failed a hard filter |
@@ -100,9 +102,9 @@ discovered → filtered → scored → materials_ready → applied
 
 ---
 
-## The 6-Phase Workflow
+## Workflow
 
-### Phase 1 — Discovery
+### Phase 1 — Discovery (`/job-hunt`)
 
 **Seek (primary — 3–4 queries per sweep):** Runs `seek-fetch.js` via Bash for each query in `SEARCH_QUERIES.md`. Returns title, company, salary, location, workType, URL per listing. Each result is deduped against `JOB_PIPELINE.md` before adding to the working list.
 
@@ -117,7 +119,7 @@ Target: 15–25 candidates total.
 > | WebFetch | Company's own about/website | Regular public webpages have no bot protection — fast and simple |
 > | Brave Search | LinkedIn job snippets | LinkedIn blocks all automated access; Brave gives us titles/companies/URLs from search engine results |
 
-### Phase 2 — Hard Filters
+### Phase 2 — Hard Filters (`/job-hunt`)
 
 Applied immediately after discovery using search result data — **no full page fetch needed**. Instant discard if any of:
 - Salary stated and base (excl. super) **< $115k** — if a range, use midpoint
@@ -128,7 +130,7 @@ Salary unknown → proceed (don't discard on missing data).
 
 Full job pages are only fetched for jobs that **survive** hard filters, avoiding wasted fetches on roles that would be discarded anyway.
 
-### Phase 3 — Relevance Scoring
+### Phase 3 — Relevance Scoring (`/job-hunt`)
 
 Scored against `RESUME.md` across four weighted dimensions:
 
@@ -141,47 +143,38 @@ Scored against `RESUME.md` across four weighted dimensions:
 
 **Threshold: score ≥ 6.0 → proceed. Below 6.0 → archived as `weak_match`.**
 
-Score breakdown is saved in every application file so the threshold can be tuned over time.
+### Phase 4 — Application File Creation (`/job-hunt`)
 
-### Phase 4 — Resume Tailoring
+For each scored job, an application file is created with the **complete verbatim job description** from seek-fetch.js — no summarising, no truncating. This is the only time the Seek listing is fetched. `/job-materials` works entirely from this file and never needs to re-fetch anything from Seek.
 
-`RESUME.md` is never modified. Instead, tailoring notes are written into the application file:
-
-1. **Keyword mapping** — JD terms mapped to resume equivalents, gaps flagged
-2. **Summary rewrite** — 2–3 sentences mirroring the JD's language
-3. **Experience bullet reorder** — most relevant bullets moved to top
-4. **Skills table reorder** — most relevant categories shown first
-5. **Gap note** — honest statement of anything missing
-
-A tailored resume (`YYYY-MM-DD_Company_Role_RESUME.md`) is generated from `RESUME.md` applying these notes.
-
-### Phase 5 — Cover Letter
-
-250–350 words, four paragraphs:
-
-1. **Hook** — role + specific company/product reference (fetched from their about page)
-2. **Evidence** — 1–2 quantified achievements matching JD core requirements
-3. **Company Fit** — specific to their tech/mission/scale, no generic filler
-4. **Close** — confident, not grovelling
-
-Tone calibrated: startup < ~50 people (direct, informal) vs enterprise (formal, reliability-focused).
-
-### Phase 6 — Notification
-
-Once materials are ready, the agent sends a WhatsApp summary:
+After creating application files, job-hunt updates the pipeline to `scored`, sends a brief sweep summary, and triggers `/job-materials`.
 
 ```
-Job sweep complete. [N] new matches, [Y] discarded.
+Job sweep complete. [N] new jobs scored, [Y] discarded.
+```
+
+### Phase 5 — Materials Generation (`/job-materials`)
+
+Runs after job-hunt, and independently 4x per day via cron. Each run:
+
+1. Finds all `scored` jobs in the pipeline
+2. Picks the top 3 by score
+3. For each: reads the application file → fetches company about page → writes tailoring notes → generates tailored resume + cover letter
+4. Updates status to `materials_ready`
+5. Sends one WhatsApp batch notification:
+
+```
+[N] job(s) ready to apply:
 
 • JOB-001: [Title] @ [Company] — Score: X.X | $[salary] | [arrangement]
   Apply: [job URL]
   Resume: jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md
   Notes: jobs/applications/YYYY-MM-DD_Company_Role.md
-
-• JOB-002: ...
 ```
 
-You review the materials, open the job URL, and apply yourself. Run `/job-applied JOB-XXX` when done.
+`RESUME.md` is never modified — tailoring notes are written into the application file only.
+
+You review the materials, open the job URL, apply yourself, then run `/job-applied JOB-XXX`.
 
 ---
 
@@ -189,7 +182,8 @@ You review the materials, open the job URL, and apply yourself. Run `/job-applie
 
 | Job | Schedule | What it does |
 |---|---|---|
-| Daily sweep | 1:47 PM AEST, Mon–Fri | Runs `/job-hunt` |
+| Job hunt | 2x daily (morning + evening) | Runs `/job-hunt` |
+| Materials | 4x daily | Runs `/job-materials` — processes top 3 scored jobs per run |
 | Heartbeat | Periodic | Expires stale active jobs (> 30 days), cleans archived entries (> 60 days) |
 
 **Expiry & cleanup (heartbeat):**
@@ -201,9 +195,16 @@ You review the materials, open the job URL, and apply yourself. Run `/job-applie
 ## Slash Commands
 
 ### `/job-hunt`
-Runs the full pipeline end-to-end. Invoked by the daily cron or manually on demand.
+Runs discovery and scoring. Invoked by the daily cron or manually on demand.
 
-**What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek, Brave Search for LinkedIn snippets → hard filters → fetches full job pages (batch, one browser session) → scores → generates tailored resume + cover letter for each match → notifies via WhatsApp → updates query quality notes.
+**What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek, Brave Search for LinkedIn snippets → hard filters → fetches full job pages (batch, one browser session) → scores → creates application files with verbatim job descriptions → updates pipeline to `scored` → sends brief sweep summary → triggers `/job-materials`.
+
+---
+
+### `/job-materials`
+Generates application materials for the top 3 scored jobs. Invoked by `/job-hunt` and runs independently via cron 4x daily.
+
+**What it does:** finds all `scored` jobs → picks top 3 by score → reads application file → fetches company about page → writes tailoring notes + tailored resume + cover letter → updates status to `materials_ready` → sends one WhatsApp batch notification. Exits silently if no scored jobs waiting.
 
 ---
 
@@ -213,7 +214,7 @@ Mark a job as applied. Updates status to `applied` and sets today's date in the 
 ---
 
 ### `/github-analyse <repo-url>`
-Analyses a GitHub repository and writes a structured project entry to `PROJECTS.md`. Works with no README — uses GitHub API metadata, file tree, manifest files, entry points, and test files. If the repo already exists in `PROJECTS.md`, the entry is overwritten not duplicated.
+Analyses a GitHub repository and writes a structured project entry to `PROJECTS.md`. Works with no README — uses GitHub API metadata, file tree, manifest files, entry points, and test files. Overwrites existing entries rather than duplicating.
 
 Run this for each of your projects before running `/job-hunt` for the first time, so the agent has rich project context for scoring and cover letters.
 
@@ -232,7 +233,7 @@ Output saved alongside the input file with `.pdf` extension.
 
 ## Application File Format
 
-Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
+Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`. The Job Description section is always the complete verbatim text from the Seek listing — this is what `/job-materials` uses to generate tailored content.
 
 ```markdown
 # [Job Title] @ [Company]
@@ -246,6 +247,10 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 - **Salary:** $130–150k
 - **Location:** Melbourne CBD, hybrid
 - **Application method:** Seek Easy Apply
+
+## Job Description
+[complete verbatim text from seek-fetch.js — all responsibilities, requirements,
+tech stack mentions, team context, and any other detail present in the listing]
 
 ## Relevance Score: 8.2 / 10
 | Dimension | Score | Notes |
@@ -264,10 +269,10 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 - Kubernetes, Terraform
 
 ## Tailoring Notes
-(filled by /job-hunt)
+(filled by /job-materials)
 
 ## Cover Letter
-(filled by /job-hunt)
+(filled by /job-materials)
 ```
 
 ---
@@ -294,6 +299,8 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 | Salary unknown → proceed | Many roles omit salary; don't miss good jobs on missing data |
 | Playwright for Seek, Brave Search for LinkedIn | seek-fetch.js scrapes Seek directly (reliable, fast); Brave Search used only for LinkedIn snippets |
 | No Chrome for LinkedIn | Bot detection too aggressive — snippets only |
+| Verbatim job description in application file | `/job-materials` works entirely from the application file — no re-fetching Seek listings |
+| Separate `/job-materials` skill with cap of 3 | Keeps job-hunt fast; materials generation runs independently and spreads load throughout the day |
 | Agent generates materials, you apply | Removes auth complexity entirely; avoids automated submission detection; you stay in control |
 | Tailoring notes, not resume rewrites | `RESUME.md` stays as single source of truth; notes are auditable |
 | Markdown files, not a database | Agent reads/writes using the same tools as everything else |

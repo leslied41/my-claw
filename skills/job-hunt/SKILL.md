@@ -98,7 +98,9 @@ For each job with full details, score against `workspace/RESUME.md`:
 
 ## Step 6 — Create application file
 
-For each job with score ≥ 6.0, create `workspace/jobs/applications/YYYY-MM-DD_Company_Role.md`:
+For each job with score ≥ 6.0, create `workspace/jobs/applications/YYYY-MM-DD_Company_Role.md`.
+
+**The Job Description section must contain the complete, verbatim text from seek-fetch.js — no summarising, no truncating.** This is the only time the Seek listing is fetched. `/job-materials` works entirely from this file and must not need to re-fetch anything from Seek.
 
 ```markdown
 # [Job Title] @ [Company]
@@ -114,7 +116,8 @@ For each job with score ≥ 6.0, create `workspace/jobs/applications/YYYY-MM-DD_
 - **Application method:** [Seek Easy Apply / email: x@y.com / external URL]
 
 ## Job Description
-[full description from seek-fetch.js]
+[complete verbatim text from seek-fetch.js — all responsibilities, requirements,
+tech stack mentions, team context, and any other detail present in the listing]
 
 ## Relevance Score: X.X / 10
 | Dimension | Score | Notes |
@@ -132,106 +135,41 @@ For each job with score ≥ 6.0, create `workspace/jobs/applications/YYYY-MM-DD_
 - [list]
 
 ## Tailoring Notes
-(filled in by Step 7)
+(filled by /job-materials)
 
 ## Cover Letter
-(filled in by Step 7)
+(filled by /job-materials)
 ```
 
 ---
 
-## Step 7 — Generate application materials
+## Step 7 — Update pipeline
 
-For each scored job, generate materials using **two data sources together**:
-- **Job page** (from Step 4): full description, requirements, responsibilities, tech stack asked for
-- **Company about page** (fetched below): mission, product, team size, company tech stack
-
-### 7a — Fetch company about page
-
-WebFetch the company's **own website** about/careers page (not the Seek listing). Extract:
-- Company mission / what they build
-- Team size (startup or enterprise — affects cover letter tone)
-- Tech stack they use internally
-- Any specific product or initiative relevant to Leslie's background
-
-If unreachable, check LinkedIn company page as fallback. If both unavailable, proceed with job listing context only.
-
-### 7b — Tailoring notes
-
-With both sources in hand, write into the application file under **Tailoring Notes** (do NOT modify `RESUME.md`):
-
-1. **Keyword mapping** — list each significant term from the job description (Step 4), map to Leslie's resume equivalent, note gaps:
-   | JD term | Resume equivalent | Gap? |
-   |---|---|---|
-
-2. **Summary rewrite** — 2–3 sentences foregrounding the most relevant skills. Mirror the job description's language; reference the company's product/domain from the about page.
-
-3. **Experience bullet reorder** — list which bullets should move to the top based on the job requirements.
-
-4. **Skills table reorder** — which skill category rows should appear first based on what the role prioritises.
-
-5. **Gap note** — honest statement of any genuine gaps between job requirements and Leslie's experience.
-
-### 7c — Tailored resume
-
-Generate `workspace/jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md` from `RESUME.md` applying the tailoring notes:
-
-1. Replace summary with the rewritten version (mirrors job description language, references company domain)
-2. Reorder experience bullets (most relevant to this role's requirements first)
-3. Reorder skills table categories (most relevant to the role first)
-4. Substitute keywords from the job description where they are genuine equivalents — never fabricate
-5. Do NOT add missing skills — leave gap note in application file only
-
-Everything else must be identical to `RESUME.md`.
-
-### 7d — Cover letter
-
-Write a 250–350 word cover letter into the application file under **Cover Letter**, drawing on both sources:
-
-**Paragraph 1 — Hook** (uses company about page)
-"I'm applying for the [Role] at [Company]. [Company]'s work on [specific product/mission from about page] aligns directly with my recent work on [Leslie's most relevant project] — both involve [shared technical challenge]."
-
-**Paragraph 2 — Evidence** (uses job description requirements from Step 4)
-One or two specific, quantified achievements that directly address the role's core requirements. Mirror the job description's language. Pull from `RESUME.md`.
-
-**Paragraph 3 — Company Fit** (uses both sources)
-What specifically appeals: the role's tech stack, the company's mission, team scale, product domain. No generic statements ("great culture", "exciting opportunity").
-
-**Paragraph 4 — Close**
-Confident, not grovelling. Available for interview. Contact: leslied41@gmail.com / 0468 911 943.
-
-**Tone:** startup < ~50 people → direct, informal. Enterprise/government → formal, emphasise reliability and production track record.
+Add each new job to the **Active Jobs** table in `JOB_PIPELINE.md` with status `scored`.
 
 ---
 
-## Step 8 — Update pipeline
+## Step 8 — Notify sweep result
 
-Add each new job to the **Active Jobs** table in `JOB_PIPELINE.md` with status `materials_ready`.
-
----
-
-## Step 9 — Notify
-
-After the run, send one WhatsApp summary to Leslie (+61468911943):
+Send a brief WhatsApp summary:
 
 ```
-Job sweep complete. [N] new matches, [Y] discarded.
-
-• JOB-001: [Title] @ [Company] — Score: X.X | $[salary] | [arrangement]
-  Apply: [job URL]
-  Resume: jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md
-  Notes: jobs/applications/YYYY-MM-DD_Company_Role.md
-
-• JOB-002: ...
+Job sweep complete. [N] new jobs scored, [Y] discarded.
 ```
 
 If nothing new was found: `Job sweep done — no new matches this run.`
 
 ---
 
-## Step 10 — Update SEARCH_QUERIES.md
+## Step 8 — Update SEARCH_QUERIES.md
 
 After each run, add a brief quality note to the queries that were used (e.g. "returned 0 relevant results 2026-03-21" or "good signal"). Retire queries that consistently return nothing useful.
+
+---
+
+## Step 9 — Trigger job-materials
+
+Run `/job-materials` to start generating application materials for the top scored jobs.
 
 ---
 

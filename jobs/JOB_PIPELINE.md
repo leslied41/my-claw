@@ -1,10 +1,10 @@
 # Job Pipeline
 
-Last updated: 2026-03-24
+Last updated: 2026-03-25
 
 ## Pipeline States
-`discovered → filtered → scored → materials_ready → pending_review → applied`
-Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skipped` (Leslie passed)
+`discovered → filtered → scored → materials_ready → applied`
+Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skipped` (passed), `expired` (listing closed)
 
 ## Active Jobs
 
@@ -21,6 +21,9 @@ Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skip
 | JOB-009 | Senior Software Engineer | Aspirante Pty Ltd | negotiable | Melbourne (Hybrid) | materials_ready | 7.35 | 2026-03-24 | 2026-03-24 |
 | JOB-010 | Senior AI Enablement Engineer | Australian Unity | not stated | Melbourne (Hybrid) | materials_ready | 6.6 | 2026-03-24 | 2026-03-24 |
 | JOB-011 | Software Engineer - Core | Easygo Solutions | not stated | Melbourne (Hybrid) | materials_ready | 6.4 | 2026-03-24 | 2026-03-24 |
+| JOB-012 | Senior Software Engineer | MongoDB | not stated | Sydney (Hybrid) | materials_ready | 7.8 | 2026-03-25 | 2026-03-25 |
+| JOB-013 | AI Engineer - Applied AI | Culture Amp | not stated | Melbourne | materials_ready | 7.75 | 2026-03-25 | 2026-03-25 |
+| JOB-014 | Software Engineer - AI / AWS / DevOps | NTP Talent | $160k-$200k | Sydney (Hybrid) | materials_ready | 7.75 | 2026-03-25 | 2026-03-25 |
 
 ## Archived Jobs (skipped / discarded / weak_match)
 

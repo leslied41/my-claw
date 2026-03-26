@@ -223,8 +223,6 @@ Job sweep complete. [N] new matches, [Y] discarded.
   Notes: jobs/applications/YYYY-MM-DD_Company_Role.md
 
 • JOB-002: ...
-
-Reply "done XXX" when applied, or "skip XXX" to pass.
 ```
 
 If nothing new was found: `Job sweep done — no new matches this run.`

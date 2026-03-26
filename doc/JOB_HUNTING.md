@@ -25,24 +25,24 @@ User invokes /job-hunt (or cron fires)
 
 | Directory | Purpose | Written by |
 |---|---|---|
-| `skills/` | Workflow instructions, templates, protocols | Leslie only |
+| `skills/` | Workflow instructions, templates, protocols | You only |
 | `jobs/` | Live pipeline state, search queries, application files | Agent only |
-| `RESUME.md` | Source of truth for Leslie's experience | Leslie only |
+| `RESUME.md` | Source of truth for your experience | You only |
 
 Skills are never modified by the agent. The agent only writes to `jobs/`.
 
 ### You control the gate
 
-The agent moves jobs autonomously through the pipeline up to `pending_review`. Nothing is submitted without your explicit action. This avoids automated submission detection and keeps you in control of what goes out.
+The agent moves jobs autonomously through the pipeline up to `materials_ready`. You apply yourself and mark jobs done with `/job-applied`.
 
 ```
-Agent does:  discover → filter → score → tailor resume → cover letter → notify you (fully automated)
-You do:      review materials → open job URL → apply yourself
+Agent does:  discover → filter → score → tailor resume → cover letter → notify (fully automated)
+You do:      review materials → open job URL → apply → /job-applied JOB-XXX
 ```
 
 ### Markdown over database
 
-All state is stored in markdown files. This means the agent can read and write state using the same tools it uses for everything else — no separate database, no special tooling. The pipeline table in `JOB_PIPELINE.md` is a plain markdown table.
+All state is stored in markdown files. The agent reads and writes state using the same tools it uses for everything else — no separate database, no special tooling. The pipeline table in `JOB_PIPELINE.md` is a plain markdown table.
 
 ---
 
@@ -50,17 +50,14 @@ All state is stored in markdown files. This means the agent can read and write s
 
 ```
 workspace/
-├── RESUME.md                    ← Leslie's skills and experience (source of truth)
+├── RESUME.md                    ← Your skills and experience (source of truth)
 ├── PROJECTS.md                  ← Project history analysed from GitHub (maintained by /github-analyse)
-├── PREFERENCES.md               ← Agent behaviour rules (web search permissions, etc.)
-├── HEARTBEAT.md                 ← Background check tasks (stale job reminders)
+├── HEARTBEAT.md                 ← Background cleanup tasks (expiry, archival)
 ├── doc/
-│   └── plan.md                  ← Implementation plan and design decisions
+│   └── JOB_HUNTING.md           ← This file
 ├── jobs/
 │   ├── JOB_PIPELINE.md          ← Live CRM table: all jobs and their status
 │   ├── SEARCH_QUERIES.md        ← Curated Seek/LinkedIn query bank (agent-maintained)
-│   ├── memory/
-│   │   └── heartbeat-state.json ← Tracks which jobs have been reminded (prevents spam)
 │   └── applications/
 │       ├── YYYY-MM-DD_Company_Role.md         ← Application file (score, tailoring notes, cover letter)
 │       └── YYYY-MM-DD_Company_Role_RESUME.md  ← Tailored resume (ready to submit)
@@ -69,14 +66,14 @@ workspace/
     │   ├── SKILL.md             ← Full pipeline: discovery → scoring → tailoring → notify
     │   └── scripts/
     │       └── seek-fetch.js    ← Playwright scraper for Seek search + job pages
-    ├── job-status/
-    │   └── SKILL.md             ← Read-only pipeline snapshot
+    ├── job-applied/
+    │   └── SKILL.md             ← Mark a job as applied in the pipeline
     ├── github-analyse/
     │   └── SKILL.md             ← Analyse a GitHub repo and write to PROJECTS.md
     └── md-to-pdf/
         ├── SKILL.md             ← Convert tailored resume markdown to PDF
         └── scripts/
-            └── md-to-pdf.js ← Playwright-based markdown→PDF converter
+            └── md-to-pdf.js    ← Playwright-based markdown→PDF converter
 ```
 
 ---
@@ -84,7 +81,7 @@ workspace/
 ## Pipeline
 
 ```
-discovered → filtered → scored → materials_ready → pending_review → applied
+discovered → filtered → scored → materials_ready → applied
                 ↓            ↓
           discarded      weak_match        ← archived, no further work
 ```
@@ -94,16 +91,16 @@ discovered → filtered → scored → materials_ready → pending_review → ap
 | `discovered` | URL found, not yet fetched |
 | `filtered` | Passed hard filters (salary, location, employment type) |
 | `scored` | Relevance score ≥ 6.0, application file created |
-| `materials_ready` | Tailoring notes and cover letter written |
-| `pending_review` | Form pre-filled, waiting for Leslie to submit |
-| `applied` | Submitted |
+| `materials_ready` | Tailoring notes, tailored resume, and cover letter written |
+| `applied` | You submitted the application |
 | `discarded` | Failed a hard filter |
 | `weak_match` | Score < 6.0 |
-| `skipped` | Leslie passed on it |
+| `skipped` | You passed on it |
+| `expired` | Listing closed (> 30 days old) |
 
 ---
 
-## The 7-Phase Workflow
+## The 6-Phase Workflow
 
 ### Phase 1 — Discovery
 
@@ -137,21 +134,16 @@ Scored against `RESUME.md` across four weighted dimensions:
 
 | Dimension | Weight | How scored |
 |---|---|---|
-| Technical skills match | 40% | Must-have tech skills Leslie has ÷ total must-haves × 10 |
-| Experience level match | 25% | Leslie has ~4 years — mid-level roles score highest |
+| Technical skills match | 40% | Must-have tech skills covered ÷ total must-haves × 10 |
+| Experience level match | 25% | ~4 years — mid-level roles score highest |
 | Domain/industry fit | 20% | Same domain = 10, adjacent = 6, unrelated = 2 |
-| Nice-to-have coverage | 15% | Proportion of nice-to-haves Leslie covers × 10 |
+| Nice-to-have coverage | 15% | Proportion of nice-to-haves covered × 10 |
 
 **Threshold: score ≥ 6.0 → proceed. Below 6.0 → archived as `weak_match`.**
 
 Score breakdown is saved in every application file so the threshold can be tuned over time.
 
-### Phase 4 — Resume Tailoring & Material Generation
-
-Before tailoring, `/job-apply` ensures complete job data is available:
-- If the application file already has the full Seek job description (fetched during `/job-hunt`) — use it directly, no re-fetch needed
-- If only summary data was captured (job-hunt hit the 5-fetch cap) — re-fetch the Seek job page using `seek-fetch.js --url` to get the full description
-- Then WebFetch the **company's own website** (not the Seek listing) to extract mission, team size, product context — this is what makes the cover letter specific rather than generic
+### Phase 4 — Resume Tailoring
 
 `RESUME.md` is never modified. Instead, tailoring notes are written into the application file:
 
@@ -160,6 +152,8 @@ Before tailoring, `/job-apply` ensures complete job data is available:
 3. **Experience bullet reorder** — most relevant bullets moved to top
 4. **Skills table reorder** — most relevant categories shown first
 5. **Gap note** — honest statement of anything missing
+
+A tailored resume (`YYYY-MM-DD_Company_Role_RESUME.md`) is generated from `RESUME.md` applying these notes.
 
 ### Phase 5 — Cover Letter
 
@@ -174,46 +168,32 @@ Tone calibrated: startup < ~50 people (direct, informal) vs enterprise (formal, 
 
 ### Phase 6 — Notification
 
-Once tailored resume and cover letter are ready, the agent sends a WhatsApp summary:
+Once materials are ready, the agent sends a WhatsApp summary:
 
 ```
-JOB-XXX ready: [Title] @ [Company]
-Score: X.X | $[salary] | [arrangement]
+Job sweep complete. [N] new matches, [Y] discarded.
 
-Apply here: [job URL]
+• JOB-001: [Title] @ [Company] — Score: X.X | $[salary] | [arrangement]
+  Apply: [job URL]
+  Resume: jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md
+  Notes: jobs/applications/YYYY-MM-DD_Company_Role.md
 
-Tailored resume: jobs/applications/YYYY-MM-DD_Company_Role_RESUME.md
-Cover letter + notes: jobs/applications/YYYY-MM-DD_Company_Role.md
-
-Reply "done XXX" when applied, or "skip XXX" to pass.
+• JOB-002: ...
 ```
 
-You review the materials, open the job URL, and apply yourself. The agent never submits on your behalf.
-
-### Phase 7 — Status Updates
-
-- `done XXX` → status set to `applied`, date recorded
-- `skip XXX` → moved to Archived with status `skipped`
+You review the materials, open the job URL, and apply yourself. Run `/job-applied JOB-XXX` when done.
 
 ---
 
-## Automation (Cron)
-
-Three cron jobs run automatically (configured in `.openclaw/cron/jobs.json`):
+## Automation
 
 | Job | Schedule | What it does |
 |---|---|---|
 | Daily sweep | 1:47 PM AEST, Mon–Fri | Runs `/job-hunt` |
-| Heartbeat check | 9:00 AM AEST, daily | Checks for stale `pending_review` jobs |
+| Heartbeat | Periodic | Expires stale active jobs (> 30 days), cleans archived entries (> 60 days) |
 
-**Heartbeat behaviour:**
-- Jobs in `pending_review` for > 48 hours → one WhatsApp reminder (once only per job)
-- Jobs in `pending_review` for > 7 days → auto-skipped
-- No reminders sent between 23:00–08:00 AEST
-- Reminder state tracked in `jobs/memory/heartbeat-state.json`
-
-**Expiry & cleanup:**
-- Active jobs (`discovered`, `filtered`, `scored`, `materials_ready`) older than 30 days → moved to Archived as `expired` (Seek listings expire after ~30 days)
+**Expiry & cleanup (heartbeat):**
+- Active jobs (`discovered`, `filtered`, `scored`, `materials_ready`) older than 30 days → moved to Archived as `expired`
 - Archived entries older than 60 days → deleted entirely, along with their application files
 
 ---
@@ -221,18 +201,21 @@ Three cron jobs run automatically (configured in `.openclaw/cron/jobs.json`):
 ## Slash Commands
 
 ### `/job-hunt`
-Runs the full pipeline end-to-end. What the cron runs automatically — also invoke manually to trigger on demand.
+Runs the full pipeline end-to-end. Invoked by the daily cron or manually on demand.
 
-**What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek, Brave Search for LinkedIn snippets → hard filters → fetches full job pages (batch, one browser session) → scores → generates tailored resume + cover letter for each match → notifies you on WhatsApp → updates query quality notes.
+**What it does:** loads pipeline + queries + resume → runs `seek-fetch.js` for Seek, Brave Search for LinkedIn snippets → hard filters → fetches full job pages (batch, one browser session) → scores → generates tailored resume + cover letter for each match → notifies via WhatsApp → updates query quality notes.
 
-**Cap:** max 10 URLs fetched, max 5 jobs scored per run. The rest stay as `discovered` for the next run.
+---
+
+### `/job-applied JOB-XXX`
+Mark a job as applied. Updates status to `applied` and sets today's date in the pipeline.
 
 ---
 
 ### `/github-analyse <repo-url>`
 Analyses a GitHub repository and writes a structured project entry to `PROJECTS.md`. Works with no README — uses GitHub API metadata, file tree, manifest files, entry points, and test files. If the repo already exists in `PROJECTS.md`, the entry is overwritten not duplicated.
 
-Run this manually for each of your projects before running `/job-hunt` for the first time, so the agent has rich project context for scoring and cover letters.
+Run this for each of your projects before running `/job-hunt` for the first time, so the agent has rich project context for scoring and cover letters.
 
 ---
 
@@ -246,31 +229,6 @@ Converts any markdown file to PDF. Manually triggered only.
 Output saved alongside the input file with `.pdf` extension.
 
 ---
-
-### `/job-status`
-Read-only pipeline snapshot. Shows counts by status.
-
-```
-📋 Job Pipeline — 2026-03-20
-
-Active
-  discovered      3
-  filtered        1
-  scored          2
-  materials_ready 1
-  pending_review  2  ← action needed
-  applied         5
-
-Archived
-  weak_match      8
-  discarded       4
-  skipped         1
-
-Total tracked: 27
-```
-
----
-
 
 ## Application File Format
 
@@ -293,8 +251,8 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 | Dimension | Score | Notes |
 |---|---|---|
 | Technical skills match (40%) | 9/10 | React ✓ TypeScript ✓ Python ✓ |
-| Experience level match (25%) | 8/10 | Senior role, Leslie is borderline |
-| Domain/industry fit (20%) | 7/10 | SaaS adjacent to IMOS work |
+| Experience level match (25%) | 8/10 | Senior role, ~4 years experience |
+| Domain/industry fit (20%) | 7/10 | SaaS adjacent to previous work |
 | Nice-to-have coverage (15%) | 8/10 | Docker ✓ AWS ✓ Kubernetes ✗ |
 
 ## Requirements
@@ -306,10 +264,10 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 - Kubernetes, Terraform
 
 ## Tailoring Notes
-(filled by /job-apply)
+(filled by /job-hunt)
 
 ## Cover Letter
-(filled by /job-apply)
+(filled by /job-hunt)
 ```
 
 ---
@@ -322,8 +280,7 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 | Seek changes selectors | Update `data-automation` selectors in `seek-fetch.js`; test with `--url` mode |
 | LinkedIn truncated (no auth) | Seek/company careers page used for full JD |
 | Active jobs not actioned after 30 days | Heartbeat marks them `expired` and archives silently |
-| Stale `pending_review` | Heartbeat re-pings after 48h (once); auto-skipped after 7 days |
-| Application file bloat | After 30 days, move skipped/rejected to `jobs/applications/archive/` |
+| Application file bloat | Archived entries deleted after 60 days along with their application files |
 
 ---
 
@@ -335,10 +292,8 @@ Each job gets a file at `jobs/applications/YYYY-MM-DD_Company_Role.md`:
 | `jobs/` holds state only | Clean separation between instructions (skills) and data (jobs) |
 | Hard salary filter first | No point scoring a job that pays under threshold |
 | Salary unknown → proceed | Many roles omit salary; don't miss good jobs on missing data |
-| Playwright script for Seek, Brave Search for LinkedIn | seek-fetch.js scrapes Seek directly (reliable, fast, no WebFetch dependency); Brave Search used only for LinkedIn snippets |
+| Playwright for Seek, Brave Search for LinkedIn | seek-fetch.js scrapes Seek directly (reliable, fast); Brave Search used only for LinkedIn snippets |
 | No Chrome for LinkedIn | Bot detection too aggressive — snippets only |
 | Agent generates materials, you apply | Removes auth complexity entirely; avoids automated submission detection; you stay in control |
 | Tailoring notes, not resume rewrites | `RESUME.md` stays as single source of truth; notes are auditable |
-| Agent pre-fills, you submit | Avoids automated submission detection; you stay in the loop |
 | Markdown files, not a database | Agent reads/writes using the same tools as everything else |
-| Max 5 scored per cron run | Prevents slow/expensive runs when many listings appear at once |

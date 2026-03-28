@@ -91,14 +91,18 @@ For each job with full details, score against `workspace/RESUME.md`:
 
 **Weighted score = (tech×0.4) + (exp×0.25) + (domain×0.2) + (nth×0.15)**
 
-- Score ≥ 6.0 → proceed to Step 6
-- Score < 6.0 → log as `weak_match` in Archived Jobs table, stop
+- Score ≥ 5.5 → proceed to Step 6
+- Score < 5.5 → log as `weak_match` in Archived Jobs table, stop
+
+**Always compute and record the numeric score before logging a weak_match.** Do not log a job as `weak_match` with only a qualitative reason — the score must appear in the Reason column (e.g. `Score 5.1 < 5.5 — deep learning/HPC research, no stack match`).
+
+**Frontend roles are valid.** Leslie has strong React, Vue.js, TypeScript, and Next.js experience. Do not pre-filter or penalise a role simply because it is frontend-focused or "frontend-heavy". Score it normally — it may pass on tech match (React/Vue/TS) even if domain or experience dimensions score lower.
 
 ---
 
 ## Step 6 — Create application file
 
-For each job with score ≥ 6.0, create `workspace/jobs/applications/YYYY-MM-DD_Company_Role.md`.
+For each job with score ≥ 5.5, create `workspace/jobs/applications/YYYY-MM-DD_Company_Role.md`.
 
 **The Job Description section must contain the complete, verbatim text from seek-fetch.js — no summarising, no truncating.** This is the only time the Seek listing is fetched. `/job-materials` works entirely from this file and must not need to re-fetch anything from Seek.
 

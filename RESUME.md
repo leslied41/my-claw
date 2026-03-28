@@ -56,13 +56,15 @@ Versatile full-stack software engineer with hands-on experience designing and de
 | Category | Skills |
 |---|---|
 | **Languages** | JavaScript, TypeScript, Python, Java, HTML, CSS, SQL |
-| **Front-End / UI** | React, Vue.js, Next.js, React Native, Ionic, Tailwind CSS, Storybook |
-| **Back-End / APIs** | Spring Boot, FastAPI, Express.js, RESTful API design, OpenAPI / Swagger, MCP, AWS |
-| **AI / Search / Data** | RAG, semantic search, hybrid search (vector + BM25), cross-encoder reranking (MS MARCO), SentenceTransformers, ChromaDB, HNSW indexing, score fusion |
-| **Data & Visualization** | xarray, NetCDF, matplotlib, Mapbox GL, WebGL, particle-based visualisation |
-| **Databases** | PostgreSQL, MySQL, MongoDB, ChromaDB (vector) |
-| **DevOps & Tools** | Docker, Git, uv, CLI tooling, CI/CD pipelines, Terraform |
-| **Testing** | Jest, Cypress, Playwright, React Testing Library |
+| **Front-End / UI** | React, Vue.js, Next.js, React Native, Ionic, Tailwind CSS, Storybook, Zustand, Redux Toolkit, React Query, Radix UI, Material UI, Highcharts, React Navigation, React Native Reanimated, Formik |
+| **Back-End / APIs** | Spring Boot, Spring Cloud (Gateway, Eureka, Config), FastAPI, Express.js, RESTful API design, OpenAPI / Swagger, MCP, JWT, pydantic, SSE |
+| **AI / Search / Data** | RAG, semantic search, hybrid search (vector + BM25), cross-encoder reranking (MS MARCO), SentenceTransformers, ChromaDB, HNSW indexing, score fusion, Gemini AI |
+| **Data & Visualization** | xarray, NetCDF, Zarr, Parquet, DuckDB, matplotlib, Mapbox GL, WebGL, GLSL shaders, particle-based visualisation |
+| **Messaging & Integration** | Kafka, AWS (S3, Batch, ECS), boto3, APScheduler |
+| **Databases** | PostgreSQL, MySQL, MongoDB, Redis, ChromaDB (vector) |
+| **DevOps & Tools** | Docker, Git, Vite, uv, Flyway, Zipkin, MapStruct, Lombok, npm workspaces, CLI tooling, CI/CD pipelines, Terraform |
+| **CMS** | Sanity CMS |
+| **Testing** | Jest, Vitest, Cypress, Playwright, React Testing Library |
 
 ---
 

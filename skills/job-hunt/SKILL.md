@@ -53,7 +53,7 @@ Search result data (title, company, salary, location, workType) is sufficient fo
 - Employment type is contract or casual only
 - Location is not Melbourne, Brisbane, or Sydney AND not remote-friendly (no mention of remote/hybrid/WFH)
 
-Log discarded jobs to the **Archived Jobs** table in `JOB_PIPELINE.md` with reason. Do not create application files for them.
+Log discarded jobs to the **Archived Jobs** table in `JOB_PIPELINE.md` with reason and the job URL. Do not create application files for them.
 
 ---
 
@@ -149,7 +149,7 @@ tech stack mentions, team context, and any other detail present in the listing]
 
 ## Step 7 — Update pipeline
 
-Add each new job to the **Active Jobs** table in `JOB_PIPELINE.md` with status `scored`.
+Add each new job to the **Active Jobs** table in `JOB_PIPELINE.md` with status `scored` and the job URL.
 
 ---
 

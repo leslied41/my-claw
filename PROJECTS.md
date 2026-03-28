@@ -12,6 +12,112 @@ This file is maintained by the `/github-analyse` skill. Each entry is generated 
 
 <!-- Entries are added below by /github-analyse. Each starts with ## repo-name -->
 
+## data-access-service
+- **URL:** https://github.com/aodn/data-access-service
+- **Type:** professional
+- **Languages:** Python 100%
+- **Stack:** FastAPI, aodn_cloud_optimized (AODN's own library for cloud-optimized Parquet/Zarr access), DuckDB (in-memory queries), xarray, Zarr, Parquet, APScheduler, boto3, botostarter, AWS Batch/ECS/S3, uvicorn, pydantic, Poetry, Docker, pre-commit
+- **What it does:** AODN Data Access Service — a REST API that provides cloud-optimized access to IMOS marine observation datasets (Parquet and Zarr formats). Supports subsetting by bounding box, time range, and depth; generates GeoJSON FeatureCollections for vector data (wave buoys, current meters); and provides formatted metadata endpoints. Also handles batch data downloads via AWS Batch subsetting jobs with email notifications on completion.
+- **Architecture notes:** Two-tier architecture — FastAPI REST layer backed by `aodn_cloud_optimized` (AODN's own library wrapping `DataQuery` for Parquet/Zarr access). Uses DuckDB in-memory for fast analytical queries on structured data. Batch subsetting jobs run on AWS Batch (ECS), triggered via an `entry_point.py` script. Multi-environment config (central, edge, staging, production) with per-environment `.env` files. Coordinates with `ocean-current-frontend` and `imos-live-frontend` — those frontends call this API.
+- **Key endpoints:** `/api/v1/das/health` (health check), `/api/v1/das/metadata` (formatted metadata list), `/api/v1/das/metadata/{uuid}` (metadata per dataset), `/api/v1/das/data/{uuid}` (subset data, returns NetCDF/JSON), `/api/v1/das/data/{uuid}/has_data` (check coverage), `/api/v1/das/data/{uuid}/temporal_extent` (date range), `/api/v1/das/data/feature-collection/wave-buoy` (GeoJSON), `/api/v1/das/data/feature-collection/wave-buoy/{buoy_name}` (per-buoy SSW/WPH/WPM/WHT/WSH data)
+- **Skills demonstrated:** FastAPI with pydantic, cloud-optimized data formats (Zarr/Parquet), AWS Batch job orchestration, xarray for scientific data, DuckDB for in-memory analytics, boto3/S3 integration, async/scheduling patterns (APScheduler), SSE (Server-Sent Events) via `sse_starlette`, email notifications with rich HTML templates, multi-environment Docker deployments, Poetry dependency management
+- **Quality signals:** GitHub Actions CI/CD (build-deploy edge, docker-build-pr, release, test, trigger_deploy), pre-commit hooks, DeepSource config, Poetry for reproducible builds, comprehensive test suite with pytest/mocks, architecture with clear separation (core/models/batch/tasks/utils packages), request collection for API testing (`.http` files)
+- **Analysed:** 2026-03-28
+
+## ocean-current-frontend
+- **URL:** https://github.com/aodn/ocean-current-frontend
+- **Type:** professional
+- **Languages:** TypeScript 89%, JavaScript 11%, HTML/CSS <1%
+- **Stack:** React 18, Vite, React Map GL, Mapbox GL JS, Zustand, React Query, Tailwind CSS, date-fns, clsx, ESLint, Prettier, Husky, commitlint, Playwright, Vitest, Yarn 4, Vite plugin SVG
+- **What it does:** AODN Ocean Current website — a comprehensive marine data portal visualizing multiple ocean observation products including ocean surface currents (via particle animation), Argo float trajectories, current meter deployments, sea level anomaly, SST (4-hour, 6-day), ocean colour, tidal currents, SWOT satellite data, gliders, and more. Users can select products, filter by region/date, view legends, and download data.
+- **Architecture notes:** Designed as a rewrite of the legacy Ocean Current site with modern UI/UX. API requests are proxied through Vite dev server in development; in production they resolve to the deployment host directly. Has separate edge and production deployment pipelines. Multiple map layer types: particle vector fields (via WebGL), GeoJSON point/polygon layers for Argo/current meters/gliders, WMS raster overlays for SST and sea level. Extensive use of custom map style JSON configs (basic-v8, bathymetry).
+- **Key components:** ArgoMapMenuBar, ArgoDatePagination, DatePagination, DatePicker (custom multi-format), DateSlider, DataVisualisationSidebar (with ProductSidebar, ProductDropdown, ProductDescriptionModal, Legend system, ArgoFilters, CurrentMetersFilters), Map (BasicMap with custom navigation controls, layer hooks), Footer
+- **Skills demonstrated:** React Map GL + Mapbox GL JS integration, multi-product data visualization (particles, points, polygons, rasters), complex filter/state management with Zustand and React Query, date/time filtering across multiple time granularities (Argo pagination, date picker, slider), data download capabilities, responsive sidebar/drawer UI, SVG icon system, product description modal with large data payload
+- **Quality signals:** Full CI/CD with GitHub Actions (separate ci.yml, cd_edge.yml, cd_production.yml), Playwright E2E tests (headless/headed/production variants), Vitest unit tests with snapshots, commitlint with gitmoji convention, ESLint with extensive plugins, Prettier formatting, Yarn 4, Architecture Decision Records (adrs/), issue templates, comprehensive README with branch naming convention and environment variable docs, GPL-3.0 license
+- **Analysed:** 2026-03-28
+
+## stomble
+- **URL:** https://github.com/leslied41/stomble
+- **Type:** professional
+- **Languages:** TypeScript 99.8%, JavaScript 0.2%
+- **Stack:** React Native 0.70.5 (Expo SDK 47/48), Redux Toolkit, React Navigation (native-stack, material-top-tabs, bottom-tabs), React Native Reanimated 2.12, Gesture Handler, native SVG, AsyncStorage, formik, react-native-paper, Tailwind CSS, ESLint, Prettier, dateTimePicker, Picker's
+- **What it does:** Stomble — a social video-sharing mobile app. Users can sign up/login as Personal or Business accounts, browse a vertical-scrolling video feed (TikTok-style), search for brands/businesses, view brand profiles with video thumbnails, share/report videos, follow users, and manage their profile. Onboarding flow (Welcome → Demo → Finish) and account switching.
+- **Architecture notes:** Expo-based React Native (runs on iOS/Android/Web). Redux Toolkit for state management. Tab navigation (bottom tabs) with material top tabs for sub-sections. Separate navigation stacks for Auth, Main (tab-based), Search, and Feed. Component organization: auth (forms, landing, login, common), feed (post, bottomSheet, intro), search (mainView, bottomSheetView, searchHintView, searchResult, ui, common), common (BottomSheetLayout, GlobalProvider, HeaderBar, ScreenLayout, TabBar, ToastBox). Asset directories for feed images (icons: heart, share, more, etc.), search images, and user avatars.
+- **Key features:** Vertical video feed with post overlay (brand info, buttons group, finger scroll up, progressive bar, slider), auth flows (PersonalRegisterForm, BusinessRegisterForm, LoginForm, VerifyCodes, BirthdayInput, GenderInput, PhoneNumberInput), bottom sheet interactions (Share, ReportVideo, MoreOptions, ReadMore), search with brand/business results, demo video onboarding, saved accounts on landing
+- **Skills demonstrated:** React Native mobile development (Expo), Redux Toolkit state management, React Navigation (multi-stack: auth/main/search/feed), native mobile UI patterns (bottom sheets, top tabs, progressive bars), form handling with formik + validation, gesture-based interactions (swipe, scroll), AsyncStorage for persistence, social features (follow, share, report)
+- **Quality signals:** ESLint + Prettier configured, TypeScript strict mode, React Native 0.70, Expo SDK 47/48, TypeScript types, comprehensive component structure
+- **Analysed:** 2026-03-28
+
+## art_gallery_hk
+- **URL:** https://github.com/leslied41/art_gallery_hk
+- **Type:** professional
+- **Languages:** JavaScript 99%, CSS/HTML <1%
+- **Stack:** Next.js 11.1.2 (React 17.0.2), Sanity CMS (embedded studio at `/artgallerysanity`), Material UI v4, React Hooks (useState/useEffect/useRef/useContext), Google Fonts (next/font), ESLint, cross-env, Vercel deployment
+- **What it does:** A CMS-driven art gallery website for a Hong Kong gallery — serves artist profiles, exhibition pages (multiple layout variants: horizontal, vertical, half-words, right-horizontal, video, words-only), project showcases, news/press, artist interviews, and an appointment booking form. Bilingual-ready via a `LanguageSwitch` component.
+- **Architecture notes:** Next.js pages router (not App Router) with `/pages/api/` for any backend routes. Sanity serves as the content backend — schemas for Artist, Exhibition, Project, Work, News, Interview, Pages, Settings, SocialMedia, and blockContent (rich text). Multiple reusable components: `ExhibitionStaticCard` with 7 layout variants, `DropDownCard` with 10 content type renderers (ExpoListWorks, ArtistBio, ArtistWorksImageList, PressList, InterviewsList, etc.), `ArtistList`, `ProjectList`, `NewsList`, `Header` (PC + Mobile variants), `Footer`, `AppointmentForm` with custom date picker, `LanguageSwitch`. Context providers for global settings and path history.
+- **Key components:** ExhibitionStaticCard (7 layout variants: Horizontal, Vertical, HalfWords, RightHorizontal, Video, Words), DropDownCard (10 content modes: works images, artist bio, press list, interviews, etc.), artist_works_imagelist/ImageList with grid/list toggle, Header (PcHeader with 14KB of nav logic vs MobileHeader), AppointmentForm with CustomDatePicker, LanguageSwitch
+- **Skills demonstrated:** CMS-driven multi-page Next.js sites, Material UI theming and component customization, responsive design (PC/mobile split), complex component composition patterns (layout variants, content-mode switches), bilingual i18n support, appointment booking workflow, rich image gallery rendering from Sanity CDN
+- **Quality signals:** ESLint configured, environment config via `.env.local`, Vercel-deployed (live at art-gallery-hk.vercel.app), Sanity studio embedded in repo, `cross-env` for cross-platform dev scripts, TypeScript aware (tsconfig present in sanity studio)
+- **Analysed:** 2026-03-28
+
+## book-network
+- **URL:** https://github.com/leslied41/book-network
+- **Type:** side
+- **Languages:** Java 98%, HTML 2%
+- **Stack:** Spring Boot 3.3.2 (Java 21), Spring Security, Spring Data JPA, Spring Mail, Spring Doc OpenAPI, PostgreSQL, Lombok, MapStruct, JWT (jjwt 0.12.6), Docker Compose (PostgreSQL + MailHog), Maven
+- **What it does:** A Spring Boot library management and social lending platform — "book social network." Users can register, verify accounts via email, browse/search books, borrow books (tracked with transaction history), leave feedback/ratings, and manage a personal book collection. Role-based access (USER/ADMIN). OpenAPI/Swagger docs at `/swagger-ui.html`.
+- **Architecture notes:** N-tier layered architecture — entities, DTOs, repositories (Spring Data JPA), services, controllers. MapStruct for entity↔DTO mapping, Lombok for boilerplate reduction. JWT authentication with access + refresh tokens stored in Redis. Docker Compose for local dev (PostgreSQL 5432, MailHog for dev email capture on 1025/8025). Book entity tracks ownership, archived/shareable status, and dynamically computes a borrow rate from feedback.
+- **Entities:** Book, User, Role, Feedback, BookTransactionHistory, VerificationCode — all with BaseEntity audit fields (createdAt, createdBy, updatedAt)
+- **Key features:** Account verification via email (HTML templates), book borrowing workflow with transaction history, feedback/rating system with computed borrow rate, file storage for book covers, JWT auth with refresh tokens, OpenAPI 2.1.0 docs
+- **Skills demonstrated:** Spring Boot full-stack, JPA/Hibernate relationships (OneToMany, ManyToOne, JoinColumn), JPQL queries with custom repository methods, Spring Security + JWT, MapStruct DTO mapping, email templating, Docker Compose multi-service, Lombok, Java streams for computed fields
+- **Quality signals:** Spring Boot Starter projects (web, data-jpa, security, mail, validation, webmvc), SpringDoc OpenAPI (webmvc), test scope for security, multi-profile config (application-dev.yml), JPA audit aware (ApplicationAuditAware), global exception handler with typed error codes
+- **Analysed:** 2026-03-28
+
+## date-slider-lib
+- **URL:** https://github.com/leslieduan/date-slider-lib
+- **Type:** side
+- **Languages:** TypeScript 97%, JavaScript/CSS <3%
+- **Stack:** React 18/19, TypeScript (strict), Tailwind CSS, Vite, Vitest, Storybook, pnpm, Husky, commitlint, ESLint, Prettier, dayjs, svgr
+- **What it does:** A headless-friendly, fully customizable React date slider component library with point, range, and combined selection modes; hour/day/month/year granularity; auto-virtualization for large date ranges (~97% DOM reduction: ~200 vs ~7,300 elements for 10-year daily ranges); and an imperative API via refs for programmatic control (`setDateTime`, `moveByStep`, `focusHandle`).
+- **Architecture notes:** Pure UI component — no external state management required. Controlled and uncontrolled modes supported. Virtualization activates automatically when scrollable and track width exceeds viewport. Composable: can swap in custom icons, render functions for handle/labels/selection panel, date format functions, scale type resolver, and Tailwind class overrides for every element. Separate `DateSliderWrapper` handles container concerns. Modular hook architecture: 17 custom hooks (useDrag, useEventHandlers, useFocusManagement, useHandleAutoScrollToVisible, useHandlePosition, useInitialAutoScrollPosition, useIsScrolling, useOnChangeNotifier, usePositionState, useRAFDFn, useResizeObserver, useScales, useSliderConfig, useSliderDimensions, useSliderVirtualization, useViewPortSize, useDateLabelPersist).
+- **Skills demonstrated:** Complex React component design (18+ dedicated hooks, virtualization, drag interactions), TypeScript with discriminated unions and complex generics, Tailwind CSS class composition, custom scale type resolution algorithm, imperative API design via refs and forwarded methods, date/time arithmetic (dayjs), ARIA/accessibility (keyboard navigation, focus management), mobile-first touch optimization, custom render prop pattern for full component extensibility
+- **Quality signals:** Published to npm (v0.1.27), Storybook with extensive stories, CI/CD (lint+type-check+test+build+release+storybook deploy via GitHub Actions), pre-commit hooks (Husky + commitlint), comprehensive README with live demo, CONTRIBUTING.md, PUBLISHING.md, TypeScript strict mode, no external state management dependency
+- **Analysed:** 2026-03-28
+
+## imos-live-frontend
+- **URL:** https://github.com/aodn/imos-live-frontend
+- **Type:** professional
+- **Languages:** TypeScript 96%, JavaScript/CSS/HTML ~4%
+- **Stack:** React 19, Vite, Tailwind CSS, Mapbox GL JS, WebGL (GLSL shaders), Highcharts, React Query, Zustand, Radix UI, pnpm, Vitest, Playwright, Storybook, ESLint, Prettier, Husky, commitlint
+- **What it does:** Interactive marine data visualization platform for Australia's Integrated Marine Observing System (IMOS). Visualizes processed GSLA ocean current data as WebGL-accelerated particle animations and raster overlays on a Mapbox map, alongside sea level anomaly overlays, sea surface temperature (SST) anomaly layers, and interactive wave buoy observations with clustered map points and time-series charts. A temporal date slider lets users navigate available data history, and a distance measurement tool enables spatial analysis.
+- **Architecture notes:** Heavy use of custom WebGL layers within Mapbox — particle simulation system driven by GLSL fragment shaders, with particles sampling a pre-processed ocean current texture (NetCDF → PNG via Python processing pipeline). The frontend communicates with a THREDDS/WMS data server via WMS tile requests for raster data, and a separate wave buoy API for point observations. Coordinate system: (lon, lat) → vector field texture (R/G channels = U/V velocity components). Particle data is generated on CPU, rendered via GPU ping-pong buffer technique.
+- **Key components:** DateSlider (complex custom component with virtualization, drag hooks, auto-scroll, focus management, 18+ dedicated hooks), DateSelectionBar, ColorScaleBar (Linear/Log/SymLog variants), Highcharts (LineChart, WaveBuoyChart, LatestObservation), DragWrapper, Dropdown, Drawer, FloatingPanel, FeaturesMenu, DistanceMeasurement, Custom Mapbox layers (VectorLayer, ImageLayer for particle and overlay rendering)
+- **Skills demonstrated:** WebGL/GLSL shader programming for particle systems, real-time oceanographic data visualization, custom interactive UI components (complex slider with virtualization), Mapbox GL JS integration with custom layers, THREDDS/WMS raster tile serving, data processing pipeline (NetCDF → PNG textures), React performance patterns, Zustand state management, React Query for data fetching, TypeScript strict mode
+- **Quality signals:** Storybook for component documentation, Vitest unit tests, Playwright E2E tests, CI/CD via GitHub Actions (build-deploy + PR checks + Playwright), commitlint with conventional commits, pre-commit/pre-push Husky hooks, comprehensive `/doc/` with TechnicalDoc.md, DataProcessing.md, PO-Handover.md, WmsCache.md, `.claude/CLAUDE.md` for AI context, issue templates, Node.js 22+
+- **Analysed:** 2026-03-28
+
+## mcp-weather
+- **URL:** https://github.com/leslieduan/mcp-weather
+- **Type:** side
+- **Languages:** TypeScript 79%, JavaScript 20%, HTML/CSS ~1%
+- **Stack:** MCP SDK (@modelcontextprotocol/sdk), React, Vite, Tailwind CSS, npm workspaces (monorepo), ESLint, Prettier, Husky, lint-staged, commitlint, cross-env, TypeScript
+- **What it does:** An MCP (Model Context Protocol) implementation for weather data with natural language processing. A monorepo with 3 packages: (1) `mcp-server` exposes weather tools (`get-alerts` by US state, `get-forecast` by lat/long) via the MCP protocol using the NWS API; (2) `mcp-client` is a REST API bridge that uses Google Gemini AI to interpret plain-English queries into MCP tool calls, returning structured responses with interpretation, results, and raw data; (3) `web-client` is a React+Tailwind web UI for querying weather with example prompts and graceful error/suggestion handling.
+- **Architecture notes:** Monorepo via npm workspaces — three independent packages with shared tooling. The NLP interpretation layer parses natural language ("What's the weather in Miami?", "Alerts in Florida") into structured tool calls with parameters, reasons, and suggestions on failure. NWS API only covers US locations; no historical data or long-range forecasts.
+- **Skills demonstrated:** MCP protocol implementation (server + client), REST API design, natural language → tool call interpretation (Gemini AI), React with TypeScript and Tailwind CSS, npm workspaces monorepo pattern, CI-grade linting/formatting (ESLint, Prettier, commitlint, Husky, lint-staged)
+- **Quality signals:** TypeScript throughout, strict ESLint config with multiple plugins (react, promise, node, import), Prettier formatting, commitlint with conventional commits, Husky + lint-staged pre-commit hooks, monorepo with shared tooling, individual package README files, `.claude/` settings for Claude Desktop integration
+- **Analysed:** 2026-03-28
+
+## leslie-cheung-rag
+- **URL:** https://github.com/leslieduan/leslie-cheung-rag
+- **Type:** side
+- **Languages:** Python 100%
+- **Stack:** sentence-transformers (BGE models), ChromaDB, rank-bm25, FastAPI, uvicorn, pydantic, pre-commit, black, isort, mypy
+- **What it does:** A full-featured RAG system for multi-source Leslie Cheung knowledge (Wikipedia articles + biography PDFs). Uses structure-based markdown chunking with heading hierarchy and 50-word overlap, multi-strategy search (semantic/BM25/hybrid with score fusion), and cross-encoder reranking via MS MARCO models for precision. Coordinates all operations through an Orchestrator pattern with clean separation of concerns — vector repository abstraction supports ChromaDB with an easy path to extend to other backends. Provides a FastAPI REST server with auto-generated OpenAPI/Swagger docs, an MCP server for Claude Desktop integration with lazy loading for sub-second startup, and a full CLI with three commands (`semantic-index`, `semantic-search`, `semantic-api`). Comprehensive documentation in `/docs` including RAG grounding, REST API reference, and installation guide.
+- **Architecture notes:** Single-orchestrator pattern: Orchestrator coordinates SemanticIndex (vector search), BM25Index (keyword search), Reranker (cross-encoder), and DocumentChunker (structure-based splitting). Data pipeline: raw sources (Wikipedia API, PDFs) → cleaning/chunking → embedding → ChromaDB. Supports three search strategies selected at query time: pure semantic (vector), pure keyword (BM25), or hybrid (fused scores). Lazy loading for fast MCP server startup.
+- **Skills demonstrated:** RAG system design with hybrid search (dense + sparse), cross-encoder reranking (MS MARCO models), structure-aware document chunking, vector database abstraction (Repository pattern), multi-interface design (CLI, REST API, MCP server), FastAPI with pydantic validation, uv for fast Python package management, pre-commit hooks (black, isort, mypy, gitlint)
+- **Quality signals:** Pre-commit hooks configured (black, isort, mypy, gitlint), linting/type-checking pipeline, comprehensive docs in /docs, uv for fast reproducible installs, structured README with architecture diagrams, clear separation of concerns via interfaces/core/models packages
+- **Analysed:** 2026-03-28
+
 ## micro-service-e-commerce
 - **URL:** https://github.com/leslied41/micro-service-e-commerce
 - **Type:** side

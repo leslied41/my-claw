@@ -1,6 +1,6 @@
 # Job Pipeline
 
-Last updated: 2026-03-28 (seek-fetch.js confirmed URLs + expired listings archived)
+Last updated: 2026-04-01 (afternoon)
 
 ## Pipeline States
 `discovered → filtered → scored → materials_ready → applied`
@@ -9,9 +9,10 @@ Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skip
 ## Active Jobs
 
 | ID | Title | Company | Salary | Location | Status | Score | Added | Updated | URL |
-|---|---|---|---|---|---|---|---|---|---|
-| JOB-003 | Senior Software Engineer | Aspirante Pty Ltd | negotiable | Melbourne (Hybrid) | materials_ready | 7.5 | 2026-03-21 | 2026-03-28 | https://www.seek.com.au/job/90997702 |
-| JOB-006 | Senior Mobile Developer | LeasePLUS Team | negotiable | Melbourne | materials_ready | 5.5 | 2026-03-21 | 2026-03-28 | https://www.seek.com.au/job/91041756 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| JOB-084 | Senior Developer - Artificial Intelligence | eHealth | $132,236-$150,222+super | Sydney (Hybrid) | materials_ready | 5.85 | 2026-03-29 | 2026-03-29 | https://www.seek.com.au/job/91211277 |
+| JOB-003 | Senior Software Engineer | Aspirante Pty Ltd | negotiable | Melbourne (Hybrid) | expired | 7.5 | 2026-03-21 | 2026-04-02 | https://www.seek.com.au/job/90997702 |
+| JOB-006 | Senior Mobile Developer | LeasePLUS Team | negotiable | Melbourne | expired | 5.5 | 2026-03-21 | 2026-04-02 | https://www.seek.com.au/job/91041756 |
 | JOB-007 | ML/NLP Software Engineer | Rumata Technologies | $110k-$160k | Brisbane (Hybrid) | materials_ready | 7.05 | 2026-03-24 | 2026-03-28 | https://www.seek.com.au/job/91020289 |
 | JOB-008 | Staff Software Engineer (Unloan) | Commonwealth Bank | not stated | Melbourne (Hybrid) | materials_ready | 7.0 | 2026-03-24 | 2026-03-28 | https://www.seek.com.au/job/91089518 |
 | JOB-013 | AI Engineer - Applied AI | Culture Amp | not stated | Melbourne | materials_ready | 7.75 | 2026-03-25 | 2026-03-28 | https://www.seek.com.au/job/91124365 |
@@ -29,6 +30,20 @@ Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skip
 | JOB-056 | Engineer – Distributed GPU Platform | Kala Data | not stated | Brisbane (Hybrid) | materials_ready | 6.3 | 2026-03-26 | 2026-03-28 | https://www.seek.com.au/job/91162449 |
 | JOB-058 | Senior Software Engineer | TheDriveGroup | $150k-$190k+super+Equity | Sydney (Hybrid) | materials_ready | 6.2 | 2026-03-27 | 2026-03-28 | https://www.seek.com.au/job/91189367 |
 | JOB-059 | Software Engineer | Geoscape Australia | $125k-$145k | Sydney (Hybrid) | materials_ready | 6.2 | 2026-03-27 | 2026-03-28 | https://www.seek.com.au/job/91188569 |
+| JOB-082 | Software Engineer I, Health Site Reliability Engineering | Google | World Class Benefits | Sydney | materials_ready | 7.65 | 2026-03-28 | 2026-03-29 | https://www.seek.com.au/job/91205784 |
+| JOB-085 | Mid-Level Frontend/Backend Engineer | Your Reformer | not stated | Melbourne (Remote) | materials_ready | 7.3 | 2026-03-30 | 2026-03-31 | https://www.seek.com.au/job/91227087 |
+| JOB-086 | Software Engineer (Product Focused, Full Stack) | Cadmus | not stated | Melbourne (Hybrid) | materials_ready | 6.75 | 2026-03-30 | 2026-03-31 | https://www.seek.com.au/job/91242813 |
+| JOB-087 | Senior Full Stack Engineer | Cluey Learning | not stated | Sydney (Hybrid) | materials_ready | 5.5 | 2026-03-30 | 2026-03-31 | https://www.seek.com.au/job/91219209 |
+| JOB-088 | Senior Full Stack Developer | Codex Consulting | not stated | Melbourne (Hybrid) | materials_ready | 5.8 | 2026-03-31 | 2026-03-31 | https://www.seek.com.au/job/91248633 |
+| JOB-091 | Mid-level Fullstack Developer | Statekraft Pty Ltd | not stated | Sydney (Remote) | materials_ready | 7.0 | 2026-03-31 | 2026-03-31 | https://www.seek.com.au/job/91246876 |
+| JOB-092 | Front End Software Developer | Akkodis | $140k-$160k | Sydney (Hybrid) | materials_ready | 7.0 | 2026-03-31 | 2026-04-01 | https://www.seek.com.au/job/91231790 |
+| JOB-093 | Software Developer | MVSI OnBoard | not stated | Sydney (Hybrid) | materials_ready | 7.15 | 2026-03-31 | 2026-04-01 | https://www.seek.com.au/job/91269232 |
+| JOB-094 | Senior Full Stack Developer | cirrus8 | not stated | Brisbane (Hybrid) | materials_ready | 6.9 | 2026-03-31 | 2026-04-01 | https://www.seek.com.au/job/91217310 |
+| JOB-095 | Software Engineer | Optus | not stated | Sydney | materials_ready | 6.65 | 2026-04-01 | 2026-04-01 | https://www.seek.com.au/job/91274379 |
+| JOB-096 | Senior Software Engineer | Shutterspeed Pty Ltd | $150k-$175k | Sydney (Hybrid) | materials_ready | 6.75 | 2026-04-01 | 2026-04-01 | https://www.seek.com.au/job/91254659 |
+| JOB-097 | Backend Developer | Kindred Group | not stated | Sydney (Hybrid) | materials_ready | 6.65 | 2026-04-01 | 2026-04-01 | https://www.seek.com.au/job/90731284 |
+| JOB-104 | Full Stack Engineer | Real Time | $140k-$160k+super+ESOP | Melbourne (Hybrid) | materials_ready | 6.1 | 2026-04-01 | 2026-04-02 | https://www.seek.com.au/job/91283486 |
+| JOB-105 | Senior Front End Engineer | SustainRecruit | $140k-$170k+super | Sydney (Remote) | materials_ready | 6.15 | 2026-04-01 | 2026-04-02 | https://www.seek.com.au/job/91129824 |
 
 ## Archived Jobs (skipped / discarded / weak_match / expired)
 
@@ -107,6 +122,27 @@ Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skip
 | JOB-079-DISCARD | Lead Developer | Engage Squared | not stated | Melbourne (Hybrid) | discarded | weak_match | Too senior (6+yr + lead experience required), client-facing consulting role | 2026-03-27 | |
 | JOB-080-DISCARD | Application Developer | ASIC | not stated | Melbourne (Hybrid) | discarded | hard_filter | Contract/Temp work type only | 2026-03-27 | https://www.seek.com.au/ASIC-jobs |
 | JOB-081-DISCARD | Software Engineer | Wymac Gaming Solutions | not stated | Melbourne (Hybrid) | discarded | weak_match | Score ~4.1 — C#/.NET/Blazor primary requirement, Leslie's Python/TS/React stack doesn't match | 2026-03-27 | https://www.seek.com.au/Wymac-Gaming-Solutions-jobs |
+| JOB-082-DISCARD | Lead Site Reliability Engineer | J.P Morgan | not stated | Sydney NSW | discarded | weak_match | Score 4.55 < 5.5 — SRE/lead role, deep observability + Kubernetes + Terraform required, Leslie's SWE stack is secondary | 2026-03-28 | https://www.seek.com.au/job/91204847 |
+| JOB-083-DISCARD | DevOps Cloud Engineer - AWS | AC3 Pty Limited | $110k-$130k | Melbourne (Hybrid) | discarded | weak_match | Score 4.0 < 5.5 — DevOps/Infrastructure role (AWS/Terraform/EKS/Kubernetes), Leslie is SWE not DevOps | 2026-03-28 | https://www.seek.com.au/job/91206383 |
+| JOB-084-DISCARD | Senior React Developer | Techforce Recruitment | not stated | Brisbane (Hybrid) | discarded | hard_filter | Contract/Temp work type only | 2026-03-28 | https://www.seek.com.au/job/91183594 |
+| JOB-085-DISCARD | Shopify Developer | Just Digital People | not stated | Melbourne (Hybrid) | discarded | hard_filter | Contract/Temp work type only | 2026-03-31 | https://www.seek.com.au/job/91256605 |
+| JOB-086-DISCARD | Full Stack Developer | Paxus | not stated | Melbourne | discarded | hard_filter | Contract/Temp work type only | 2026-03-31 | https://www.seek.com.au/job/91224305 |
+| JOB-087-DISCARD | Lead Software Engineer | Morgan Consulting | $140k-$180k | Sydney | discarded | weak_match | Score 4.3 < 5.5 — Lead role (80% people leadership), 5-8yr required, Leslie ~4yr SWE | 2026-03-31 | https://www.seek.com.au/job/91251110 |
+| JOB-088-DISCARD | Senior Software Engineer | PartsCheck | not stated | Brisbane | discarded | weak_match | Score 4.2 < 5.5 — 5+yr C#/.NET core required as primary platform; Leslie's Python/TS/React stack has no C#/.NET match | 2026-03-31 | https://www.seek.com.au/job/91220486 |
+| JOB-089-DISCARD | Backend Engineer (Java/Spring Boot/AI) | Morgan Consulting | $100k-$150k | Sydney | discarded | weak_match | Score 4.4 < 5.5 — Spring Boot required as primary backend framework; Leslie has Java/Spring (class-level) but not Spring Boot production experience; midpoint $125k ≥ $115k | 2026-03-31 | https://www.seek.com.au/job/91249378 |
+| JOB-090-DISCARD | Founding Engineer | DOORA GROUP | $170k-$200k+equity | Sydney (Hybrid) | discarded | weak_match | Score 3.2 < 5.5 — React ✅ but C#/ASP.NET Core required as founding tech stack; Leslie has no C#/.NET experience | 2026-03-31 | https://www.seek.com.au/job/91213061 |
+| JOB-098-DISCARD | AI/ Full Stack Engineer | Anson McCade Ltd | Competitive | Sydney (Hybrid) | discarded | hard_filter | Contract/Temp work type only | 2026-04-01 | https://www.seek.com.au/job/91282130 |
+| JOB-099-DISCARD | Senior Full Stack Developer | Peoplebank Australia | Competitive | Sydney | discarded | hard_filter | Contract/Temp work type only | 2026-04-01 | https://www.seek.com.au/job/91285167 |
+| JOB-100-DISCARD | Senior RPA Developer | WithYouWithMe | Competitive | Sydney (Hybrid) | discarded | weak_match | Blue Prism RPA platform required, not general software engineering | 2026-04-01 | https://www.seek.com.au/job/91272754 |
+| JOB-101-DISCARD | Senior Web Developer | Dept of Health Queensland | not stated | Brisbane | discarded | weak_match | Score 4.7 < 5.5 — frontend/React/HTML/CSS/Azure health domain, no Leslie stack match | 2026-04-01 | https://www.seek.com.au/job/91152801 |
+| JOB-102-DISCARD | Senior Software Developer | Redox Ltd | not stated | Sydney (Hybrid) | discarded | weak_match | Score 5.0 < 5.5 — .NET 7/C# required as primary backend; Leslie's Python/TS/React stack doesn't cover .NET | 2026-04-01 | https://www.seek.com.au/job/91255643 |
+| JOB-103-DISCARD | Senior Full-Stack Software Developer | Martian Logic | $150k-$180k+bonus+options | Sydney (Hybrid) | discarded | weak_match | Score 4.9 < 5.5 — 5yr + Core Java/EE/Spring Boot required; Leslie's Python/TS/React doesn't match | 2026-04-01 | https://www.seek.com.au/job/91253504 |
+| JOB-106-DISCARD | Senior Backend Developer | iterate | not stated | Melbourne (Hybrid) | discarded | hard_filter | Contract/Temp work type only | 2026-04-01 | https://www.seek.com.au/job/91294364 |
+| JOB-107-DISCARD | AI/Full Stack Engineer | Anson McCade Ltd | Competitive | Melbourne (Hybrid) | discarded | hard_filter | Contract/Temp work type only | 2026-04-01 | https://www.seek.com.au/job/91282160 |
+| JOB-108-DISCARD | Senior Software Engineer | Tanner Menzies | not stated | Melbourne | discarded | weak_match | Score 4.5 < 5.5 — C++/embedded software + hardware leadership required; Leslie's Python/TS/React stack doesn't match | 2026-04-01 | https://www.seek.com.au/job/91291807 |
+| JOB-109-DISCARD | Front End Developer | Sympraxi | $130k-$140k | Sydney (Hybrid) | discarded | weak_match | Score 5.4 < 5.5 — frontend-heavy, fintech domain mismatch | 2026-04-01 | https://www.seek.com.au/job/91120248 |
+| JOB-003-EXPIRED | Senior Software Engineer | Aspirante Pty Ltd | negotiable | Melbourne (Hybrid) | expired | Listing live >30 days with no application | 2026-03-21 | https://www.seek.com.au/job/90997702 |
+| JOB-006-EXPIRED | Senior Mobile Developer | LeasePLUS Team | negotiable | Melbourne | expired | Listing live >30 days with no application | 2026-03-21 | https://www.seek.com.au/job/91041756 |
 
 ### Expired Listings (seek-fetch.js verified — listing not found)
 
@@ -129,6 +165,13 @@ Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skip
 | JOB-057-EXPIRED | Backend Developer | The Argyle Network | not stated | expired | Listing not found on Seek (2026-03-28) | 2026-03-27 | |
 
 ## Notes
+- 2026-04-02 morning: 0 new jobs scored. Queried Melbourne (Python, TypeScript), Brisbane (Software Engineer), Sydney (Full Stack). 7 full job pages fetched. All failed scoring: Halcyon Knights Technical Lead (Python/ERP lead, too senior), Talent Python (contract only), MuleSoft Agentforce (Java 5+yr required, no match), VALE Partners (Laravel required, no Vue.js match), Easygo Frontend (Svelte required, not Leslie's stack), TASS (AI-first .NET required, no match), Ambition (Angular 5+yr required, no match). Severe diminishing returns continue - pipeline remains at 34 active jobs with materials ready.
+- 2026-04-01 evening: 2 new jobs scored. Real Time Full Stack Engineer (Melbourne, $140-160k+ESOP, score 6.1 — Node.js/Python/React, travel tech startup with founding-level role), SustainRecruit Senior Front End Engineer (Sydney Remote, $140-170k, score 6.15 — React/TS/Tailwind, B2B SaaS platform). 4 jobs archived/discarded (2 contract-only, 2 weak_match). Continue to see diminishing returns but decent 2-job pickup tonight.
+- 2026-04-01 afternoon: 3 new jobs scored. Optus SWE (Sydney, score 6.65 — Python/TS/React/Node/FastAPI match), Shutterspeed Senior SWE (Sydney, $150-175k, score 6.75 — Next.js/React/Node.js/PostgreSQL), Kindred Group Backend Dev (Sydney, score 6.65 — Node.js/TS, gambling domain drag). 6 jobs archived/discarded (2 contract, 4 weak match). LinkedIn searches returned 0 results again. Severe diminishing returns continue but a decent haul of 3 this run.
+- 2026-03-31 morning: 2 new jobs scored. Codex Consulting Senior FSD (Melbourne, score 5.8), Statekraft Mid-level Fullstack (Sydney Remote, score 7.0). Several jobs close to threshold: Morgan Backend (4.4 — Spring Boot gap), DOORA (3.2 — C# required). Most other results already archived or contract-only.
+- 2026-03-30 morning: No new viable matches. Queried Melbourne, Brisbane, Sydney. All results already archived, contract-only, salary below $115k threshold (Pospal $80-85k), .NET required, or senior/lead/principal level. Pipeline at 21 active jobs with materials ready - severe diminishing returns continuing.
+- 2026-03-29 afternoon: No new viable matches. All candidates either already archived, too senior, contract-only, wrong stack (C#/.NET), or DevOps/infrastructure-focused. Continuing to find diminishing returns on daily sweeps given the thorough prior coverage.
+- 2026-03-29 morning: 1 new job scored (eHealth Senior Dev AI, Sydney, score 5.85). Most Melbourne/Sydney/Brisbane results already archived or filtered.
 - seek-fetch.js URL backfill done 2026-03-28 — 19 active jobs confirmed with real seek.com.au/job/XXXXX URLs; 15 listings archived as expired/not found
-- Active pipeline: 19 jobs with confirmed direct Seek links, all with materials ready
+- Active pipeline: 20 jobs with materials ready (19 confirmed + 1 new scored)
 - Top picks: Secure Code Warrior x2 (8.45/7.15), Medbill (8.15), Culture Amp (7.75), NTP Talent (7.75), CBA Unloan (7.0)

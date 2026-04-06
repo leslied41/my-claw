@@ -1,0 +1,14 @@
+{
+  "lastChecks": {
+    "pipeline": 1701740400
+  },
+  "lastHeartbeat": "2026-04-04T23:00:00Z",
+  "pipelineStatus": {
+    "activeJobs": 41,
+    "activeWithMaterials": 41,
+    "expiredFound": 0,
+    "archivedCleaned": 0,
+    "orphanedAppsCleaned": 0
+  },
+  "notes": "No expired active jobs (all added within last 11 days, threshold 30d). No archived entries older than 60 days. All application files correspond to active pipeline jobs — no orphans."
+}

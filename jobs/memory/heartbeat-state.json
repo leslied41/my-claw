@@ -1,14 +1,15 @@
 {
   "lastChecks": {
-    "pipeline": 1701740400
+    "pipeline": 1744321200
   },
-  "lastHeartbeat": "2026-04-04T23:00:00Z",
+  "lastHeartbeat": "2026-04-10T23:00:00Z",
   "pipelineStatus": {
-    "activeJobs": 41,
-    "activeWithMaterials": 41,
+    "activeJobs": 52,
+    "activeWithMaterials": 52,
     "expiredFound": 0,
     "archivedCleaned": 0,
-    "orphanedAppsCleaned": 0
+    "orphanedAppsCleaned": 0,
+    "checkTime": "2026-04-10T23:00:00Z"
   },
-  "notes": "No expired active jobs (all added within last 11 days, threshold 30d). No archived entries older than 60 days. All application files correspond to active pipeline jobs — no orphans."
+  "notes": "No expired active jobs (oldest added 2026-03-24, ~17 days ago; threshold 30d). No archived entries older than 60 days (oldest ~15 days old). All application files correspond to active pipeline jobs — no orphans."
 }

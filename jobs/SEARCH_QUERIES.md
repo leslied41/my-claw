@@ -1,3 +1,34 @@
+# Query Quality Notes - 2026-04-14 (Morning — 10:00 AM UTC)
+
+## This Run
+
+### Seek Queries Used
+- "full stack developer" Sydney: 7 results — Canva Product Manager (not SWE ❌), Canva Senior iOS (iOS not SWE ❌), Canva Sr Product Manager Data (data ❌), Airwallex x3 (IT Support, Engineering Manager, SWE II Yield already archived ❌), Canva Senior Product Manager (not SWE ❌). 0 scored.
+- "python developer" Melbourne: 7 results — Airwallex Okta (IT Support ❌), Airwallex Engineering Manager (manager ❌), Airwallex SWE II (archived), Fyndr Group Senior/Staff AI (AI specialist ❌), Peoplebank DevOps (DevOps not SWE ❌), Trans Traffic Survey AI Engineer (AI specialist ❌), EBIX Australia (already archived ❌). 0 scored.
+- "javascript developer" Brisbane: 7 results — Royal Health (null data ❌), Opengear Senior (archived ❌), APNIC (in pipeline ❌), Obzervr Integration Dev (NEW — $85-105k below $115k threshold ❌), Hills R&D (in pipeline ❌), BOQ Senior Frontend (archived ❌), Resources Safety (archived ❌). 0 scored.
+- "vue.js developer" Sydney: 5 results — TeamHQ Senior Python/Django ($170-180k ✅ but role is Python/Django primary, not Vue.js ❌), Private Web Developer ($90-130k — insufficient data ❌), Winning Group Senior Frontend (Angular required, archived ❌), ANSTO Web Developer (null data ❌), Garvan Institute (null data ❌). 0 scored.
+- "software engineer" Melbourne: 13 results — Salesforce Dev (contract ❌), Interface Agency ML Manager (manager ❌), DWS .NET/Vue.js (.NET required ❌), Formation Technology Tech Lead (too senior ❌), SEEK Grad (grad ❌), ITA Technical Consultant (consultant ❌), CFA Senior ServiceNow (ServiceNow ❌), Pronto Industry Analyst (analyst ❌), Peoplebank Systems (systems engineering ❌), iSelect Solution Architect (architect ❌), Pronto BI Support (BI ❌), Carpet Call Team Lead Python (team lead ❌), VOG Web Developer ($70-80k < $115k ❌). 0 scored.
+- "software engineer" Brisbane: 7 results — FinXL Junior Full Stack (contract ❌), Worldpay Salesforce (Salesforce ❌), Mater Group BA (BA ❌), EDMI Data Engineer (data engineer ❌), SEEK Grad (grad ❌), Private Advertiser Senior Full Stack (NEW ✅), Pronto BI Support (BI ❌). 1 scored.
+
+### Full Fetch Results
+2 candidates fetched:
+- EVRA Senior Full Stack Developer (91502300): Score 5.8 — TypeScript✅ React✅ PostgreSQL✅ REST API✅ Google Cloud✅ GitHub✅ — core stack matches 6/8 essentials. Next.js App Router gap, Prisma gap, construction/insurance domain mismatch. PASSES — score 5.8 ≥ 5.5 ✅
+- Obzervr Integration Developer (91444175): Salary $85-105k midpoint $95k < $115k — HARD FILTER. DISCARD.
+
+### LinkedIn Queries Used
+- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
+- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
+
+## Conclusion
+- 1 new job scored: EVRA (Brisbane, Remote, $120-160k+equity, score 5.8 — TypeScript/React/PostgreSQL/REST/Google Cloud/GitHub all core Leslie stack, tech 7.5/10; construction/insurance domain mismatch drags overall score)
+- 1 job archived/discarded: Obzervr (salary below $115k threshold)
+- All 6 Seek queries returned mostly already-archived or already-pipeline candidates, contract-only, wrong stack (.NET, Django, Salesforce), IT Support/Management/Architect roles, or salary below threshold
+- LinkedIn continues to return 0 results
+- Pipeline now at 60 active jobs (59 prior + 1 new)
+- **Note**: EVRA score 5.8 is just above 5.5 threshold — construction/insurance domain is unrelated to Leslie's marine/research/fintech background but tech stack is a strong match. Worth a second look after materials are generated.
+
+---
+
 # Query Quality Notes - 2026-04-14 (Midnight — 12:00 AM UTC)
 
 ## This Run

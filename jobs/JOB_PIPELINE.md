@@ -1,6 +1,6 @@
 # Job Pipeline
 
-Last updated: 2026-04-13 (10:00 AM UTC)
+Last updated: 2026-04-14 (10:00 AM UTC)
 
 ## Pipeline States
 `discovered → filtered → scored → materials_ready → applied`
@@ -68,6 +68,7 @@ Exit states: `discarded` (hard filter failed), `weak_match` (score < 6.0), `skip
 | JOB-140 | Staff or Senior Engineer (React, TypeScript) | Software At Scale | not stated | Sydney NSW (Hybrid) | materials_ready | 7.55 | 2026-04-12 | 2026-04-12 | https://www.seek.com.au/job/91457026 |
 | JOB-141 | Software Engineer - React Native | Australian Retirement Trust | not stated | Brisbane QLD (Hybrid) | materials_ready | 7.85 | 2026-04-13 | 2026-04-13 | https://www.seek.com.au/job/91479869 |
 | JOB-143 | Senior Software Engineer – Full Stack (Typescript, React, GraphQL API, Node.js) | Commonwealth Bank (Unloan) | not stated | Melbourne VIC (Hybrid) | materials_ready | 6.65 | 2026-04-14 | 2026-04-14 | https://www.seek.com.au/job/91489395 |
+| JOB-144 | Senior Full Stack Developer | EVRA | $120k-$160k+super+Equity | Brisbane QLD (Remote) | materials_ready | 5.8 | 2026-04-14 | 2026-04-14 | https://www.seek.com.au/job/91502300 |
 
 ## Archived Jobs (skipped / discarded / weak_match / expired)
 

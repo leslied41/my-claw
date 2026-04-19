@@ -85,7 +85,7 @@ For each job with full details, score against `workspace/RESUME.md`:
 | Dimension | Weight | How to score (0–10) |
 |---|---|---|
 | Technical skills match | 40% | Count must-have tech skills Leslie has ÷ total must-haves × 10 |
-| Experience level match | 25% | Junior (<3yr)=3, Mid(3-5yr)=7, Senior(5yr+)=10; Leslie has ~4 years |
+| Experience level match | 25% | Junior (<3yr)=3, Mid(3-5yr)=10, Senior(5yr+)=7; Leslie has ~4 years |
 | Domain/industry fit | 20% | Has Leslie worked in a similar domain? Same=10, Adjacent=6, Unrelated=2 |
 | Nice-to-have coverage | 15% | How many nice-to-haves does Leslie cover? Proportion × 10 |
 

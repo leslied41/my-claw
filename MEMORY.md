@@ -5,7 +5,7 @@
 - **Role:** Software Engineer (~4 years experience)
 - **Location:** Hobart, TAS — wants to relocate to Melbourne, Brisbane, or Sydney
 - **Salary target:** $130k+
-- **Stack:** Python, TypeScript, React, Vue.js, Next.js, Node.js, Java (class-level), Spring Boot, FastAPI, PostgreSQL, AWS, Docker/K8s, Redis, MongoDB, GraphQL, REST APIs
+- **Stack:** Python, TypeScript, React, Vue.js, Next.js, Node.js, Java (production), Spring Boot (production), FastAPI, PostgreSQL, AWS, Docker/K8s, Redis, MongoDB, GraphQL, REST APIs
 - **Open to:** Hybrid/Remote, Full-time only (no contracts)
 
 ## Job Pipeline Status

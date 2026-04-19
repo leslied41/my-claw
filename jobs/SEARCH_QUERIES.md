@@ -1,14 +1,207 @@
-# Query Quality Notes - 2026-04-14 (Morning — 10:00 AM UTC)
+---
+
+# Query Quality Notes - 2026-04-19 (10:00 AM UTC)
 
 ## This Run
 
 ### Seek Queries Used
-- "full stack developer" Sydney: 7 results — Canva Product Manager (not SWE ❌), Canva Senior iOS (iOS not SWE ❌), Canva Sr Product Manager Data (data ❌), Airwallex x3 (IT Support, Engineering Manager, SWE II Yield already archived ❌), Canva Senior Product Manager (not SWE ❌). 0 scored.
-- "python developer" Melbourne: 7 results — Airwallex Okta (IT Support ❌), Airwallex Engineering Manager (manager ❌), Airwallex SWE II (archived), Fyndr Group Senior/Staff AI (AI specialist ❌), Peoplebank DevOps (DevOps not SWE ❌), Trans Traffic Survey AI Engineer (AI specialist ❌), EBIX Australia (already archived ❌). 0 scored.
-- "javascript developer" Brisbane: 7 results — Royal Health (null data ❌), Opengear Senior (archived ❌), APNIC (in pipeline ❌), Obzervr Integration Dev (NEW — $85-105k below $115k threshold ❌), Hills R&D (in pipeline ❌), BOQ Senior Frontend (archived ❌), Resources Safety (archived ❌). 0 scored.
-- "vue.js developer" Sydney: 5 results — TeamHQ Senior Python/Django ($170-180k ✅ but role is Python/Django primary, not Vue.js ❌), Private Web Developer ($90-130k — insufficient data ❌), Winning Group Senior Frontend (Angular required, archived ❌), ANSTO Web Developer (null data ❌), Garvan Institute (null data ❌). 0 scored.
-- "software engineer" Melbourne: 13 results — Salesforce Dev (contract ❌), Interface Agency ML Manager (manager ❌), DWS .NET/Vue.js (.NET required ❌), Formation Technology Tech Lead (too senior ❌), SEEK Grad (grad ❌), ITA Technical Consultant (consultant ❌), CFA Senior ServiceNow (ServiceNow ❌), Pronto Industry Analyst (analyst ❌), Peoplebank Systems (systems engineering ❌), iSelect Solution Architect (architect ❌), Pronto BI Support (BI ❌), Carpet Call Team Lead Python (team lead ❌), VOG Web Developer ($70-80k < $115k ❌). 0 scored.
-- "software engineer" Brisbane: 7 results — FinXL Junior Full Stack (contract ❌), Worldpay Salesforce (Salesforce ❌), Mater Group BA (BA ❌), EDMI Data Engineer (data engineer ❌), SEEK Grad (grad ❌), Private Advertiser Senior Full Stack (NEW ✅), Pronto BI Support (BI ❌). 1 scored.
+- "software engineer" Melbourne: returned Engineering Lead (contract), Robotics Engineer, Implementation Consultant, Platform Support, AI Automation (Forever New), Head of AI, Technical Lead, Salesforce, Full-Stack Fintech, DevOps, Senior Python (iterate) — mix of contract, AI, DevOps, no direct SWE matches. 0 scored.
+- "software engineer" Sydney: returned AI Productivity Platform, Cyber Security, SRE, ML Engineer Training (Canva), Power Platform, Senior React (TheDriveGroup — in pipeline), Senior SWE (Safewill — in pipeline), SRE (Google), ML Engineer Deep Learning (Nearmap), .NET/Angular, Product Manager, Senior SWE (DataMesh — in pipeline) — mix of AI, SRE, management, in-pipeline. 0 scored.
+- "full stack developer" Brisbane: returned Java API (PRA — contract), Integration Developer, Data Engineer, .NET, Integration Dev (Robert Half), .NET/Lead, ServiceNow, Microsoft Dynamics, Platform Engineer AI (BLACKROC), ServiceNow Dev, Director Apps (ACCC), DevSecOps (Boeing), Principal Platform (Emanate) — mostly contract, AI specialist, .NET, DevOps. 0 scored.
+- "python developer" Melbourne: returned Senior Front End (Aurec — contract), LT Network Integrations (in pipeline), LT Network AI Specialist, Senior Python (iterate — contract), AI Data Scientist, SRE (AlayaCare), AWS DevOps, Senior Java (sportsbet). Mostly contract, AI specialist, wrong stack.
+- "typescript developer" Sydney: returned Senior Front End (TheDriveGroup — in pipeline), Senior SWE (Safewill — in pipeline), React Native (Ashdown), Front End Mid (Star X $70-90k < $115k), Cox Purtell x2 (in pipeline), Junior Dev (Ripltec), Web Dev (Orion), Google Core Maps (in pipeline), Preacta Java (contract), React/Angular (Acolade — contract), Senior React Contract, Tech Lead, HCL Mobile, Senior Frontend, ANSTO Web, Senior Dev (Private — in pipeline), Golang, Garvan Medical, Junior Computer, Resmed FTC, Founding SW (Real Time — in pipeline), Staff/Senior (Software At Scale — in pipeline), Clicks IT (contract), JAVA Fullstack, Tech Lead, Staff .NET/React, React Native, ServiceNow Dev. Mix of contract, in-pipeline, junior (<$115k), AI specialist.
+- "vue.js developer" Melbourne: returned Full Stack .NET+Vue.js (DWS — .NET required), Angular (FinXL), Senior Frontend (Easygo), Frontend Web Platform (Easygo), Software Core (Easygo), Easygo x4, Shopify (Cupcake). Mostly .NET/Angular required, not Vue.js.
+- "react developer" Brisbane: returned ART React Native (in pipeline), Frontend (BOQ), Full Stack Universal Store (in pipeline), Angular Mining OT, Auto & General x2 — mix of in-pipeline, Angular required.
+
+### LinkedIn Queries Used
+- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
+- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
+
+## Conclusion
+- 0 new jobs scored
+- 7 Seek queries (exceeded 3-4 target but covered comprehensively) + 2 LinkedIn queries all returned no new matches
+- All candidates either: already in pipeline, contract-only, AI/ML specialist, .NET/C#/Angular required, junior (<$115k), or DevOps/SRE/embedded
+- Melbourne/Sydney/Brisbane SWE market appears thoroughly covered; diminishing returns continue
+- LinkedIn returns 0 results
+- Pipeline remains at 70 active jobs (unchanged)
+
+---
+
+# Query Quality Notes - 2026-04-19 (12:00 AM UTC)
+
+## This Run
+
+### Seek Queries Used
+- "software engineer" Melbourne: returned mix of AI automation engineer (Forever New), DevOps, contract-only, .NET roles, already in pipeline/archived. 0 scored.
+- "full stack developer" Sydney: returned TheDriveGroup/Safewill (already in pipeline), AI/engineer roles, contract-only, .NET. 0 scored.
+- "python developer" Brisbane: returned data engineers, AI/ML specialists, Boeing (DevSecOps/NV1). 0 scored.
+- "typescript developer" Sydney: returned 2 new candidates: Cox Purtell Full Stack and Devops (91571598), Private Advertiser Senior Developer (91466787). Both scored.
+
+### Full Fetch Results
+2 candidates fetched:
+- Cox Purtell Software Developer - Full Stack and Devops (91571598): Score 5.65 ≥ 5.5 ✅ PASS — TypeScript/AWS/DevOps match but functional programming (Elixir/Erlang/F# etc) gap; small team experience strength.
+- Private Advertiser/File Republic Senior Developer (91466787): Score 6.05 ≥ 5.5 ✅ PASS — TypeScript/Vue.js/React/AWS/AI-RAG match but C#/.NET Core gap; legal software domain unrelated.
+
+### LinkedIn Queries Used
+- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
+- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
+
+## Conclusion
+- 2 new jobs scored: Cox Purtell (Sydney, Hybrid, $120-150k, score 5.65), Private Advertiser (Sydney, Remote, $130-150k, score 6.05)
+- All 4 Seek queries returned mostly already-in-pipeline, contract-only, AI specialist, or wrong stack (.NET, Go) roles
+- LinkedIn continues to return 0 results
+- Pipeline now at 70 active jobs (68 prior + 2 new)
+
+---
+
+# Query Quality Notes - 2026-04-18 (10:00 AM UTC)
+
+## This Run
+
+### Seek Queries Used
+- "software engineer" Sydney: returned TheDriveGroup Senior Front End React (NEW ✅ PASS — React/TypeScript, $150-190k), Safewill Senior SWE (NEW ✅ PASS — Nuxt/Vue.js/TypeScript/Nest.js), DataMesh Senior SWE (NEW ✅ PASS — MERN stack), Plenti AI Engineer (NEW ❌ — AI specialist), NSW Trustee Senior App Developer (NEW ❌ — C#/.NET required), Canva ML Engineer (ML specialist ❌), Google SRE/Manager (management ❌), Nearmap CV/ML (ML specialist ❌), DXC Cloud Support (DevOps ❌). 3 scored.
+- "python developer" Melbourne: returned iterate Senior Python (NEW ❌ — contract), sportsbet Software Engineer (NEW ❌ — Java/Spring Boot), SYPAQ Systems (NEW ❌ — contract+NV1), carsales Senior SWE (NEW ❌ — .NET/Angular), LT Network Integrations (NEW ✅ PASS — TypeScript/Express/GraphQL/AWS), LT Network AI Specialist (NEW ❌ — AI specialist), ACER Level 2 (NEW ❌ — salary below threshold). 1 scored.
+- "react developer" Melbourne: returned DXC Senior Full Stack (NEW ❌ — .NET required), Aurec Front End (contract ❌), sportsbet Java (NEW ❌ — Java), Sestra .NET (contract ❌), nib Technical Analyst (analyst ❌), DXC Full Stack .NET (NEW ❌ — .NET), Sharp & Carter Full Stack (fetch error). Mix of results.
+
+### Full Fetch Results
+11 candidates fetched:
+- TheDriveGroup Senior Front End React (91596059): Score 6.75 ≥ 5.5 ✅ PASS — React/TypeScript/Docker/CI/CD strong stack match; 5yr required, slight stretch but delivery-focused.
+- Safewill Senior SWE (91595528): Score 7.6 ≥ 5.5 ✅ PASS — Nuxt/Vue.js/TypeScript/Nest.js perfect stack match; fintech domain adjacent to IMOS; hands-on delivery culture.
+- DataMesh Senior SWE (91585078): Score 7.35 ≥ 5.5 ✅ PASS — MERN stack strong match; fintech/payments domain adjacent to fintech; cloud-native required.
+- LT Network Integrations (91574420): Score 7.7 ≥ 5.5 ✅ PASS — TypeScript/Node.js/Express/GraphQL/AWS perfect stack; API integration focus; martech domain adjacent to IMOS platform.
+- Plenti AI Engineer (91592053): Score ~4.0 < 5.5 ❌ — AI specialist (LLM orchestration, RAG, AI agents), not general SWE. DISCARD.
+- LT Network AI Specialist (91574312): Score ~4.0 < 5.5 ❌ — AI specialist (LLMs, agentic architectures, MCP), not general SWE. DISCARD.
+- iterate Senior Python (91572959): Contract/Temp — HARD FILTER. DISCARD.
+- SYPAQ Systems (91552351): Contract + NV1 clearance — HARD FILTER. DISCARD.
+- carsales (91547430): Score ~4.5 < 5.5 ❌ — .NET/Angular primary required, no Leslie match. DISCARD.
+- sportsbet (91585466): Score ~4.5 < 5.5 ❌ — Java/Spring Boot primary required, no Leslie match. DISCARD.
+- NSW Trustee (91581398): Score ~4.5 < 5.5 ❌ — C#/.NET/SQL primary required, no Leslie match. DISCARD.
+
+### LinkedIn Queries Used
+- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
+- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
+
+## Conclusion
+- 4 new jobs scored: TheDriveGroup (Sydney, $150-190k, score 6.75), Safewill (Sydney, score 7.6), DataMesh (Sydney, score 7.35), LT Network (Melbourne, score 7.7)
+- 7 jobs archived/discarded: Plenti (AI specialist), LT Network AI (AI specialist), iterate (contract), SYPAQ (contract+NV1), carsales (.NET), sportsbet (Java/Spring Boot), NSW Trustee (C#/.NET)
+- 3 Seek queries returned mix of contract-only, AI specialist, .NET/Java required, management, and ML specialist roles
+- LinkedIn continues to return 0 results
+- Pipeline now at 68 active jobs (64 prior + 4 new)
+- Note: Strong week — 4 new jobs with scores 6.75-7.7 all above threshold. TheDriveGroup emphasizes React/TypeScript with real-time systems. Safewill is perfect stack match (Nuxt/Vue.js/TypeScript/Nest.js). DataMesh is MERN stack with fintech adjacency. LT Network is TypeScript/GraphQL/API integration — highlight IMOS API work.
+
+---
+
+# Query Quality Notes - 2026-04-17 (12:00 AM UTC)
+
+## This Run
+
+### Seek Queries Used
+- "software engineer" Brisbane: returned Technology One Performance Architect (architect ❌), Kestral Senior SWE (NEW ❌ — C#/.NET/Angular 6yr required, no Leslie match), BLACKROC Senior Platform Engineer AI (NEW ❌ — AI platform specialist), ServiceNow Developer (ServiceNow ❌), ACCC Director (management ❌), Sr Azure Cloud Engineer (contract ❌), Evercare Senior Full Stack (NEW ❌ — .NET 5+yr required), SixPivot Senior .NET (contract ❌), Talenza Senior SWE (contract ❌), Davidson ServiceNow (contract ❌), Delivery Lead (PM ❌), AI Engineering Sr Manager (AI specialist ❌), Autodesk SWE Integrations (NEW ❌ — C#/ASP.NET required, no Leslie match), Boeing DevSecOps x2 (NEW ❌ — DevSecOps/embedded, NV1 clearance required), Data Solutions Architect (architect ❌). 0 scored.
+- "python developer" Sydney: returned Cox Purtell Software Developer (NEW ✅ PASS — TypeScript/AWS required, greenfield product, lean team), Pair People C#/.NET (C# required ❌), nib Technical Product Analyst (analyst ❌), Future Secure AI Staff AI Engineer (AI specialist ❌), Honeywell Advanced SWE (NEW ❌ — C/C++/C#/Python industrial automation, 5+yr), Enterprise IT .NET contract (contract ❌), University of Sydney Data Engineer (data engineer ❌), Ripltec Junior Dev (too junior ❌), SEEK Grad x4 (grad ❌), SEEK Internship x3 (intern ❌), Google SWE Core Maps (NEW ✅ PASS — Python/Java/TS, mapping adjacent to IMOS), Nearmap Senior ML (ML specialist ❌), Cognizant Senior Data Engineer (data engineer ❌), SEEK Grad Interns (intern ❌). 2 scored.
+- "full stack developer" Melbourne: returned nib Technical Product Analyst (analyst ❌), ACER Software Engineer (NEW ❌ — Level 2 seniority gap), Sestra .NET contract (contract ❌), AustralianSuper Application Engineer (NEW ✅ PASS — Python required ✅, React ✅, .NET partial), Davidson Integration (contract ❌), Davidson Microservices (contract ❌), SYPAQ Senior SWE (contract ❌), Suzuki Developer (null data ❌), HiTech Tech Lead (lead ❌). 1 scored.
+- "react developer" Sydney: returned Cox Purtell (duplicate ✅), nib (analyst ❌), Ethos BeathChapman contract (contract ❌), Motion Recruitment AEM (AEM ❌), CMC Markets 18-month contract (contract ❌), PRA Fullstack (null data ❌), Orion Creative Web Dev ($60-70/hr < $115k ❌), Fyndr (contract ❌), Acolade Java (contract ❌), TikTok Intern (intern ❌), Swordfish Tech Lead (contract ❌), TeamHQ Python/Django (Django primary ❌), Argyle Network (archived ❌), HCL Mobile App (iOS/Android ❌), ANSTO Web Dev (null data ❌), Winning Group Angular (Angular required ❌). 0 scored.
+- "javascript developer" Melbourne: returned nib (analyst ❌), ACER (duplicate ❌), Aeris Junior (too junior ❌). 0 scored.
+
+### Full Fetch Results
+11 candidates fetched:
+- Cox Purtell Software Developer (91571384): Score 7.2 ≥ 5.5 ✅ PASS — TypeScript/AWS required, greenfield product, smaller lean team aligns with Funkie Loopie experience. Strong pickup.
+- Kestral Senior SWE (91570566): Score ~4.0 < 5.5 ❌ — C#/.NET/Angular/Next.js primary (6yr required), no Leslie match. DISCARD.
+- BLACKROC Senior Platform Engineer AI (91569530): Score ~3.5 < 5.5 ❌ — AI platform engineer specialist (Claude Code/AWS Bedrock/MCP), not general SWE. DISCARD.
+- Evercare Senior Full Stack (91559484): Score ~3.5 < 5.5 ❌ — .NET 5+yr required as primary, React/Flutter secondary. DISCARD.
+- Autodesk SWE Integrations (91541412): Score ~4.5 < 5.5 ❌ — C#/ASP.NET required, no Leslie .NET match. DISCARD.
+- Boeing DevSecOps x2 (91530719, 91527091): Score ~3.5 < 5.5 ❌ — DevSecOps focus, Kubernetes/Docker/Bamboo/Ansible required, NV1 security clearance required. DISCARD.
+- Honeywell Advanced SWE (91570398): Score ~3.0 < 5.5 ❌ — C/C++/C#/Python industrial automation, 5+yr domain expertise (oil/gas/power/chemicals), no Leslie match. DISCARD.
+- Google SWE Core Maps (91542702): Score 6.35 ≥ 5.5 ✅ PASS — Python/Java backend + TS/HTML/CSS frontend, mapping domain adjacent to IMOS marine viz. Good pickup.
+- AustralianSuper Application Engineer (91555908): Score 5.65 ≥ 5.5 ✅ PASS — Python required ✅, React ✅, .NET partial, regulated superannuation domain adjacent to fintech. Marginal but passes.
+
+### LinkedIn Queries Used
+- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
+- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
+
+## Conclusion
+- 3 new jobs scored: Cox Purtell (Sydney, $120-150k, score 7.2), Google (Sydney, score 6.35), AustralianSuper (Melbourne, score 5.65)
+- 8 jobs archived/discarded: Kestral (C#/.NET), BLACKROC (AI specialist), Evercare (.NET), Autodesk (C#), Boeing x2 (DevSecOps), Honeywell (industrial automation), Technology One (architect)
+- All 5 Seek queries returned mostly already-archived, contract-only, wrong stack (.NET, C#, Go, Angular, ServiceNow), or AI/DevSecOps/architect/management roles
+- LinkedIn continues to return 0 results
+- Pipeline now at 64 active jobs (61 prior + 3 new)
+- Note: Cox Purtell role is great fit — highlight greenfield product experience from Funkie Loopie and IMOS. Google role is adjacent domain (mapping vs marine viz) — emphasize Mapbox/WebGL experience. AustralianSuper is marginal (Python✅, React✅, .NET partial) — emphasize Python data pipeline work from IMOS.
+
+---
+
+# Query Quality Notes - 2026-04-15 (10:00 AM UTC)
+
+## This Run
+
+### Seek Queries Used
+- "golang developer" Sydney: returned Nearmap Senior ML Engineer (ML specialist ❌), Preacta Java contract (contract ❌), SEEK Grad x4 (intern/grad ❌), Canva Senior Localisation AI (not SWE ❌), Appian Associate Solution Eng (partial data ❌), Change Recruitment Data Engineer (data engineer ❌), UNSW Integration Engineer AI (AI specialist ❌), Omniscient Python Medical Imaging (medical imaging domain ❌), DeVision SRE (SRE not SWE ❌), The Onset Senior SWE Python $180-210k (NEW ✅ PASS — Python/FastAPI/AWS microservices ✅), Canva Sr Product Manager Data (PM ❌), Software At Scale x2 (DevOps/AI ❌). 1 scored.
+- "node.js developer" Melbourne: returned REA Group Associate SWE (too junior ❌), Shell Energy Senior Full Stack (already in pipeline as JOB-120 ❌), PointsBet Full Stack SWE (NEW ❌ — C# primary required, gambling domain; weak_match 4.69), Liberty Financial Web Developer (null data ❌), FinXL Backend Developer (contract likely ❌), Kentico/Xperience (Kentico CMS required ❌), DWS .NET+Vue.js (.NET required ❌), VOG Web Developer (null data ❌), Blackmagic GoLang (Go required ❌), Acolade NodeJS/Java (NEW ❌ — contract only), CBA Unloan (already in pipeline as JOB-143 ❌), Infosys Senior Consultant (consultant ❌), DXC .Net+React (.NET required ❌), EBIX (archived ❌). 0 scored.
+- "next.js developer" Sydney: returned Preacta Java x2 (contract ❌), Interfi Lead SWE (lead level ❌), Paxus ServiceNow (ServiceNow ❌), Airwallex Yield SWE (archived ❌), Google Motion Designer (not SWE ❌), HCL .NET Developer (.NET required ❌), Fyndr Full Stack (NEW ❌ — contract only), Pega Developer (Pega ❌), Smartgroup Engineering Manager (manager ❌), TheDriveGroup .NET (archived ❌), Komatsu Digital Solutions (analyst ❌), The Onset Senior Python (duplicate from golang query ✅), 3D Safety iOS (iOS/Swift ❌), Airwallex Staff Architect (architect ❌), TikTok Frontend Intern (intern ❌), Swordfish Tech Lead React/TS (contract ❌), Vision Intelligence Tech Lead (null data ❌). 0 scored.
+- "react native developer" Brisbane: returned Total Dealer Junior FE (salary $65-70k < $115k ❌), Private Advertiser Senior FSD (in pipeline as JOB-144 ❌), Total Dealer Head of Front (management ❌), ART React Native (in pipeline as JOB-141 ❌), Royal Health (null data ❌), BOQ Senior Frontend (archived ❌), Universal Store Eagle Farm (in pipeline as JOB-130 ❌), Task Recruitment Angular (Angular required ❌), Auto & General Senior Dev (null data ❌), DataMC (in pipeline as JOB-111 ❌), VALE Partners Senior (archived ❌), Medcan (null data ❌). 0 scored.
+
+### Full Fetch Results
+4 candidates fetched:
+- The Onset Senior SWE Python (91495604): Score 6.0 ≥ 5.5 ✅ PASS — Python/FastAPI/AWS microservices strong stack match; senior/staff level stretch (~4yr Leslie vs 5+yr implied) and regulated industry domain partial. Good pickup.
+- PointsBet Full Stack SWE (91523686): Score 4.69 < 5.5 ❌ — C# primary required (no Leslie C# match), gambling domain mismatch, TypeScript✅ React✅ SQL✅ partial but tech 4.4/10 drags overall. DISCARD as weak_match.
+- Acolade Backend Dev NodeJS/Java (91493298): Contract/Temp work type — HARD FILTER. DISCARD.
+- Fyndr Group Full Stack Engineer (91504870): Contract/Temp work type — HARD FILTER. DISCARD.
+
+### LinkedIn Queries Used
+- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
+- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
+
+## Conclusion
+- 1 new job scored: The Onset (Sydney, Hybrid, $180-210k+Super+ESOP, score 6.0 — Python/FastAPI/AWS microservices strong stack match; senior/staff level slight stretch and regulated industry partial domain but tech match carries it)
+- 3 jobs archived/discarded: PointsBet (weak_match 4.69), Acolade (contract), Fyndr (contract)
+- All 4 Seek queries returned mostly already-archived, contract-only, wrong stack (.NET, Go, Kentico, Pega, Angular, ServiceNow), IT Support/Management/Architect/ML specialist roles, or salary below threshold
+- LinkedIn continues to return 0 results
+- Pipeline now at 61 active jobs (60 prior + 1 new)
+- Note: The Onset role is at senior/staff level — recommend highlighting polyglot flexibility, end-to-end ownership from IMOS/NRE experience, and regulated industry exposure (AODN government context) in cover letter to address experience level concern.
+
+---
+
+# Query Quality Notes - 2026-04-15 (12:00 AM UTC)
+
+## This Run
+
+### Seek Queries Used
+- "software engineer" Melbourne: returned Refactor Senior AI (NEW ✅), DWS .NET/Vue (NEW ❌ — .NET required), Formation Tech Lead (null data), SEEK Grad (graduate ❌), ITA Technical Consultant (not SWE ❌), CFA ServiceNow (not SWE ❌), Pronto Industry Analyst (analyst ❌), Peoplebank Systems (systems ❌). 1 scored.
+- "software engineer" Sydney: returned Airwallex Yield SWE (NEW ❌ — Kotlin/vert.x required, no Leslie match), Airwallex Engineering Manager (manager ❌), Google Technical Program Manager (PM ❌), Google SRE Manager (manager ❌), Nearmap Product Manager (PM ❌), Appian Group (null data), HCL .NET Developer (.NET required ❌), Data Engineer (not SWE ❌), Omniscient Python (Medical Imaging ❌), SustainRecruit Data Engineer (data engineer ❌), Ambition Salesforce (Salesforce ❌), UNSW Agentic Automation (AI specialist ❌), DeVision SRE (SRE ❌), SEEK Grad (graduate ❌). 0 scored.
+- "full stack developer" Brisbane: returned Private Advertiser Senior (in pipeline as JOB-144), Aurec .NET (contract ❌), Suncorp Principal Platform (platform engineer ❌), ART Senior DevOps (DevOps ❌), Swift Developer (iOS ❌), ART Application Support (support ❌), Head of Front (management ❌), P&C DevOps GCP (DevOps ❌), KBR Power Platform (Power Platform ❌), ART React Native (in pipeline), PHP Developer (PHP required ❌), P&C Lead Platform (platform/lead ❌), Paxus Azure (contract ❌), Royal Health (null data ❌), Compare the Market Telephony (platform ❌), Suncorp Architect (architect ❌), Opengear (archived). 0 scored.
+- "python developer" Melbourne: returned Refactor Senior AI (duplicate ✅), Michael Page Kentico (Kentico/CMS ❌), Carpet Call Team Lead (lead ❌), Blackmagic GoLang (Go required ❌), EBIX (archived), Altis Consulting AI Engineer (AI specialist ❌), Airwallex Data Scientist (AI/ML specialist ❌), Infosys Consultant (consultant ❌), Fyndr AI (AI specialist ❌), Peoplebank DevOps (DevOps ❌), Trans Traffic Survey AI (AI specialist ❌). 1 scored.
+- "react" Sydney: returned Fyndr Full Stack (in pipeline), Smartgroup Engineering Manager (manager ❌), Komatsu Digital Solutions (analyst ❌), Swordfish Technical Lead (contract ❌), Vision Intelligence Tech Lead (robotics ❌), Libre Head of Product Engineering (head ❌), TeamHQ Senior Python/Django (Python/Django primary ❌), Argyle Network Full Stack (archived), HCL Mobile App (iOS/Android ❌), Private Web Developer (null data ❌), Winning Group Senior Frontend (Angular required ❌). 0 scored.
+- "typescript" Melbourne: returned Michael Page Kentico (Kentico ❌), DWS .NET/Vue (.NET required ❌), IMC Search AI Engineer (AI specialist ❌), CBA Unloan (in pipeline), Infosys Consultant (consultant ❌), SustainRecruit QA (QA ❌), EBIX (archived), Orygen (in pipeline), CareSuper (in pipeline), FinXL Angular (Angular ❌), Easygo Staff (in pipeline), Lookahead LLM (AI specialist ❌), BOQ Frontend (in pipeline), DuluxGroup (contract ❌). 0 scored.
+- "full stack developer" Melbourne: returned Cox Purtell Architect (architect ❌), Refactor Senior AI (duplicate ✅), Michael Page Kentico (Kentico ❌), DWS .NET/Vue (.NET required ❌), Formation Tech Lead (lead ❌), Carpet Call Team Lead (lead ❌), Bluefin Azure DevOps (DevOps ❌), Blackmagic GoLang (Go ❌), IMC Search AI (AI specialist ❌), Real Time DevOps Lead (DevOps ❌), Fusion5 Associate (too junior ❌), Airwallex IT Engineer (IT support ❌), CBA Unloan (in pipeline). 1 scored.
+
+### Full Fetch Results
+2 candidates fetched:
+- Refactor. Senior Software Engineer - AI (91518793): Score ~4.25 — Java primary backend required (5+yr), Weaviate/RAG experience but as Python developer not Java; Leslie has class-level Java, no production Java backend; React secondary but primary is Java backend for LLM orchestration. DISCARD as weak_match.
+- Airwallex Senior Software Engineer, Yield (91517837): Score ~4.15 — Kotlin/vert.x required as primary, Temporal & Kafka for workflow orchestration; Leslie's Python/TypeScript/React stack has NO Kotlin match. DISCARD as weak_match.
+
+### LinkedIn Queries Used
+- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
+- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
+
+## Conclusion
+- 0 new jobs scored
+- 2 jobs fetched and discarded as weak_match: Refactor (Java primary, no Leslie match), Airwallex (Kotlin required, no Leslie match)
+- All 7 Seek queries returned mostly already-archived or already-pipeline candidates, contract-only, wrong stack (.NET, Kotlin, Go, Angular, PHP), or IT Support/Management/Architect/AI specialist roles
+- LinkedIn continues to return 0 results
+- Pipeline unchanged at 60 active jobs with materials ready
+- **Severe diminishing returns continuing** — Melbourne/Sydney/Brisbane SWE market appears thoroughly covered; most new listings are AI/RAG specialist or specialized backend (Kotlin, Go, .NET) roles
+
+---
+
+# Query Quality Notes - 2026-04-14 (Evening — 10:00 PM UTC)
+
+## This Run
+
+### Seek Queries Used
+- "full stack developer" Sydney: returned Canva Product Manager (not SWE ❌), Canva Senior iOS (iOS not SWE ❌), Canva Sr Product Manager Data (data ❌), Airwallex x3 (IT Support, Engineering Manager, SWE II Yield already archived ❌), Canva Senior Product Manager (not SWE ❌). 0 scored.
+- "python developer" Melbourne: returned Airwallex Okta (IT Support ❌), Airwallex Engineering Manager (manager ❌), Airwallex SWE II (archived), Fyndr Group Senior/Staff AI (AI specialist ❌), Peoplebank DevOps (DevOps not SWE ❌), Trans Traffic Survey AI Engineer (AI specialist ❌), EBIX Australia (already archived ❌). 0 scored.
+- "javascript developer" Brisbane: returned Royal Health (null data ❌), Opengear Senior (archived ❌), APNIC (in pipeline ❌), Obzervr Integration Dev (NEW — $85-105k below $115k threshold ❌), Hills R&D (in pipeline ❌), BOQ Senior Frontend (archived ❌), Resources Safety (archived ❌). 0 scored.
+- "vue.js developer" Sydney: returned TeamHQ Senior Python/Django ($170-180k ✅ but role is Python/Django primary, not Vue.js ❌), Private Web Developer ($90-130k — insufficient data ❌), Winning Group Senior Frontend (Angular required, archived ❌), ANSTO Web Developer (null data ❌), Garvan Institute (null data ❌). 0 scored.
+- "software engineer" Melbourne: returned Salesforce Dev (contract ❌), Interface Agency ML Manager (manager ❌), DWS .NET/Vue.js (.NET required ❌), Formation Technology Tech Lead (too senior ❌), SEEK Grad (grad ❌), ITA Technical Consultant (consultant ❌), CFA Senior ServiceNow (ServiceNow ❌), Pronto Industry Analyst (analyst ❌), Peoplebank Systems (systems engineering ❌), iSelect Solution Architect (architect ❌), Pronto BI Support (BI ❌), Carpet Call Team Lead Python (team lead ❌), VOG Web Developer ($70-80k < $115k ❌). 0 scored.
+- "software engineer" Brisbane: returned FinXL Junior Full Stack (contract ❌), Worldpay Salesforce (Salesforce ❌), Mater Group BA (BA ❌), EDMI Data Engineer (data engineer ❌), SEEK Grad (grad ❌), Private Advertiser Senior Full Stack (NEW ✅), Pronto BI Support (BI ❌). 1 scored.
 
 ### Full Fetch Results
 2 candidates fetched:
@@ -26,517 +219,3 @@
 - LinkedIn continues to return 0 results
 - Pipeline now at 60 active jobs (59 prior + 1 new)
 - **Note**: EVRA score 5.8 is just above 5.5 threshold — construction/insurance domain is unrelated to Leslie's marine/research/fintech background but tech stack is a strong match. Worth a second look after materials are generated.
-
----
-
-# Query Quality Notes - 2026-04-14 (Midnight — 12:00 AM UTC)
-
-## This Run
-
-### Seek Queries Used
-- "full stack developer" Melbourne: 30 results — IMC Search AI Engineer (not SWE ❌), Real Time DevOps Lead (DevOps not SWE ❌), Fusion5 Technical Consultant ($80-90k <115k ❌), Airwallex Okta (IT Support ❌), Airwallex Engineering Manager (manager ❌), CBA Unloan Senior SWE (NEW ✅), Medibank Power Platform (Power Platform not SWE ❌), Fyndr Group Senior/Staff AI (AI specialist ❌), Accenture Architecture (architect ❌), Cobol Developer (COBOL required ❌), RACV Senior Developer (archived), Slade Mobile Lead (lead ❌), Blackbook Software Lead (null data ❌), The Onset Endpoint Engineer (infrastructure ❌), DXC .Net/React (.NET required ❌), Task Robotics Architect (robotics ❌), EBIX (archived), Catapult Principal Firmware (firmware ❌), Slater Gordon Cloud (cloud consulting ❌), Forever New Data Engineer (data engineer ❌), Preacta DevOps (DevOps ❌), Sharp & Carter Full Stack (archived), Orygen (in pipeline), DUAL Angular (archived), McMillan Shakespeare (in pipeline), Randstad Cloud (cloud infrastructure ❌), Suncorp Android (Android not SWE ❌). 1 scored.
-- "software engineer" Sydney: 22 results — 3D Safety iOS (iOS not SWE ❌), Nine Data Engineer (data engineer ❌), Fusion5 Technical Consultant ($140-150k but consulting ❌), Airwallex Okta (IT Support ❌), Airwallex Solution Architect (architect ❌), Airwallex Engineering Manager (manager ❌), Airwallex SWE II Yield (archived), TikTok Intern (intern ❌), Google Customer Engineer (pre-sales ❌), Sapient Salesforce (Salesforce specialist ❌), Software At Scale x4 (AI/DevOps - contract ❌), Fyndr Group AI (AI specialist ❌), Swordfish Tech Lead (contract ❌), Vision Intelligence (null data ❌), Accenture Architecture (architect ❌), Libre Head of Product (head ❌), Evolution Java (Java required ❌), TeamHQ Senior (archived), Argyle Network Full Stack (NEW ❌). 0 scored.
-- "react developer" Brisbane: 16 results — Total Dealer Head of Front (management ❌), ART React Native (archived), Boost My Business Web Designer ($30-40/hr ❌), Auto & General Analyst (in pipeline), BOQ Senior Frontend (archived), Universal Store (in pipeline), Task Recruitment Angular (Angular required ❌), Auto & General Senior (in pipeline), VALE Partners (archived), Medcan (in pipeline), Genesis Java (Java required ❌), others duplicates. 0 scored.
-- "react" Melbourne: 7 results — BOQ Senior Frontend (in pipeline), DuluxGroup (contract ❌), iterate Engineering Lead (lead ❌), Techforce Full Stack AI (contract ❌), Civica Libraries (in pipeline), Tes Solutions Architect (architect ❌), Launch Recruitment (contract ❌). 0 scored.
-- "typescript" Brisbane: 16 results — ART React Native (archived), Opengear Senior (archived), ART Quality Engineer (QA not SWE ❌), Hills R&D (archived), BOQ Senior Frontend (archived), Goodman Fielder .NET (.NET required ❌), BLACKROC D365 (Dynamics ❌), Auto & General Senior (in pipeline), Gravity IT SAP (SAP specialist ❌), Medcan (in pipeline), ABS Cloud Engineer (cloud infrastructure ❌), Reapit AI Engineers (AI specialist ❌), others duplicates. 0 scored.
-
-### Full Fetch Results
-3 candidates fetched:
-- Commonwealth Bank Unloan Senior SWE (91489395): Score 6.65 — TypeScript ✅, React ✅, Node.js ✅, GraphQL ✅, AWS/Azure ✅, Docker ✅, GitHub Actions ✅ — core stack matches perfectly. Senior role fits Leslie's ~4yr experience. FinTech domain (adjacent to Cuscal payments experience). SCORE ✅
-- The Argyle Network Full Stack (91481459): Score 3.5 — Angular + Java required (5yr), Leslie's Python/TS/React stack secondary. DISCARD as weak_match.
-- Software At Scale Python AI Engineer (91486866): Contract/Temp — HARD FILTER. DISCARD.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: Commonwealth Bank Unloan Senior SWE (Melbourne, Hybrid, score 6.65 — TypeScript/React/Node.js/GraphQL perfect Leslie stack match, senior role fits ~4yr experience, FinTech domain adjacent)
-- 2 jobs archived/discarded: The Argyle Network (weak_match — Angular/Java primary, no Leslie match), Software At Scale (contract only)
-- All 5 Seek queries returned mostly already-archived or already-pipeline candidates, contract-only, wrong stack (Angular/Java, Cobol, .NET), or IT Support/Management/Architect roles
-- LinkedIn continues to return 0 results
-- Pipeline now at 59 active jobs (58 prior + 1 new)
-
----
-
-# Query Quality Notes - 2026-04-13 (Morning — 10:00 AM UTC)
-
-## This Run
-
-### Seek Queries Used
-- "senior software engineer" Melbourne: 12 results — Fyndr Group (AI Delivery Lead, too senior ❌), Accenture (Architecture Manager, not SWE ❌), Cobol Developer (COBOL required, no match ❌), RACV Senior Developer (NEW ✅), Slade Group Mobile Technical Lead (lead level ❌), Talent Systems Engineer (systems engineering ❌), Blackbook Executive (Software Lead, null data ❌), sportsbet Engineering Manager (manager ❌), Insignia GM Technology (GM level ❌), Attribute Data Platform (data engineer ❌), Nigel Frank Senior Data Scientist (data scientist ❌), Task Robotics Architect (robotics ❌). 1 scored.
-- "full stack developer" Sydney: 10 results — Swordfish (contract ❌), Vision Intelligence (null data ❌), Libre Technologies Head of Product Engineering (head/lead ❌), Evolution Recruitment Senior Backend (Java required ❌), TeamHQ Senior Developer (NEW ✅), Coforge Systems Engineer (systems ❌), Profusion Digital Systems Manager (manager ❌), Lookahead Senior/Principal (electrical/electronic, not SWE ❌), Private Web Developer (null data ❌), Winning Group Senior Frontend (NEW ✅). 2 scored.
-- "software engineer" Brisbane: 11 results — KBR Power Platform (Power Platform, not SWE ❌), Australian Retirement Trust React Native (NEW ✅), Fynd Consulting PHP (PHP required ❌), P&C Partners Lead Platform (lead level ❌), UQ Principal REDCap (admin ❌), Laing O'Rourke Digital Engineer (construction ❌), Royal Health (null data ❌), Compare the Market Telephony Platform (platform engineering ❌), Opengear (archived), NTI Graduate (too junior ❌), APNIC (in pipeline). 1 scored.
-- "react developer" Melbourne: 15 results — DXC (.NET/React, C# required ❌), CareSuper (in pipeline ❌), FinXL Angular (Angular required ❌), Easygo Staff (in pipeline ❌), DuluxGroup (contract ❌), Launch Recruitment (contract ❌), Suncorp (in pipeline ❌), Easygo Staff/Frontend (in pipeline ❌), Preacta React Native (contract ❌), Australian Unity (archived ❌), Natural Selection RN (contract ❌), Lookahead (archived ❌), Cupcake Central (null data ❌). 0 scored.
-- "python developer" Sydney: 10 results — TeamHQ Senior Developer (duplicate ✅), Lookahead Principal (electrical, not SWE ❌), Private Graduate (graduate level, too junior ❌), ANSTO Web Developer (null data ❌), FinXL Senior Python (partial, null salary ❌), Enterprise IT AI Engineer (AI specialist ❌), Ethos Data Engineer (data engineer ❌), Private Senior Developer ($130-150k), TheDriveGroup Golang (archived ❌), Garvan Institute (fetch error). 0 scored.
-
-### Full Fetch Results
-4 candidates fetched:
-- RACV Senior Developer (91479945): Java (Spring/Hibernate) AND Python required, 10+yr required — Leslie has ~4yr and Python but not 10yr Java. DISCARD as weak_match (Score ~4.5 < 5.5 — 10yr required, too senior for Leslie's ~4yr, Java primary requirement).
-- TeamHQ Senior Developer (91482033): Score 7.65 — Python/Django ✅, Vue 3/TypeScript ✅, PostgreSQL ✅, AWS ✅ — PERFECT Leslie stack match. 5-7yr experience stretch but high-ownership role may offset. SCORE ✅
-- Winning Group Senior Frontend (91477912): Score 5.1 — Angular 2+ required as primary, Vue/React secondary; 6+yr required (exceeds Leslie's ~4yr). DISCARD as weak_match.
-- Australian Retirement Trust React Native (91479869): Score 7.85 — React Native ✅, Expo ✅, TypeScript ✅ — perfect stack match. Leslie has React Native from stomble project. SCORE ✅
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python React TypeScript 2026`: 0 results
-- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
-
-## Conclusion
-- 2 new jobs scored: Australian Retirement Trust React Native (Brisbane, score 7.85 — React Native/Expo/TypeScript perfect stack), TeamHQ Senior Dev (Sydney, $160-180k, score 7.65 — Python/Django/Vue/TypeScript/AWS perfect stack)
-- 2 jobs discarded: RACV (10yr + Java primary, too senior), Winning Group (Angular 2+ required + 6yr exceeds Leslie)
-- LinkedIn continues to return 0 results
-- Pipeline now at 58 active jobs (56 prior + 2 new)
-
----
-
-# Query Quality Notes - 2026-04-13 (Midnight — 12:00 AM UTC)
-
-## This Run
-
-### Seek Queries Used
-- "react native developer" Melbourne: 4 results — Preacta (contract), Natural Selection Group (contract), ACER (already in pipeline), McMillan Shakespeare (already in pipeline). 0 scored.
-- "full stack engineer" Sydney: 18 results — Hungry Jack's (Management), Facto (Consultant), TheDriveGroup Golang (NEW ❌ — Golang required, no Leslie match), Garvan Institute (fetch error), Airwallex IT Support, ResMed contracts x2, Real Time Founding (already in pipeline), Software At Scale (already in pipeline), Airwallex x3 (all in pipeline or weak_match), Google SRE (archived), Orygen (in pipeline), Are Media (DevOps), Talenza (DevSecOps), oOh! Data Engineer. 0 scored.
-- "python developer" Brisbane: 12 results — Royal Health (salary $80-90k <115k ❌), Opengear (archived), NTI Graduate (too junior), APNIC (in pipeline), Auto & General Analyst (in pipeline), Hills R&D (NEW ✅), Universal Store (in pipeline), Data Scientist $850-950/d (contract), RPMGlobal (archived), Micromine ML Engineer (ML specialist ❌). 1 scored.
-- "javascript developer" Melbourne: 20 results — EBIX (archived), CareSuper (in pipeline), FinXL Angular (Angular required), Easygo Staff (in pipeline), DuluxGroup (contract), Invenio (salary below threshold), ORIKAN Graduate, Easygo x3 (all in pipeline), sportsbet Junior (archived), Allura Partners (contract), Australian Unity (archived), Natural Selection RN (contract), Megabus (null data), Lookahead (archived), Randstad Digital (contract), Cupcake Central (null data), Woolworths (archived), Triniti (contract), Gigworth (archived). 0 scored.
-- "vue.js developer" Melbourne: 14 results — Sharp & Carter (fetch error), Orygen (in pipeline), FinXL Angular, BOQ (in pipeline), DuluxGroup (contract), Easygo x4 (in pipeline), Preacta RN (contract), Australian Unity (archived), Lookahead (archived), Cupcake Central (null data), Gigworth (archived). 0 scored.
-- "node.js developer" Sydney: 22 results — Garvan (fetch error), Circuit-TK (salary $52-78k <115k), ResMed contract, Real Time Founding (in pipeline), Software At Scale (in pipeline), Airwallex x3 (in pipeline or weak_match), Orygen (in pipeline), Clicks IT (contract), Torch Java, Profusion .NET (in pipeline), Objective (in pipeline), TalentWeb RN (archived), UTS (null data), Earned Media (salary $75-85k <115k), The Aquarium contract, AAR Consulting (archived), MongoDB (archived), Google SRE (archived), Real Time Support (salary $93.5k <115k), Assembl Talent (contract), Nuix (archived). 0 scored.
-
-### Full Fetch Results
-4 candidates fetched:
-- Garvan Institute (91465569): Page load timeout — could not verify details. DISCARD as fetch_error.
-- TheDriveGroup Senior Golang (91465880): Score 4.65 — Golang required as primary must-have; Leslie has Python/TS/React but no Golang. DISCARD as weak_match.
-- Hills Limited Full Stack R&D (91433360): Score 8.15 — TypeScript/Python/React/Vue/Angular all ✅, REST APIs, Git/CI/CD ✅ — PERFECT STACK MATCH. SCORE ✅
-- AAM Corporate Integration (91389037): Contract/Temp work type — HARD FILTER. DISCARD.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: Hills Limited Full Stack Developer R&D (Brisbane, score 8.15 — TypeScript/Python/React/Vue/Angular perfect stack match)
-- 3 jobs archived/discarded: TheDriveGroup Golang (weak_match — Golang required, no Leslie match), AAM Corporate (contract only), Garvan Institute (fetch error)
-- All 6 Seek queries returned mostly already-archived or already-pipeline candidates, contract-only, wrong stack (Golang, Angular, C#, Java), or salary below $115k threshold
-- LinkedIn continues to return 0 results
-- Pipeline now at 56 active jobs (55 prior + 1 new)
-- Note: Hills R&D role is a strong match — TypeScript/Python backend/frontend all Leslie's core skills
-
----
-
-# Query Quality Notes - 2026-04-12 (Midnight — 12:00 AM UTC)
-
-## This Run
-
-### Seek Queries Used
-- "python developer" Melbourne: 8 results — EBIX Australia (already archived), Airwallex Data Scientist (AI/ML specialist), Coles Lead (too senior), Orygen (already in pipeline), Talent LIMS (null location), Urbis AI (AI specialist), SEEK Lead/Staff (too senior). 0 scored.
-- "software engineer" Sydney: 18 results — Airwallex IT (IT Support), Susquehanna (support), Sideshow QA, ResMed contracts, Real Time Founding (already in pipeline), Software At Scale (NEW ✅ — Staff/Senior React/TypeScript, tech 10/10), Airwallex SWE II Yield (NEW ❌ — Kotlin/vert.x/Temporal/Kafka required), Google SRE (already archived), Orygen (duplicate), NSW Principal (too senior), Are Media/Talenza/oOh! (DevOps/Data engineer). 1 scored.
-- "full stack developer" Brisbane: 9 results — Opengear (already archived), APNIC (already in pipeline), Auto & General Analyst Dev, Hills R&D, Resources Safety (archived), Universal Store (already in pipeline), Sunstone Advisory (contract angular), Task Recruitment (Angular required), AAM Integration. 0 scored.
-- "golang developer" Sydney: 19 results — Google SRE (archived), Torch (Java required), SEEK Staff (too senior), Breville Embedded (C++), AAR Consulting (archived), MongoDB (archived), Google SRE (archived), Earth AI (data/ML), LUXOFT (already in pipeline), brix (archived), Launch Jr (salary below threshold), The Onset Principal (too senior), Robert Walters (contract), Gaming Arts (game dev), Greenstone, DingGo ML, Easygo Senior (in pipeline). 0 scored.
-- "java spring boot" Melbourne: 14 results — Invenio (salary below threshold), Restive Lead (too senior), Davidson Sr Microservices (archived), Suncorp (already in pipeline), Infosys Consultant (too senior), iterate Java (partial), SustainRecruit contracts x2, Datacom BA (not SWE), DWS Tech Lead (too senior), Salesforce Agentforce (archived), Davidson Fullstack (archived), Attribute QA (not SWE), LogiHire (archived), Sharp & Carter Integration. 0 scored.
-- "react developer" Brisbane: 10 results — Boost My Business (salary too low), Auto & General Analyst Dev (duplicate), Hills R&D (duplicate), Universal Store (already in pipeline), Auto & General Sr Dev (duplicate of other listings), VALE Partners (Laravel required), Medcan (archived), Genesis Java (Java required), OPS Full Stack (null data). 0 scored.
-
-### Full Fetch Results
-2 candidates fetched:
-- Software At Scale (91457026): Score 7.55 — React/Node.js/TypeScript/AWS/GitHub Actions/Docker all ✅ (tech 10/10), Staff-level experience stretch but delivery-focused culture may offset. SCORE ✅
-- Airwallex SWE II Yield (91454380): Score 4.15 — Kotlin/vert.x/Temporal/Kafka explicitly required as must-have backend stack; Leslie's Python/Java/Spring Boot/FastAPI stack has NO Kotlin match. DISCARD as weak_match.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: Software At Scale Staff/Senior Engineer (Sydney, Hybrid, score 7.55 — perfect Leslie tech stack: React/Node.js/TypeScript/AWS/Docker/GitHub Actions/observability, tech score 10/10, experience slight stretch for ~4yr Leslie vs Staff-level requirement but delivery-focused culture may offset)
-- 1 job discarded: Airwallex SWE II Yield (Sydney, weak_match Score 4.15 — Kotlin/vert.x/Temporal/Kafka explicitly required, no Leslie match)
-- All 6 Seek queries returned mostly already-archived or already-pipeline candidates, contract-only, wrong stack (C++, Java, Spring Boot 5yr, .NET), too senior (Staff, Principal, Lead), or DevOps/infrastructure-focused
-- LinkedIn continues to return 0 results
-- Pipeline now at 55 active jobs (54 prior + 1 new)
-- Note: Software At Scale is a stretch due to Staff-level experience requirement, but tech stack is a PERFECT match — worth applying
-
----
-
-# Query Quality Notes - 2026-04-11 (Morning — 10:00 AM UTC)
-
-## This Run
-
-### Seek Queries Used
-- "python developer" Melbourne: 15 results — EBIX Australia ($130-145k scored), Orygen (in pipeline), CareSuper (in pipeline), Easygo Staff (too senior), Lookahead (LLM specialist, archived), BOQ (in pipeline), Dulux (contract), Techforce (contract), Civica (null location), Davidson (contract), Launch (contract), Easygo Staff FE (too senior), Easygo Core (null), Easygo Eng/Eng/SWE (all in pipeline), sportsbet (archived), Allura (contract), NatSel RN (contract), Gigworth (archived), Kestral (archived), etc. 1 scored.
-- "react developer" Sydney: 22 results — Software At Scale (null salary), Clicks IT (contract), Profusion x2 (.NET required), TalentWeb .NET, Objective (Java/AWS), TalentWeb RN, Breville (embedded), Earned Media (junior/AI), Assembl (contract), Nuix (archived), Shift Financial (.NET), Engagis (null), Martian Logic (archived), Lendi (in pipeline), brix (archived), Charterhouse (contract), Compass (PHP), TRS (contract), Easygo (in pipeline), Codematix (in pipeline), Optus Lead (archived). 0 scored.
-- "full stack" Brisbane: 15 results — Opengear (archived), APNIC (in pipeline), Bay Technologies (DevOps), Auto & General (analyst), Hills (R&D), Task Recruitment (Scrum Master), Resources Safety (archived), Universal Store (in pipeline), Sunstone Advisory (contract), Auto & General Senior, Better Staff (DevOps), Australian Retirement Trust (DevOps), Robert Half (support), Gravity IT (SAP), Cuscal (archived). 0 scored.
-- "typescript" Melbourne: 28 results — EBIX Australia (already scored), Orygen (in pipeline), CareSuper (in pipeline), FinXL Angular, Easygo Staff, Lookahead LLM (archived), BOQ (in pipeline), Dulux (contract), Techforce AI, Civica, Davidson (contract), Launch (contract), Easygo x4 (in pipeline), sportsbet (archived), Allura (contract), NatSel (contract), Gigworth (archived), Kestral (archived), Easygo x3 (in pipeline), ABS Cloud (archived), iterate (archived), Cadmus (in pipeline), LogiHire (archived), Tennis Aus (in pipeline), Avon ($90-100k <115k), Cadmus (in pipeline). 0 scored.
-- "vue" Sydney: 7 results — Real Time Founding ($250-400k scored), Clicks (contract), Real Time App Support ($93.5k), Engagis, Easygo (in pipeline), PRA (contract), Canva (archived). 1 scored.
-- "node.js developer" Melbourne: 30 results — Already covered above — all duplicates from prior queries. 0 scored.
-
-### Full Fetch Results
-2 candidates fetched:
-- EBIX Australia (91457387): Score ~2.89 — C#/.NET Core (5yr), Angular 17+, SQL Server, Entity Framework required. Leslie's Python/TS/React/Vue stack has NO match. DISCARD as weak_match.
-- Real Time Founding SW Engineer (91457235): Score 7.05 — TypeScript/Next.js/React/Tailwind/tRPC/PostgreSQL/AWS ALL MATCH (10/10 tech). Experience gap (~8yr founding level vs 4yr Leslie) but tech stack perfect. SCORE.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python React 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: Real Time Founding SW Engineer (Sydney, $250-400k+ESOP, score 7.05 — perfect TypeScript/Next.js/React/Tailwind stack but founding-level experience stretch)
-- 1 job discarded: EBIX Australia (Melbourne, $130-145k, weak_match — C#/.NET Core/Angular/SQL Server primary, no Leslie match)
-- All 6 Seek queries returned mostly already-archived or already-pipeline candidates, contract-only, or wrong stack (.NET/C#/PHP/C++/Angular)
-- LinkedIn continues to return 0 results
-- Pipeline now at 54 active jobs (53 prior + 1 new)
-- Note: Real Time is a stretch due to founding-level requirements (~8-10yr), but tech stack is a PERFECT match — worth applying
-
----
-
-# Query Quality Notes - 2026-04-09 (Morning — 10:00 AM UTC)
-
-## This Run
-
-### Seek Queries Used
-- "golang developer" Melbourne: 8 results — Roller Software (C# .NET ❌), Easygo x3 (in pipeline ❌), Civmec Developer Lead (too senior/construction ❌), Talent Street Senior Angular (archived ❌), Argyle Network Backend Dev (null salary, Melbourne fintech, insufficient data ❌). 0 scored.
-- "aws developer" Sydney: 16 results — mostly non-SWE: Customer Success, Sales, Network Admin, Security Engineer, Windows System Engineer, Infrastructure Engineer, Architect, etc. 0 scored.
-- "java developer" Brisbane: 9 results — RSHQ Senior Developer (null data ❌), Goodman Fielder .NET (❌), Dept Health Apps Specialist (database ❌), Universal Store (in pipeline ❌), Databricks Solutions Architect (not SWE ❌), Auto & General x2 (in pipeline ❌), VALE Partners (archived ❌), Medcan (in pipeline ❌). 0 scored.
-- "software engineer" Melbourne: 8 results — Automation/Analyst (sysadmin ❌), BlueRock DevOps/SecDevOps (DevOps not SWE ❌), Clicks Robotic Software (robotics/C++ ❌), Sell and Parker Business Systems (not SWE ❌), Graduate Mobile (❌), Duck Creek Engineer (insurance platform ❌), Techforce Full Stack AI (contract ❌), Invenio SWE (null data ❌). 0 scored.
-- "javascript" Melbourne: 9 results — iterate Lead (contract ❌), Techforce Full Stack AI (contract ❌), Deloitte Sys/DevOps (DevOps ❌), ServiceNow (contract ❌), sportsbet Associate SWE (see below ❌), Launch Senior (contract ❌), Suncorp (see below), others filtered. 0 scored.
-- "typescript" Melbourne: 21 results — iterate Lead/Davidson Senior (contract ❌), Techforce Full Stack AI (contract ❌), Davidson Senior Engineer Microservices (contract ❌), Launch Senior (contract ❌), Easygo x5 (all in pipeline ❌), sportsbet x2 (see below ❌), Allura Partners (contract ❌), NatSel Senior RN (contract ❌), Gigworth (archived ❌), Tech & Data People (in pipeline ❌), Kestral (archived ❌), ABS Cloud (archived ❌), Cadmus (in pipeline ❌), LogiHire (archived ❌), Tennis Australia (in pipeline ❌). 0 scored.
-- "frontend developer" Sydney: 19 results — ASIC (marketing ❌), Earned Media ($75-85k <115k ❌), AAR Consulting (PHP required ❌), WOW Lead Shopify (Shopify specialist ❌), MongoDB SWE3 (C++ required ❌), Google SRE (archived ❌), Assembl Talent (contract ❌), Real Time App Support ($93.5k ❌), Kinexus Lead (archived ❌), Nuix Engine (archived ❌), SALT Tech Support UX ($122-123k but support ❌), Snyk (contract ❌), Tenzing SmartCOMM (archived ❌), Shift Financial .Net/React (.NET required ❌), Sydney Tools (in pipeline ❌), Martian Logic (archived ❌). 0 scored.
-
-### Full Fetch Results
-6 candidates fetched:
-- MongoDB Software Engineer 3 (91421963): C++ server-side WiredTiger — Leslie no C++. DISCARD.
-- Davidson Senior Microservices (91408161): Contract/Temp — HARD FILTER. DISCARD.
-- Launch Recruitment Senior SWE (91407197): Contract 6 months — HARD FILTER. DISCARD.
-- sportsbet.com.au Associate SWE FanDuel (91407503): .NET/Java primary, gambling domain. DISCARD.
-- sportsbet.com.au Junior Engineer (91400363): AWS/GitHub automation/DevOps platform role — not SWE. DISCARD.
-- AAR Consulting Full Stack x2 (91412105): Contract, PHP required — HARD FILTER. DISCARD.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" React Python 2026`: 0 results
-
-## Conclusion
-- 0 new jobs scored
-- 6 candidates fetched, all discarded (3 hard_filter contract-only, 1 C++ no match, 1 DevOps not SWE, 1 gambling domain + .NET gap)
-- All 7 Seek queries returned 0 scored candidates — most results already in pipeline, contract-only, wrong stack, or too senior/specialized
-- LinkedIn continues to return 0 results
-- Pipeline unchanged at 49 active jobs with materials ready
-- **Severe diminishing returns** — running low on fresh query combinations; Melbourne/Sydney/Brisbane SWE market appears thoroughly covered
-
----
-
-# Query Quality Notes - 2026-04-09 (Midnight)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Melbourne: 20+ results — Computershare Software Dev (C/C++/SQL required, no Leslie stack ❌), AustralianSuper AI Engineer/Automation Engineer (AI specialist ❌), Aurec Power Apps (Power Platform, not SWE ❌), Talent Street Pega Architect (architect ❌), Davidson Integration (in pipeline), Green Light PS .NET (contract ❌), Talenza Salesforce (contract ❌), Tenzing SmartCOMM (archived), etc. 0 scored.
-- "python developer" Sydney: 20+ results — The Onset Principal Python (too senior, 170-200k ❌), Deloitte Agentic Data Engineer (data engineer ❌), Correlate Resources Staff AI (archived), Greenstone Financial Services (C++/Java required, not SWE ❌), Rezdy Senior Data Engineer (data engineer ❌), Citi Apps Support (IT support ❌), FinXL Associate Data Engineer ($85k <115k ❌), EY AI Engineer (AI specialist ❌), etc. 0 scored.
-- "full stack" Brisbane: 15 results — Auto & General Senior Dev (in pipeline), Robert Walters FSD ($100-115k <115k ❌), Outsourced Professional Solutions (null data ❌), others archived/contract/wrong stack. 0 scored.
-- "react developer" Sydney: 25 results — Assembl Talent (contract ❌), Real Time App Support ($93.5k <115k ❌), Nuix Engine (archived ❌), Shift Financial .NET/React (.NET required ❌), Sydney Tools (in pipeline), Martian Logic (archived ❌), Lendi Group (in pipeline), Charterhouse (contract ❌), Robert Walters Java/React (contract ❌), Compass Education PHP/React (PHP required ❌), etc. 0 scored.
-- "software engineer" Sydney: 30 results — Bureau of Meteorology Technical SOE (systems admin ❌), WOW Recruitment Lead Shopify (Shopify ❌), Bentley Systems Application Engineer (engineering ❌), Canva Technical Program Manager (PM ❌), Canva ML Engineer (ML specialist ❌), Google SRE (SRE/infrastructure ❌), Easygo Engineering Manager (management ❌), Cuscal Java & SQL (in pipeline), Codematix AI/ML (AI specialist ❌), Airwallex IT Engineer (IT ❌), Slalom Architect (architect ❌), Google SRE II (SRE ❌), etc. 0 scored.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: Talent Locker Jnr/Mid Dev (Sydney, $130-150k, score 7.94 — React/Next.js perfect stack match, 2-5yr experience fits Leslie's ~4yr, on-site requirement may be a concern)
-- 0 jobs archived/discarded this run (most filtered by prior runs, no new candidates needed archiving)
-- LinkedIn continues to return 0 results
-- Pipeline now at 49 active jobs (48 prior + 1 new)
-- Severe diminishing returns continuing — most queries returning already-archived or already-pipeline candidates
-- Note: Talent Locker is on-site (5 days office) — may need to flag as downside
-
----
-
-# Query Quality Notes - 2026-04-08 (Afternoon)
-
-## This Run
-
-### Seek Queries Used
-- "javascript developer" Melbourne: 12 results — Allura Partners (contract ❌), Australian Unity Senior FE (archived ❌), Randstad Digital ServiceNow (contract ❌), Natural Selection Senior RN (contract ❌), Megabus Growth (null data ❌), Randstad Digital SWE (contract ❌), Cupcake Central Shopify (null data ❌), Woolworths FSD (weak_match ❌ — C#/.NET Core primary, no Leslie stack), Triniti Sr Python (contract ❌), Gigworth App Dev (weak_match ❌ — Angular/PHP required), Sidekicker Sr SWE (null data), Easygo Staff FE (in pipeline). 0 scored.
-- "python" Sydney: 12 results — Arinco Principal Azure AI (consultant ❌), Slalom Senior Architect (architect ❌), Real Time App Support ($93.5k below $115k ❌), Talenza Lead Data Engineer (data engineer ❌), Assembl Talent (contract ❌), ManpowerGroup Sr Automation (contract ❌), Unisson Data Analyst (data analyst ❌), Deloitte Sr Data Engineer (data engineer ❌), ANSTO Modern EUC (infrastructure ❌), My Guardian IT Support (support ❌), What Ability Data Analyst ($70-80k ❌), HammondCare Sr BI Dev (BI focus ❌). 0 scored.
-- "full stack" Melbourne: 22 results — all candidates already in pipeline (Shell Energy, Tech & Data People), contract-only (Allura, Green Light PS, Calleo, SustainRecruit), weak_match (Woolworths C#/.NET, Lookahead Elixir, iterate Java), archived (Salesforce Agentforce), or null data. 0 scored.
-- "react" Brisbane: 8 results — Universal Store FSD Eagle Farm (scored ✅ — 9.05, React/Vue/Node/AWS perfect stack), Task Recruitment Angular (Angular required ❌), Auto & General Sr Dev x2 (archived ❌), VALE Partners (Laravel ❌), Medcan (in pipeline ✅), NHVR (in pipeline ✅), Goodstart (null data ❌). 1 scored.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack developer" "Melbourne OR Brisbane" Python JavaScript 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: Universal Store Full Stack Developer (Brisbane, Eagle Farm QLD, Hybrid, score 9.05 — React/Vue/Node.js/AWS all Leslie core skills, 3yr experience requirement perfect fit)
-- 3 jobs archived/discarded: Woolworths FSD (C#/.NET Core primary, score 2.8), Triniti (contract-only), Gigworth App Dev (Angular/PHP required, score ~4.0)
-- LinkedIn continues to return 0 results
-- Pipeline now at 48 active jobs (47 prior + 1 new)
-- Severe diminishing returns — most Melbourne/Sydney queries returning already-archived or already-pipeline candidates
-
----
-
-# Query Quality Notes - 2026-04-08 (Morning)
-
-## This Run
-
-### Seek Queries Used
-- "react" Melbourne: 12 results — Preacta Senior RN (contract ❌), Australian Unity Senior FE (weak_match ❌ — 8yr/Sitecore required), Natural Selection Senior RN (contract ❌), Lookahead Senior FSD (weak_match ❌ — Elixir backend), Easygo Staff (in pipeline), Tech & Data People Senior AI (in pipeline), ACER Front End (in pipeline), Civillo (archived), etc. 0 scored.
-- "python developer" Sydney: 12 results — Lendi Mid-Level (contract ❌), Canva x2 ML (archived ❌), Junior Tech (salary $80-85k <115k ❌), LUXOFT Python Dev (scored ✅ — score 7.025, Python/AWS/Airflow/SQL), brix Full-Stack Agentic (insufficient data). 1 scored.
-- "full stack" Brisbane: 10 results — NHVR (in pipeline), Gravity IT SAP CAP (archived ❌ — architect level), Cuscal Systems & DevOps (archived ❌), Auto & General Senior (insufficient data), etc. 0 scored.
-- "typescript" Sydney: 17 results — Insignia Financial Sr FSE (scored ✅ — score 8.05, React/TS/Node/AWS), Sydney Tools Sr FSD (scored ✅ — score 6.25, React/HTML/CSS), Nuix Engine (archived ❌), Kinexus Lead (archived ❌ — C++20/ROS2), CBA Staff .NET (archived), Easygo (in pipeline), etc. 2 scored.
-- Additional queries: "software engineer" Sydney, "javascript developer" Brisbane — most already in pipeline/archived. Assembl Talent (contract), Tenzing SmartCOMM (archived ❌ — CCM platform), RGS Tech Lead (archived ❌ — founding level).
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney OR Brisbane" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack" "Melbourne OR Brisbane" React Python TypeScript 2026`: 0 results
-
-## Conclusion
-- 3 new jobs scored: LUXOFT Python Dev (Sydney, score 7.025 — Python/AWS/Airflow/SQL match), Insignia Financial Senior FSE (Sydney, score 8.05 — React/TS/Node/AWS perfect match), Sydney Tools Senior FSD (Sydney, $130k, score 6.25 — React/TypeScript match)
-- 9 jobs archived/discarded: 3 contract-only (Preacta RN, Natural Selection RN, Assembl Talent), 6 weak_match (Australian Unity 8yr/Sitecore, Lookahead Elixir, Nuix Java/C++, Kinexus C++20/ROS2, Tenzing SmartCOMM, RGS Tech Lead founding)
-- LinkedIn continues to return 0 results
-- Pipeline now at 47 active jobs (44 prior + 3 new)
-- Moderate pickup after diverse queries (react, python dev, full stack, typescript)
-
----
-
-# Query Quality Notes - 2026-04-06 (Morning)
-
-## This Run
-
-### Seek Queries Used
-- "next.js" Melbourne: 18 results — McMillan Shakespeare Frontend Dev (scored ✅ — React/Vue.js/Next.js, WCAG accessibility, score 6.55), Tennis Australia Senior Full Stack (scored ✅ — TypeScript/React/Next.js/Tailwind/AWS, score 7.05), Easygo x2 (in pipeline), Real Time (in pipeline), PRA .Net (archived), Davidson (in pipeline), iterate (archived), Triniti (contract), etc. 2 scored.
-- "node.js" Brisbane: 16 results — DataMC (in pipeline), VALE Partners (archived), Medcan (in pipeline), UQ (archived), Auto & General x3 (in pipeline/archived), Genesis Java (archived), Robert Walters (salary $100-115k <115k ❌), Technology One (weak_match ❌ — C# required), PartsCheck Data Engineer (archived), Maintain Technology (contract), Working Mouse (weak_match ❌ — C# primary), Endpoint IQ (weak_match ❌ — .NET primary), etc. 0 scored.
-- "fastapi" Sydney: 4 results — DingGo Lead ML (archived ❌), Optus Lead Software (archived ❌), Interactive Architect (archived ❌), Optus SWE (in pipeline). 0 scored.
-- "vue" Brisbane: 9 results — VALE Partners (archived), Auto & General x2 (in pipeline), Maintain Technology (contract), Techforce (contract), Dept Health (archived), DeVision Senior Front-End (scored ✅ — $130-140k, React, score 7.05), Silverlink (archived), Endpoint IQ (weak_match ❌). 1 scored.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney" Python TypeScript React 2026`: 0 results
-
-## Conclusion
-- 3 new jobs scored: McMillan Shakespeare (Melbourne, score 6.55), Tennis Australia (Melbourne, score 7.05), DeVision (Brisbane, $130-140k, score 7.05)
-- 3 jobs archived as weak_match: Technology One (C# required, score 4.2), Working Mouse (C# 5+yr, score 5.35), Endpoint IQ (.NET primary, score 4.8)
-- LinkedIn continues to return 0 results
-- Pipeline now at 44 active jobs (41 prior + 3 new)
-- Moderate pickup after trying new query combinations (next.js, node.js, fastapi, vue)
-
----
-
-# Query Quality Notes - 2026-04-06 (Midnight)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Melbourne: all 10 candidates already in pipeline (Shell Energy) or archived (Frequentis x2, Gigworth, Sidekicker, DataSpark, Reflex, In Marketing We Trust contract, Capgemini SAP, AKQA delivery manager). 0 scored.
-- "react" Sydney: all candidates already in pipeline (CBA Staff .NET, Easygo, Codematix, Ambition, Optus, Shutterspeed) or archived (Correlate Staff AI, Bluefin security, FinXL contract, Real Time SRE $300-600k outlier). 0 scored.
-- "python developer" Sydney: all candidates already in pipeline (Optus, Shutterspeed) or archived (CBA Staff .NET, Chery Motor no details, DingGo Lead ML too senior, Greenstone data engineer, FinXL associate $85k below threshold, TikTok intern, SALT quant). 0 scored.
-- "typescript" Brisbane: all candidates already in pipeline (cirrus8, Medbill) or archived (Medcan, ABS cloud engineer, Techforce contract, Round Table x2, Auto & General x2). 0 scored.
-- Chery Motor IT Application Engineer (seek 91296574): insufficient data (null location/salary/workType) — cannot confirm target city — discarding.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney" Python TypeScript React 2026`: 0 results
-
-## Conclusion
-- 0 new jobs scored
-- All candidates either already in pipeline, archived, contract-only, salary below $115k threshold, too senior/specialized, or insufficient data (Chery Motor discarded)
-- LinkedIn continues to return 0 results
-- Severe diminishing returns — pipeline remains at 41 active jobs with materials ready
-- Next run should try different queries: "next.js" Melbourne, "node.js" Brisbane, "fastapi" Sydney, or "vue" Brisbane
-
----
-
-# Query Quality Notes - 2026-04-05 (Midnight)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Melbourne: Tech & Data People Senior AI (already in pipeline), all other candidates already archived/filtered. 0 scored.
-- "full stack" Sydney: all candidates already in pipeline (Kindred Senior Backend, CBA Staff .NET, Easygo Senior, Talenza Cloud Engineer, etc.). Partial results due to SIGTERM. 0 scored.
-- "python developer" Brisbane: DataMC Software Dev (already in pipeline), SQL Developers DataMC Brisbane (salary $85-115k midpoint $100k < $115k ❌), Medcan/UQ/Urban/Dept Justice (all archived). 0 scored.
-- "node.js developer" Melbourne: Gigworth App Dev (archived ❌), Sidekicker Senior (archived ❌), Easygo Staff FE (in pipeline), Kestral Senior (archived ❌), ACER Front End Developer (scored ✅ — $110-122k, JS/React/Vue/TS match, score 5.65), Easygo Senior FE/Design Systems (in pipeline), PRA .Net/Azure (in pipeline), Davidson Fullstack (in pipeline), iterate Senior Backend (in pipeline), Cadmus Senior SWE (in pipeline), Real Time Full Stack (in pipeline), LogiHire Full Stack (discarded ❌ — Java/Spring Boot 5+yr required), Moveware Full Stack (weak_match ❌ — Flutter/Dart required + AI-centric, score 4.55). 1 scored.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "full stack" "Melbourne OR Sydney" Python TypeScript 2026`: 0 results
-- `site:linkedin.com/jobs "software engineer" "Brisbane OR Melbourne" React Python 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: ACER Front End Developer (Melbourne, $110-122k, score 5.65 — JavaScript/React/Vue/TypeScript, 3+yr experience, research domain fit)
-- 2 jobs archived/discarded: LogiHire (Java/Spring Boot/Kafka 5+yr required, no Leslie match), Moveware (Flutter/Dart required + AI-driven dev, score 4.55)
-- All other candidates already in pipeline or archived from prior runs
-- LinkedIn continues to return 0 results
-- Pipeline now at 41 active jobs (40 prior + 1 new)
-- Continuing severe diminishing returns — most queries returning already-archived or already-pipeline candidates
-
----
-
-# Query Quality Notes - 2026-04-04 (Morning)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Melbourne: returned Gigworth App Developer (already archived), Frequentis Lead SWE (weak_match ❌ — aviation safety-critical), Sidekicker Senior (weak_match ❌ — 6+yr), Shell Energy Senior (scored ✅), DataSpark Power Platform (weak_match ❌), Reflex Tech Apps (weak_match ❌), St John Security (weak_match ❌), Bunnings Oracle APEX (weak_match ❌). 1 scored.
-- "javascript developer" Brisbane: returned DataMC (already in pipeline), VALE Partners Senior (Laravel required ❌), Medcan (already in pipeline), UQ App/DB (archived), Auto & General (in pipeline). 0 scored.
-- "typescript" Sydney: returned Correlate Staff AI (weak_match ❌ — staff level), Ambition Full Stack (scored ✅), Easygo Senior (already in pipeline), Codematix Senior (scored ✅), Optus Lead (already in pipeline), Interactive Architect (weak_match ❌), PRA Senior (contract ❌), Optus SWE (in pipeline). 2 scored.
-- "full stack developer" Brisbane: returned DataMC (in pipeline), VALE Partners (archived), Medcan (in pipeline), NHVR Senior (scored ✅), UQ (archived), ABS Cloud Engineer (weak_match ❌), NHVR Technical Lead (weak_match ❌). 1 scored.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "full stack" "Melbourne OR Sydney" Python TypeScript 2026`: 0 results
-- `site:linkedin.com/jobs "software engineer" "Brisbane OR Melbourne" Python React 2026`: 0 results
-
-## Conclusion
-- 4 new jobs scored: NHVR Senior Full Stack (Brisbane, $161,808+super, 8.05 — perfect React/TS/Node/Azure match), Shell Energy Senior Engineer (Melbourne, 6.5), Codematix Senior Full-Stack (Sydney, $160k, 7.35), Ambition Full Stack (Sydney, 5.975)
-- 11 jobs archived/discarded (1 contract, 10 weak_match: Power Platform, cloud engineer, AI specialist, security, Oracle APEX, architect, etc.)
-- LinkedIn continues to return 0 results
-- Pipeline now at 40 active jobs with materials ready (36 prior + 4 new)
-- Good pickup today — 4 new jobs is a strong result
-
----
-
-# Query Quality Notes - 2026-04-03 (Evening)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Melbourne: returned Easygo Staff SWE Frontend (too senior 8+yr ❌), Sidekicker Senior SWE (6+yr required, too senior ❌), Gigworth App Developer (Angular required, no Leslie stack ❌). 0 scored.
-- "full stack developer" Sydney: returned Talent Consultant Group Arlula Senior Backend (NV1 clearance required, not met ❌), Cuscal Software Engineer (scored ✅ — Java/Spring Boot/SQL/AWS, 6.65), others filtered/archived.
-- "python developer" Brisbane: returned DataMC (already in pipeline), UQ App/DB Dev (salary $104-113k <115k threshold ❌), Urban Utilities Developer (weak_match 5.55 < 5.5 ❌), Medcan Software Dev (scored ✅ — React/TS/Node, 6.2), etc. 1 scored.
-- "vue.js developer" Melbourne: returned Real Time (already in pipeline), Your Reformer (already in pipeline), others filtered/archived. 0 scored.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney" Python React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack" "Brisbane OR Melbourne" Python TypeScript 2026`: 0 results
-
-## Conclusion
-- 1 new job scored: Cuscal (Sydney, Java/Spring Boot/SQL/AWS, 6.65 — fintech payments domain)
-- 7 jobs archived (1 salary below threshold, 6 weak_match: NV1 clearance required, 6+yr too senior, Angular/PHP stack no match, utility/healthcare domain)
-- LinkedIn continues to return 0 results
-- Pipeline at 36 active jobs with materials ready (35 prior + 1 new)
-- Diminishing returns continue — most queries returning already-archived or non-matching roles
-
----
-
-# Query Quality Notes - 2026-04-02 (Evening)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Melbourne: returned Tech & Data People Senior AI (scored ✅ — $150-180k, React/TS/Node/RAG), Civillo Mid SWE (weak_match ❌ — C#/.NET required), others filtered. 1 scored.
-- "full stack developer" Sydney: returned mostly senior/lead/architect roles; The Recruitment Company Senior Java (weak_match ❌ — 7yr/Spring required). 0 scored.
-- "python developer" Brisbane: returned DataMC Software Dev (scored ✅ — Python/JS/Linux/REST all Leslie skills, 7.3), Dept of Justice Sr SWE (weak_match ❌ — Dynamics/Azure required). 1 scored.
-- "senior software engineer" Melbourne: returned Kestral Computing Sr SWE (weak_match ❌ — C#/.NET/Angular required), Salesforce Agentforce (weak_match ❌ — Java 5yr). 0 scored.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney" Python React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack" "Brisbane OR Melbourne" Python TypeScript 2026`: 0 results
-
-## Conclusion
-- 2 new jobs scored: DataMC Software Dev (Brisbane, 7.3 — Python/JS/Linux/REST core match) and Tech & Data People Senior AI (Melbourne, 6.85 — React/TS/Node/RAG match)
-- 5 jobs archived as weak_match (Kestral C#/.NET, Recruitment Co Java 7yr, Civillo C#, Salesforce Java, Dept of Justice Dynamics/Azure)
-- LinkedIn continues to return 0 results
-- Pipeline now at 36 active jobs with materials ready
-- Diminishing returns continue but 2 decent picks this run
-
----
-
-# Query Quality Notes - 2026-04-02 (Morning)
-
-## This Run
-
-### Seek Queries Used
-- "python developer" Melbourne: returned Halcyon Knights Technical Lead (Python/ERP lead, too senior ❌), Talent Python (contract ❌), MuleSoft Agentforce (Java 5+yr required ❌), Full Stack Moveware (no stack details), others filtered. No new matches.
-- "software engineer" Brisbane: returned VALE Partners (Laravel required ❌), Technology One Solution Lead (not SWE ❌), Caterpillar Autonomous (not SWE ❌), Medcan Software Dev (no stack), TASS AI-First (.NET required ❌), Dept Health Principal HR Data Engineer (data engineer focus ❌), UQ App Database Dev (no stack). No new matches.
-- "full stack" Sydney: returned FOIT Service Delivery (IT support ❌), Ambition Full Stack (Angular 5+yr required ❌), Onset Senior PHP (PHP required ❌), Netcomm Test Automation (hardware ❌). No new matches.
-- "typescript" Melbourne: returned Tech & Data People Senior AI (AI specialist ❌), Kestral Senior SWE (no stack), Easygo Senior Frontend (Svelte required ❌), Easygo Design Systems (Svelte required ❌), ABS Senior Cloud (cloud engineer ❌). No new matches.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Brisbane" Python TypeScript React 2026`: aggregation pages only, no direct job URLs
-- `site:linkedin.com/jobs "full stack" "Sydney OR Melbourne" Python JavaScript 2026`: aggregation pages only, no direct job URLs
-
-## Conclusion
-- 0 new jobs scored
-- 7 jobs fetched for full details, all failed scoring: too senior, wrong stack (Laravel, Svelte, .NET, Java), contract-only, or wrong role type
-- LinkedIn continues to return only category/aggregation pages — no usable job URLs
-- Severe diminishing returns — pipeline remains at 34 active jobs with materials ready
-- All Melbourne/Sydney/Brisbane results exhaustively covered across prior runs
-
----
-
-# Query Quality Notes - 2026-04-01 (Evening)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Melbourne: returned PRA .NET (contract ❌), Davidson Fullstack (scored ✅), Real Time (scored ✅), Anson McCade AI (contract ❌), iterate (contract ❌), Tanner Menzies (weak_match ❌), etc. Real Time scored.
-- "full stack developer" Sydney: mostly Canva/Akkodis/Sympraxi entries already covered; sustainrecruit scored from vue.js search
-- "react" Brisbane: largely existing listings; some contract/tender roles; no new
-- "vue.js developer" Sydney: returned Canva/Sympraxi/Akkodis already in pipeline; SustainRecruit new match
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney" Python TypeScript React 2026`: 0 results
-- `site:linkedin.com/jobs "full stack" "Brisbane OR Sydney" Vue OR TypeScript 2026`: aggregation pages only, no direct URLs
-
-## Conclusion
-- 2 new jobs scored: Real Time (Melbourne, $140-160k+ESOP, score 6.1 — founding-level full stack), SustainRecruit (Sydney Remote, $140-170k, score 6.15 — React/TS/Tailwind B2B SaaS)
-- 4 jobs archived/discarded (2 contract-only, 2 weak_match)
-- LinkedIn continues to return zero usable results
-- Pipeline now at 34 active jobs with materials ready (32 prior + 2 new)
-- Diminishing returns continue but a decent 2-job pickup tonight
-
----
-
-# Query Quality Notes - 2026-04-01 (Afternoon)
-
-## This Run
-
-### Seek Queries Used
-- "software engineer" Sydney: returned Anson McCade AI/FSD (contract ❌), Optus SWE (scored ✅), Peoplebank Sr FSD (contract ❌), Shutterspeed Sr SWE (scored ✅), WithYouWithMe Sr RPA (discarded ❌), others filtered
-- "full stack" Melbourne: Easygo x3 (all already in pipeline), Sharp & Carter Integration (partial), no new matches
-- "javascript developer" Brisbane: most already archived/contract/wrong stack; Dept of Health QLD Sr Web Dev (weak_match ❌)
-- "react" Sydney: Peoplebank (contract ❌), Optus (already scored), Redox Sr SWE (weak_match ❌), Martian Logic (weak_match ❌), HCF FTC (contract ❌), Kindred Group Backend (scored ✅), others filtered
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Sydney" React Python 2026`: 0 results
-- `site:linkedin.com/jobs "full stack" "Brisbane OR Sydney" Python TypeScript 2026`: 0 results
-
-## Conclusion
-- 3 new jobs scored: Optus (6.65), Shutterspeed (6.75), Kindred Group (6.65)
-- 6 jobs discarded/archived (2 contract, 4 weak_match)
-- LinkedIn continues to return zero usable results
-- Pipeline now at 32 active jobs with materials ready
-- Strong run for a change — all 3 Sydney roles passed scoring
-
----
-
-# Query Quality Notes - 2026-03-31 (Evening)
-
-### Seek Queries Used
-- "react developer" Melbourne: 16 results — returned Senior Software Engineer Platform (Easygo), Mid-Level Frontend/Backend (Your Reformer already in pipeline), Graduate SWE (SEEK), Full Stack Developer (TRS contract), Senior Angular (Talent Street), Senior SWE Frontend (Experis), Viva Energy (archived), Senior SWE Frontend (Ocean), Full Stack Azure (Talent), BGL Corporate (archived), Junior Full Stack (LeasePLUS), Lead Platform Engineer, Technology Lead (Domain archived). No new matches.
-- "full stack developer" Brisbane: 18 results — Full Stack Engineer (Robert Walters $100-115k <115k threshold), Senior Engine Programmer (Gameloft, game dev), Azure Cloud Lead, Java Developer (contract), Auto & General x2, Data Engineer (PartsCheck), RPMGlobal x2, Application Support (ART), Senior ServiceNow, Senior SWE (PartsCheck archived), Working Mouse, PHP/Laravel, cirrus8 (scored ✅), etc. cirrus8 is new match.
-- "javascript developer" Sydney: 19 results — Mobile Apps DWS ($180k mobile/React Native), Statekraft (already in pipeline), Canva Renderer/Staff Frontend (too senior), Akkodis Front End (scored ✅), ServiceNow (Deloitte), PRA (contract), .NET/React DWS (archived), Java Developer HCL, ASIC App Developer, FinXL AI-First (contract), Girraphic (salary $95-115k <115k), Aurec, Front End Sympraxi ($130-140k), Credit Corp Senior Full Stack, Mid-Senior Frontend Bluefin ($130k+). Akkodis is new match.
-- "typescript developer" Melbourne: 17 results — Avon Research ($90-100k <115k), Senior SWE Platform Easygo (bonus), Your Reformer (in pipeline), Graduate SWE SEEK, TRS Full Stack (contract), Senior Angular Talent Street, Experis Senior (in pipeline), Viva Energy (archived), Ocean Senior Frontend, Full Stack Azure Talent, BGL Corporate, AJQ, LeasePLUS Junior, Lead Platform Engineer, Domain Technology Lead. No new matches.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "full stack" "Sydney OR Melbourne" Python React 2026`: returned No Moss Co (Sydney) — partial data, no direct URL
-- `site:linkedin.com/jobs "software engineer" "Melbourne OR Brisbane" Python TypeScript 2026`: no results
-
-### Conclusion (Evening)
-- 3 new jobs scored: Akkodis (Sydney, $140-160k, score 7.0), MVSI OnBoard (Sydney, MERN stack, score 7.15), cirrus8 (Brisbane, AI-native SaaS, score 6.9)
-- All 3 passed hard filters and scored ≥5.5
-- Pipeline now at 28 active jobs (25 prior + 2 morning + 3 evening)
-- Evening queries returned moderate signal after severe diminishing returns all week
-
----
-
-# Query Quality Notes - 2026-03-31
-
-## This Run (Afternoon)
-
-### Seek Queries Used
-- "software engineer" Melbourne: weak — AKQA (Technical Delivery Manager ❌), Transdev Data Engineer ❌, Junior Linux Engineer ❌, App Support ❌, Senior Implementation ❌, Azure DevOps Engineer ❌, Graduate Automation ❌, ASIC Data Engineer ❌, Integration Engineer, Coles Principal Engineer ❌. No new matches.
-- "full stack developer" Sydney: weak — Java/Kotlin contract ❌, Mobile Apps DWS ($180k but mobile/React Native focused), Azure Data Engineer ❌, .NET/Dynamics CRM ❌, Data Engineer ❌, Iteration Lead ❌, Lead React Native (contract ❌), Backend Morgan (already scored), Backend Java contract ❌, Tech Support Frontend ❌, Firmware ❌. No new matches.
-- "Python developer" Brisbane: weak — Java contract ❌, RPMGlobal (C#/WinForms, archived ❌), Working Mouse (partial), HPC Principal (too senior ❌). No new matches.
-
-### LinkedIn Queries Used
-- `site:linkedin.com/jobs "full stack" "Melbourne" React Python 2026`: weak — aggregation/category pages only, no direct job URLs
-
-## Conclusion (Afternoon)
-- 0 new jobs scored
-- All candidates either already in pipeline (Statekraft from morning), contract-only, wrong stack (.NET/Java/C++/Azure), or too senior (principal/lead/architect/data engineer)
-- LinkedIn continues to return only category/aggregation pages — no usable job URLs
-- **Continuing severe diminishing returns** — pipeline at 26 active jobs (24 prior + 2 new from morning)
-- Morning run added 2 jobs: Codex Consulting (5.8), Statekraft (7.0)
-
----
-
-# Query Quality Notes - 2026-03-31 (Morning)
